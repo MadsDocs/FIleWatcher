@@ -1,0 +1,13 @@
+﻿<Window x:Class="FileWatcher.Errorbehandlung"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FileWatcher"
+        mc:Ignorable="d"
+        Title="Errorbehandlung" Height="250" Width="421.519">
+    <Grid Margin="0,0,0,-1">
+        <TextBox x:Name="txt_message" HorizontalAlignment="Left" Height="49" Margin="0,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="404" IsEnabled="False"/>
+        <TextBox x:Name="txt_stacktrace" HorizontalAlignment="Left" Height="146" Margin="0,64,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="404" IsEnabled="False"/>
+    </Grid>
+</Window>
