@@ -333,8 +333,6 @@ namespace FileWatcher
                     if (d.IsReady)
                     {
                         cmb_festplatten.Items.Add(d);
-                        Classes.Logging.Logger logger = new Classes.Logging.Logger();
-                        logger._wLogger("Festplatte: " + d.Name + " gefunden!");
                     }
                     else
                     {
