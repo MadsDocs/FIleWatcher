@@ -19,7 +19,6 @@ namespace FileWatcher.Classes.FileSystem
     // 1) Dateisystem -> Ordnerstruktur unter %APPDATA%\FileWatcher soll angelegt werden
     //                -> Eventuelle Ordner (Patches, Temp, Logs, Rollbacks) sollen angelegt werden
     // 2) Sammeln von Daten über die Umgebung -> OS, Eigenes Verzeichnis (wird wichtig wenn das erstellen des Ordners unter %APPDATA% fehlschlägt!
-    //                                        -> Ausführender Benutzer, CLR Version
 
 
     class Init
@@ -92,11 +91,7 @@ namespace FileWatcher.Classes.FileSystem
             {
                 log._wLogger("<ROOT DIR CREATED>");
                 os = Environment.OSVersion.Version.ToString();
-                platform = Environment.OSVersion.Platform.ToString();
-                servicepack = Environment.OSVersion.ServicePack.ToString();
-                is64 = Environment.Is64BitOperatingSystem;
-                execuser = Environment.UserName;
-                clr_version = Environment.Version.ToString();
+               
                 currdir = Environment.CurrentDirectory;
                 
 
@@ -134,12 +129,7 @@ namespace FileWatcher.Classes.FileSystem
                     }
                 }
 
-
                 log._wLogger("OS: " + os);
-                log._wLogger("Plattform: " + platform);
-                log._wLogger("ServicePack: " + servicepack);
-                log._wLogger("64bit OS: " + is64.ToString());
-                log._wLogger("Ausführender Benutzer: " + execuser);
                 log._wLogger("Dir: " + owndir);
                 log._wLogger("CLR_VERSION: " + clr_version);
                 log._wLogger("GATHERER() fertig, versuche nun die neuerste Version zu bekommen!");

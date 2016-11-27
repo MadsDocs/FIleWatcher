@@ -376,43 +376,5 @@ namespace FileWatcher
         {
             ShowLogs();
         }
-
-        void SeekForUpdate ()
-        {
-            try
-            {
-                // Diese Methode updated den FileWatcher
-                string line;
-                string dversion = "";
-                string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                WebClient client = new WebClient();
-                client.DownloadFile("https://themadbrainz.net/FileWatcher/version.txt", Options.appdata + @"\FileWatcher\version.txt");
-
-                StreamReader reader = new StreamReader(Options.appdata + @"\FileWatcher\save");
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    line = dversion;
-                }
-
-                if (version != dversion)
-                {
-                    log._wLogger(" Update benötigt, starte nun den Updater! ");
-
-                }
-                else
-                {
-                    log._wLogger(" Kein Update benötigt! ");
-                }
-            }
-            catch ( Exception ex)
-            {
-                log._wLogger(ex.ToString());
-                MessageBox.Show("Konnte den FileWatcher nicht updaten! ");
-            }
-           
-
-
-        }
     }
 }
