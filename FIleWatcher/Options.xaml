@@ -17,10 +17,10 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Zustand" Initialized="TabItem_Initialized">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,-2">
                     <Label x:Name="lbl_explain" Content="Label" HorizontalAlignment="Left" Margin="3,4,0,0" VerticalAlignment="Top" Width="241"/>
                     <Label x:Name="lbl_entries" Content="Label" HorizontalAlignment="Left" Margin="3,30,0,0" VerticalAlignment="Top" Height="108" Width="212"/>
-                    <Label x:Name="lbl_Path" Content="Label" HorizontalAlignment="Left" Margin="10,138,0,0" VerticalAlignment="Top" Width="205"/>
+                    <Label x:Name="lbl_Path" Content="Label" HorizontalAlignment="Left" Margin="143,4,0,0" VerticalAlignment="Top" Width="183"/>
                 </Grid>
             </TabItem>
         </TabControl>

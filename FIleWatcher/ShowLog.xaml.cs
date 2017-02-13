@@ -24,9 +24,7 @@ namespace FileWatcher
     /// </summary>
     public partial class ShowLog : Window
     {
-        private static int counter = 0;
-        private static string line;
-        static PerformanceCounter perfcounter;
+
         static Logger Log = new Logger();
 
 
@@ -56,30 +54,23 @@ namespace FileWatcher
                     while ((line = reader.ReadLine()) != null)
                     {
                         counter++;
-                        lstbx_show.Items.Add(" ( " + counter + " ) " + line);
+                        lstbx_show.Items.Add(line);
 
                         lbl_counter.Content = "Counter ( Log ) : " + counter;
                     }
                     reader.Close();
                 }
-
-
-               
             }
             catch (Exception ex)
             {
                 Log._eLogger(ex);
             }
-
-
-
         }
 
         private void rdb_showLog_Checked(object sender, RoutedEventArgs e)
         {
             try
             {
-
                 int counter = 0;
                 string line;
 
@@ -95,7 +86,7 @@ namespace FileWatcher
                     while ((line = reader.ReadLine()) != null)
                     {
                         counter++;
-                        lstbx_show.Items.Add(" ( " + counter + " ) " + line);
+                        lstbx_show.Items.Add(line);
                     }
                     reader.Close();
                     lbl_counter.Content = "Counter ( Log ) : " + counter;
@@ -195,7 +186,7 @@ namespace FileWatcher
             }
             catch (Exception ex)
             {
-
+                File.AppendAllText(Logger.currentdir + @"\log.log", ex.Message);
             }
         }
     }

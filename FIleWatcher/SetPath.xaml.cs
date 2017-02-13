@@ -121,6 +121,7 @@ namespace FileWatcher
             catch (Exception ex)
             {
                 MessageBox.Show(" Konnte den Pfad: " + txt_pfad.Text + " nicht finden!", " Fehler beim erstellen der save Datei!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message);
             }
 
         }

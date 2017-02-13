@@ -37,6 +37,8 @@ namespace FileWatcher
     {
         public static int counter = 0;
         public static FileSystemWatcher fsw = new FileSystemWatcher();
+        private Errorbehandlung behandlung = new Errorbehandlung();
+        private Logger logger = new Logger();
         private static Logger log = new Logger();
         public string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public List<String> gDrives = new List<string>();
@@ -48,6 +50,7 @@ namespace FileWatcher
             windows.ResizeMode = ResizeMode.CanMinimize;
             Init inti = new Init();
             inti._Init();
+            lbl_Messages.Visibility = Visibility.Hidden;
 
             if ( File.Exists ( Options.appdata + @"\FileWatcher\save"))
             {
@@ -63,6 +66,8 @@ namespace FileWatcher
             try
             {
                 string path = cmb_festplatten.SelectedItem.ToString();
+                lbl_Messages.Visibility = Visibility.Visible;
+                lbl_Messages.Content = "Überwachung gestartet!";
 
                 if (path == string.Empty)
                 {
@@ -85,7 +90,7 @@ namespace FileWatcher
                         }
                         catch (Exception ex)
                         {
-                            Errorbehandlung.DisplayError(ex);
+                            behandlung.DisplayError(ex);
                         }
                     }
 
@@ -96,11 +101,16 @@ namespace FileWatcher
                     fsw.Deleted += Fsw_Deleted;
                     
                 }
+
+                
             }
             catch (Exception  ex)
             {
                 MessageBox.Show(" Bitte eine Festplatte auswählen!", "Keine Festplatte wurde ausgewählt", MessageBoxButton.OK, MessageBoxImage.Error);
                 log._eLogger(ex);
+                behandlung.DisplayError(ex);
+                
+                
             }
         }
 
@@ -291,6 +301,7 @@ namespace FileWatcher
 
         private void btn_beenden_Click(object sender, RoutedEventArgs e)
         {
+            logger.ClearAllTheGarbage();
             Environment.Exit(-1);
         }
 
@@ -318,6 +329,12 @@ namespace FileWatcher
         {
             Options opt = new Options();
             opt.Show();
+        }
+
+        private void DirectoryWatch_Click (object sender, RoutedEventArgs e)
+        {
+            DirectoryWatcher watcher = new DirectoryWatcher();
+            watcher.Show();
         }
 
         private void cmb_festplatten_Loaded(object sender, RoutedEventArgs e)
@@ -350,6 +367,8 @@ namespace FileWatcher
         public void Stop()
         {
             fsw.EnableRaisingEvents = false;
+            lbl_Messages.Content = "Überwachung beendet";
+            
         }
 
         private void lstview_anzeige_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -375,6 +394,16 @@ namespace FileWatcher
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
             ShowLogs();
+        }
+
+        private void btn_stop_Click(object sender, RoutedEventArgs e)
+        {
+            Stop();
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

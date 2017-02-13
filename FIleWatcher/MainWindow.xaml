@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileWatcher"
         mc:Ignorable="d"
-        Title="SystemFileWatcher" Height="350.828" Width="696.801" Initialized="Window_Initialized">
+        Title="SystemFileWatcher" Height="376.828" Width="696.801" Initialized="Window_Initialized">
     <Grid Margin="0,0,0,4" Name="myGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto">
 
             </RowDefinition>
         </Grid.RowDefinitions>
-        <Button x:Name="btn_go" Content="Start" HorizontalAlignment="Left" Margin="360,282,0,0" VerticalAlignment="Top" Width="75" Click="btn_go_Click"/>
-        <Button x:Name="btn_beenden" Content="Beenden" HorizontalAlignment="Left" Margin="440,282,0,0" VerticalAlignment="Top" Width="75" Click="btn_beenden_Click"/>
+        <Button x:Name="btn_go" Content="Start" HorizontalAlignment="Left" Margin="209,283,0,0" VerticalAlignment="Top" Width="75" Click="btn_go_Click"/>
+        <Button x:Name="btn_beenden" Content="Beenden" HorizontalAlignment="Left" Margin="289,283,0,0" VerticalAlignment="Top" Width="75" Click="btn_beenden_Click"/>
         <ListView x:Name="lstview_anzeige" HorizontalAlignment="Left" Height="251" Margin="10,28,0,0" VerticalAlignment="Top" Width="669" MouseDoubleClick="lstview_anzeige_MouseDoubleClick">
             <ListView.Resources>
                 <Style TargetType="{x:Type ListViewItem}">
@@ -47,8 +47,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label x:Name="lbl_counter" Content="Label" HorizontalAlignment="Left" Margin="8,279,0,0" VerticalAlignment="Top" Width="136" Height="23"/>
-        <Label x:Name="lbl_fwversion" Content="Label" HorizontalAlignment="Left" Margin="520,279,0,0" VerticalAlignment="Top" Width="167"/>
+        <Label x:Name="lbl_counter" Content="Label" HorizontalAlignment="Left" Margin="420,297,0,0" VerticalAlignment="Top" Width="136" Height="23" FontSize="10"/>
+        <Label x:Name="lbl_fwversion" Content="Label" HorizontalAlignment="Left" Margin="420,282,0,0" VerticalAlignment="Top" Width="167" FontSize="10"/>
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="18" Margin="10,5,0,0" VerticalAlignment="Top" Width="669">
             <MenuItem Header="Datei">
                 <MenuItem Header="Einstellungen">
@@ -58,16 +58,26 @@
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
+                    <!-- END EINSTELLUNGEN AUSWAHL-->
                     <MenuItem Header="Log Dateien auslesen" Click="MenuItem_Click_1">
                         <MenuItem.Icon>
                             <Image Source="Images/settings_icon.png">
                             </Image>
                         </MenuItem.Icon>
                     </MenuItem>
+                    <!-- END LOG DATEI-->
+                </MenuItem>
+                <!-- END EINSTELLUNGEN-->
+                <MenuItem Header="Überwachungsoptionen" >
+                    <MenuItem Header="Ordnerüberwachung" Click="DirectoryWatch_Click">
+
+                    </MenuItem>
                 </MenuItem>
             </MenuItem>
             <Separator></Separator>
         </Menu>
-        <ComboBox x:Name="cmb_festplatten" HorizontalAlignment="Left" Margin="235,282,0,0" VerticalAlignment="Top" Width="120" Loaded="cmb_festplatten_Loaded"/>
+        <ComboBox x:Name="cmb_festplatten" HorizontalAlignment="Left" Margin="10,284,0,0" VerticalAlignment="Top" Width="189" Loaded="cmb_festplatten_Loaded"/>
+        <Button x:Name="btn_stop" Content="Stop" HorizontalAlignment="Left" Margin="209,310,0,0" VerticalAlignment="Top" Width="75" Click="btn_stop_Click"/>
+        <Label x:Name="lbl_Messages" Content="Label" HorizontalAlignment="Left" Margin="420,312,0,0" VerticalAlignment="Top" Width="126" FontSize="10"/>
     </Grid>
 </Window>

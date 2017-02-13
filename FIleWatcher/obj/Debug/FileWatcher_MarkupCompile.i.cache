@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\mario\Documents\Visual Studio 2015\Projects\FileWatcher\FileWatcher\obj\Debug\
+C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\
 FileWatcher
 none
 false
 DEBUG;TRACE
-C:\Users\mario\Documents\Visual Studio 2015\Projects\FileWatcher\FileWatcher\App.xaml
-5758744720
+C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\App.xaml
+6-1006145172
 
-161414310204
+17-1982466421
 15-438651682
-Errorbehandlung.xaml;MainWindow.xaml;Options.xaml;SetPath.xaml;ShowLog.xaml;
+DirectoryWatcher.xaml;Errorbehandlung.xaml;MainWindow.xaml;Options.xaml;SetPath.xaml;ShowLog.xaml;
 
 False
 

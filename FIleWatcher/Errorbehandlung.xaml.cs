@@ -25,35 +25,18 @@ namespace FileWatcher
             InitializeComponent();
         }
 
-        public static void DisplayError(Exception ex)
+        private static Errorbehandlung behandlung = new Errorbehandlung();
+
+        public void DisplayError(Exception ex)
         {
 
-            string[] value;
+            
+            string errormessage = ex.Message;
+            string stacktrace = ex.StackTrace;
 
-            value = Environment.GetCommandLineArgs();
-
-            foreach (string argument in value)
-            {
-                if (argument == "-debug")
-                {
-                    Errorbehandlung behandlung = new Errorbehandlung();
-
-                    string errormessage = ex.Message;
-                    string stacktrace = ex.StackTrace;
-
-
-                    behandlung.txt_message.Text = errormessage;
-                    behandlung.txt_stacktrace.Text = stacktrace;
-
-                    behandlung.Show();
-                }
-                else
-                {
-                    //Pech gehabt, dann wird nix ausgegeben!
-                }
-            }
-
-
+            behandlung.txt_message.Text = errormessage;
+            behandlung.txt_stacktrace.Text = stacktrace;
+            
 
        }
 

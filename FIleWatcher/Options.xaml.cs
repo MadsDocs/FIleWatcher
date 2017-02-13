@@ -65,11 +65,12 @@ namespace FileWatcher
                                          + "  Extension: " + info.Extension + "\r\n";
                 }
 
-                lbl_Path.Content = Logger.path;
+                lbl_Path.Content = "Logger Pfad: " + Logger.path;
             }
             catch ( Exception ex )
             {
                 lbl_entries.Content = "Entries.log wurde nicht gefunden!";
+                File.AppendAllText(Logger.currentdir + @"\log.log", ex.Message);
             }
              
             
