@@ -208,6 +208,23 @@ namespace FileWatcher.Classes.Logging
             }
         }
 
+        public void LogDirs (string pfad)
+        {
+            try
+            {
+                    StreamWriter dirwriter = new StreamWriter(path + @"\dirs.log", true, ASCIIEncoding.UTF8, 20);
+                    dirwriter.WriteLine(pfad);
+                    dirwriter.WriteLine("\r\n");
+                    dirwriter.Close();
+                    dirwriter.Dispose();
+            }
+            catch ( Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n" + ex.StackTrace);
+            }
+           
+        }
+
         public string GetPath ()
         {
             if ( File.Exists ( Options.appdata + @"\FileWatcher\save"))

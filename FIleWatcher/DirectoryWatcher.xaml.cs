@@ -42,6 +42,10 @@ namespace FileWatcher
             {
                 lbl_fehler.Content = " Fehlendes Verzeichnis!";
             }
+            else if ( !Directory.Exists(WatchDir))
+            {
+                lbl_fehler.Content = "Verzeichnis existiert nicht!";
+            }
             else
             {
                 
@@ -68,6 +72,8 @@ namespace FileWatcher
                 fsw.Deleted += Fsw_Deleted;
                 fsw.Renamed += Fsw_Renamed;
                 lbl_fehler.Content = "Überwachung gestartet";
+
+                log.LogDirs(WatchDir);
 
             }
         }
@@ -247,6 +253,33 @@ namespace FileWatcher
                 lbl_fehler.Content = ex.Message;
             }
             
+
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            if ( !File.Exists ( Logger.path + @"\dirs.log" ))
+            {
+
+            }
+            else
+            {
+                string line;
+                StreamReader reader = new StreamReader(Logger.path + @"\dirs.log");
+                
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if ( !cmb_lastdir.Items.Contains(line))
+                    {
+                        cmb_lastdir.Items.Add(line);
+                    }
+
+                   
+                }
+
+                reader.Close();
+                reader.Dispose();
+            }
 
         }
     }

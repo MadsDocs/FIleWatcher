@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileWatcher"
         mc:Ignorable="d"
-        Title="DirectoryWatcher" Height="359.334" Width="696.801">
-    <Grid>
+        Title="DirectoryWatcher" Height="377.834" Width="696.801" Initialized="Window_Initialized">
+    <Grid Margin="0,0,0,-3">
         <ListView x:Name="lstview_anzeige" HorizontalAlignment="Left" Height="260" VerticalAlignment="Top" Width="662" Margin="10,10,0,0">
             <ListView.View>
                 <GridView>
@@ -14,10 +14,11 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="btn_Start" Content="Start" HorizontalAlignment="Left" Margin="362,278,0,0" VerticalAlignment="Top" Width="75" Click="btn_Start_Click"/>
-        <Button x:Name="btn_Stop" Content="Stop" HorizontalAlignment="Left" Margin="442,278,0,0" VerticalAlignment="Top" Width="75" Click="btn_Stop_Click"/>
+        <Button x:Name="btn_Start" Content="Start" HorizontalAlignment="Left" Margin="362,276,0,0" VerticalAlignment="Top" Width="75" Click="btn_Start_Click"/>
+        <Button x:Name="btn_Stop" Content="Stop" HorizontalAlignment="Left" Margin="442,276,0,0" VerticalAlignment="Top" Width="75" Click="btn_Stop_Click"/>
         <TextBox x:Name="txtbx_Dir" HorizontalAlignment="Left" Height="23" Margin="10,275,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="347"/>
         <Label x:Name="lbl_fehler" Content="Label" HorizontalAlignment="Left" Margin="522,275,0,0" VerticalAlignment="Top" Width="150" Height="26"/>
+        <ComboBox x:Name="cmb_lastdir" HorizontalAlignment="Left" Margin="10,303,0,0" VerticalAlignment="Top" Width="347"/>
 
     </Grid>
 </Window>
