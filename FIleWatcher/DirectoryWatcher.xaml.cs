@@ -36,46 +36,95 @@ namespace FileWatcher
 
         private void btn_Start_Click(object sender, RoutedEventArgs e)
         {
-            string WatchDir = txtbx_Dir.Text;
+            try
+            {
+                string WatchDir = txtbx_Dir.Text;
+                string overwatchpath = cmb_lastdir.SelectedItem.ToString();
 
-            if ( WatchDir == string.Empty)
-            {
-                lbl_fehler.Content = " Fehlendes Verzeichnis!";
-            }
-            else if ( !Directory.Exists(WatchDir))
-            {
-                lbl_fehler.Content = "Verzeichnis existiert nicht!";
-            }
-            else
-            {
-                
-                fsw.Path = WatchDir;
-                fsw.Filter = "*.*";
-
-                fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-                fsw.IncludeSubdirectories = true;
-                
-                if ( fsw.EnableRaisingEvents == false)
+                if (overwatchpath != string.Empty)
                 {
-                    try
-                    {
-                        fsw.EnableRaisingEvents = true;
-                    }
-                    catch ( Exception ex)
-                    {
-                        lbl_fehler.Content = ex.Message;
-                    }
+                    WatchDir = overwatchpath;
                 }
 
-                fsw.Changed += Fsw_Changed;
-                fsw.Created += Fsw_Created;
-                fsw.Deleted += Fsw_Deleted;
-                fsw.Renamed += Fsw_Renamed;
-                lbl_fehler.Content = "Überwachung gestartet";
+                if (WatchDir == string.Empty)
+                {
+                    lbl_fehler.Content = " Fehlendes Verzeichnis!";
+                }
+                else if (!Directory.Exists(WatchDir))
+                {
+                    lbl_fehler.Content = "Verzeichnis existiert nicht!";
+                }
+                else
+                {
+                    if (overwatchpath != string.Empty)
+                    {
+                        fsw.Path = overwatchpath;
+                        fsw.Filter = "*.*";
 
-                log.LogDirs(WatchDir);
+                        fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+                        fsw.IncludeSubdirectories = true;
+
+                        if (fsw.EnableRaisingEvents == false)
+                        {
+                            try
+                            {
+                                fsw.EnableRaisingEvents = true;
+                            }
+                            catch (Exception ex)
+                            {
+                                lbl_fehler.Content = ex.Message;
+                            }
+                        }
+
+                        fsw.Changed += Fsw_Changed;
+                        fsw.Created += Fsw_Created;
+                        fsw.Deleted += Fsw_Deleted;
+                        fsw.Renamed += Fsw_Renamed;
+                        lbl_fehler.Content = "Überwachung gestartet";
+
+                        log.LogDirs(WatchDir);
+
+                    }
+                    else
+                    {
+                        fsw.Path = WatchDir;
+                        fsw.Filter = "*.*";
+
+                        fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+                        fsw.IncludeSubdirectories = true;
+
+                        if (fsw.EnableRaisingEvents == false)
+                        {
+                            try
+                            {
+                                fsw.EnableRaisingEvents = true;
+                            }
+                            catch (Exception ex)
+                            {
+                                lbl_fehler.Content = ex.Message;
+                            }
+                        }
+
+                        fsw.Changed += Fsw_Changed;
+                        fsw.Created += Fsw_Created;
+                        fsw.Deleted += Fsw_Deleted;
+                        fsw.Renamed += Fsw_Renamed;
+                        lbl_fehler.Content = "Überwachung gestartet";
+
+                        log.LogDirs(WatchDir);
+
+                    }
+
+
+
+                }
+            }
+            catch ( Exception ex)
+            {
 
             }
+            
+            
         }
 
         private void Fsw_Renamed(object sender, RenamedEventArgs e)

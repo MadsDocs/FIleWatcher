@@ -74,7 +74,7 @@ namespace FileWatcher.Classes.Logging
             }
             catch (Exception ex)
             {
-                File.AppendAllText(currentdir + @"\log.log", ex.Message);
+                File.AppendAllText(Logger.path + @"\log.log", ex.Message + "\r\n");
             }
         }
 
@@ -136,7 +136,7 @@ namespace FileWatcher.Classes.Logging
             }
             catch (Exception ex)
             {
-                File.AppendAllText(currentdir + @"\log.log", ex.Message);
+                File.AppendAllText(Logger.path + @"\log.log", ex.Message + "\r\n");
             }
 
         }
@@ -204,7 +204,7 @@ namespace FileWatcher.Classes.Logging
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace, ex.Message);
+                File.AppendAllText(Logger.path + @"\log.log", ex.Message + "\r\n");
             }
         }
 
@@ -220,7 +220,7 @@ namespace FileWatcher.Classes.Logging
             }
             catch ( Exception ex)
             {
-                MessageBox.Show(ex.Message + "\r\n" + ex.StackTrace);
+                File.AppendAllText(Logger.path + @"\log.log", ex.Message + "\r\n");
             }
            
         }

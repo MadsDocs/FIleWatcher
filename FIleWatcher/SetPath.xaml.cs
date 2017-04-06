@@ -40,7 +40,7 @@ namespace FileWatcher
                 FileInfo info = new FileInfo(pfad);
                 string ext = info.Extension;
 
-                // Überprüfen ob pfad eine Extension hat ( zB.: C:\Test.dir )
+                // Überprüfen ob pfad eine Extension hat ( zB.: C:\Test )
                 if (ext != string.Empty)
                 {
                     MessageBox.Show(" Bitte einen Ordnerpfad angeben! ");
