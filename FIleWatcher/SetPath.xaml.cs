@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using System.IO;
+using System.Diagnostics;
 
 namespace FileWatcher
 {
@@ -63,7 +64,7 @@ namespace FileWatcher
                             {
                                 Directory.CreateDirectory(pfad);
                                 File.AppendAllText(Options.appdata + @"\FileWatcher\save", pfad);
-                                this.Close();
+                                Close();
                             }
                             else
                             {
@@ -83,12 +84,12 @@ namespace FileWatcher
                                     {
                                         File.Delete(Options.appdata + @"\FileWatcher\save");
                                         File.AppendAllText(Options.appdata + @"\FileWatcher\save", pfad);
-                                        this.Close();
+                                        Close();
                                     }
                                     else
                                     {
                                         File.AppendAllText(Options.appdata + @"\FileWatcher\save", pfad);
-                                        this.Close();
+                                        Close();
                                     }
                                 }
                                 else
@@ -97,7 +98,7 @@ namespace FileWatcher
                                     txt_pfad.Clear();
 
                                     MessageBox.Show("Ordner Erstellung abgebrochen, geben Sie bitte einen anderen Ordner an!", "", MessageBoxButton.OK, MessageBoxImage.Information);
-                                    this.Close();
+                                    Close();
                                 }
                             }
                             else
@@ -106,12 +107,12 @@ namespace FileWatcher
                                 {
                                     File.Delete(Options.appdata + @"\FileWatcher\save");
                                     File.AppendAllText(Options.appdata + @"\FileWatcher\save", pfad);
-                                    this.Close();
+                                    Close();
                                 }
                                 else
                                 {
                                     File.AppendAllText(Options.appdata + @"\FileWatcher\save", pfad);
-                                    this.Close();
+                                    Close();
                                 }
                             }
                         }
@@ -122,6 +123,7 @@ namespace FileWatcher
             {
                 MessageBox.Show(" Konnte den Pfad: " + txt_pfad.Text + " nicht finden!", " Fehler beim erstellen der save Datei!", MessageBoxButton.OK, MessageBoxImage.Error);
                 MessageBox.Show(ex.Message);
+                
             }
 
         }

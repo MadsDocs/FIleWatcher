@@ -30,6 +30,7 @@ namespace FileWatcher.Classes.FileSystem
         public static bool is_Home = false;
 
         private static Logger log = new Logger();
+        //private static Database.DBCreate dbcreate = new Database.DBCreate();
 
         public void _Init()
         {
@@ -37,6 +38,7 @@ namespace FileWatcher.Classes.FileSystem
             {
                 CreateHomeDir();
                 Gatherer();
+                //dbcreate.CreateDatabase();
 
                 if ( !File.Exists ( Options.appdata + @"\FileWatcher\save"))
                 {
@@ -116,11 +118,40 @@ namespace FileWatcher.Classes.FileSystem
 
                 log._wLogger("OS: " + os);
                 log._wLogger("GATHERER() fertig, versuche nun die neuerste Version zu bekommen!");
+
+                ///TODO Updater schreiben!
             }
             else
             {
 
             }
+        }
+
+        public string ReadVersion ()
+        {
+            try
+            {
+                RegistryKey version;
+                version = Registry.CurrentUser.OpenSubKey("FileWatcher");
+                version.GetValue("Version");
+
+                if (version.ToString() == string.Empty)
+                {
+                    //Tja, dann ist wohl noch nie was in die Registry geschrieben worden!
+                    // Und wir werden wohl oder übel die Version über die Assembly auslesen müssen!
+                    return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                }
+                else
+                {
+                    string dVersion = version.GetValue("Version").ToString();
+                    return dVersion;
+                }
+            }
+            catch ( Exception ex)
+            {
+                return null;
+            }
+         
         }
 
 

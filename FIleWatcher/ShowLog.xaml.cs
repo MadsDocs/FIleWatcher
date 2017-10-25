@@ -38,7 +38,7 @@ namespace FileWatcher
             try
             {
 
-                string path = Logger.path;
+                string path = Logger.Path;
                 int counter = 0;
                 string line;
 
@@ -103,7 +103,7 @@ namespace FileWatcher
 
         private void btn_update_Click(object sender, RoutedEventArgs e)
         {
-            string path = Logger.path;
+            string path = Logger.Path;
 
 
             try

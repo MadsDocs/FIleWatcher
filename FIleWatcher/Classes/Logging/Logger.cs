@@ -20,8 +20,10 @@ namespace FileWatcher.Classes.Logging
         private static StringBuilder sb2 = new StringBuilder();
         private static StringBuilder error = new StringBuilder();
         private static StringBuilder sb3 = new StringBuilder();
-        public static string path = "";
-        
+        private static string path = "";
+
+        public static string Path { get => path; set => path = value; }
+
         /// <summary>
         /// Dies ist der Error Logger
         /// </summary>
@@ -39,7 +41,7 @@ namespace FileWatcher.Classes.Logging
                 }
                 else
                 {
-                    sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + ex.Message + "\r\n").ToString();
+                    sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "| ERROR |" +  "\t" + ex.Message + "\r\n").ToString();
                     File.AppendAllText(FileSystem.Init.appdata + @"\FileWatcher\Logs\log.log", sb.ToString());
                     sb.Clear();
                 }
@@ -74,7 +76,7 @@ namespace FileWatcher.Classes.Logging
             }
             catch (Exception ex)
             {
-                File.AppendAllText(Logger.path + @"\log.log", ex.Message + "\r\n");
+                File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");
             }
         }
 
@@ -95,7 +97,7 @@ namespace FileWatcher.Classes.Logging
 
                 if (extension == ".tmp")
                 {
-                    if (path == "INVALID" || path == string.Empty)
+                    if (Path == "INVALID" || Path == string.Empty)
                     {
                         _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
                     }
@@ -108,13 +110,13 @@ namespace FileWatcher.Classes.Logging
                         sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Besitzer: " + besitzer + "\r\n");
                         sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
                         sb2.Append("\r\n");
-                        File.AppendAllText(path + @"\entries.log", sb2.ToString());
+                        File.AppendAllText(Path + @"\entries.log", sb2.ToString());
                         sb2.Clear();
                     }
                 }
                 else
                 {
-                    if (path == "INVALID" || path == string.Empty)
+                    if (Path == "INVALID" || Path == string.Empty)
                     {
                         _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
                     }
@@ -129,14 +131,14 @@ namespace FileWatcher.Classes.Logging
                         sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Besitzer: " + besitzer + "\r\n");
                         sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
                         sb2.Append("\r\n");
-                        File.AppendAllText(path + @"\entries.log", sb2.ToString());
+                        File.AppendAllText(Path + @"\entries.log", sb2.ToString());
                         sb2.Clear();
                     }
                 }
             }
             catch (Exception ex)
             {
-                File.AppendAllText(Logger.path + @"\log.log", ex.Message + "\r\n");
+                File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");
             }
 
         }
@@ -159,7 +161,7 @@ namespace FileWatcher.Classes.Logging
 
                 if (extension == ".tmp")
                 {
-                    if (path == "INVALID" || path == string.Empty)
+                    if (Path == "INVALID" || Path == string.Empty)
                     {
                         _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
                     }
@@ -174,13 +176,13 @@ namespace FileWatcher.Classes.Logging
                         sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
 
                         sb3.Append("\r\n");
-                        File.AppendAllText(path + @"\entries.log", sb3.ToString());
+                        File.AppendAllText(Path + @"\entries.log", sb3.ToString());
                         sb3.Clear();
                     }
                 }
                 else
                 {
-                    if (path == "INVALID" || path == string.Empty)
+                    if (Path == "INVALID" || Path == string.Empty)
                     {
                         _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
                     }
@@ -197,14 +199,14 @@ namespace FileWatcher.Classes.Logging
                         sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
 
                         sb3.Append("\r\n");
-                        File.AppendAllText(path + @"\entries.log", sb3.ToString());
+                        File.AppendAllText(Path + @"\entries.log", sb3.ToString());
                         sb3.Clear();
                     }
                 }
             }
             catch (Exception ex)
             {
-                File.AppendAllText(Logger.path + @"\log.log", ex.Message + "\r\n");
+                File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");
             }
         }
 
@@ -212,7 +214,7 @@ namespace FileWatcher.Classes.Logging
         {
             try
             {
-                    StreamWriter dirwriter = new StreamWriter(path + @"\dirs.log", true, ASCIIEncoding.UTF8, 20);
+                    StreamWriter dirwriter = new StreamWriter(Path + @"\dirs.log", true, ASCIIEncoding.UTF8, 20);
                     dirwriter.WriteLine(pfad);
                     dirwriter.WriteLine("\r\n");
                     dirwriter.Close();
@@ -220,7 +222,7 @@ namespace FileWatcher.Classes.Logging
             }
             catch ( Exception ex)
             {
-                File.AppendAllText(Logger.path + @"\log.log", ex.Message + "\r\n");
+                File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");
             }
            
         }
@@ -236,16 +238,16 @@ namespace FileWatcher.Classes.Logging
                 while ((line = reader.ReadLine()) != null)
                 {
                     counter++;
-                    path = line;
-                    return path;
+                    Path = line;
+                    return Path;
                 }
             }
             else
             {
-                path = "INVALID";
+                Path = "INVALID";
             }
 
-            return path;
+            return Path;
             
         }
 

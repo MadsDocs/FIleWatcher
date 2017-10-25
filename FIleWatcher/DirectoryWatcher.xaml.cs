@@ -114,9 +114,6 @@ namespace FileWatcher
                         log.LogDirs(WatchDir);
 
                     }
-
-
-
                 }
             }
             catch ( Exception ex)
@@ -307,14 +304,14 @@ namespace FileWatcher
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            if ( !File.Exists ( Logger.path + @"\dirs.log" ))
+            if ( !File.Exists ( Logger.Path + @"\dirs.log" ))
             {
 
             }
             else
             {
                 string line;
-                StreamReader reader = new StreamReader(Logger.path + @"\dirs.log");
+                StreamReader reader = new StreamReader(Logger.Path + @"\dirs.log");
                 
                 while ((line = reader.ReadLine()) != null)
                 {

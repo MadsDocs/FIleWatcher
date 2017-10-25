@@ -44,3 +44,6 @@ C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.P
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.csproj.GenerateResource.Cache
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\DirectoryWatcher.g.cs
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\DirectoryWatcher.baml
+C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\bin\Debug\System.Data.SQLite.pdb
+C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\bin\Debug\System.Data.SQLite.xml
+C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\bin\Debug\System.Data.SQLite.dll.config

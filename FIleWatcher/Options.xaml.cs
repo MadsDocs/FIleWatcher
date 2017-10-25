@@ -16,6 +16,7 @@ using System.IO;
 using FileWatcher.Classes;
 using FileWatcher.Classes.Logging;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace FileWatcher
 {
@@ -56,25 +57,29 @@ namespace FileWatcher
             {
                 lbl_explain.Content = " Zustand FileWatcher";
 
-                if (Directory.Exists(Logger.path))
+                if (Directory.Exists(Logger.Path))
                 {
-                    FileInfo info = new FileInfo(Logger.path + @"\entries.log");
+                    FileInfo info = new FileInfo(Logger.Path + @"\entries.log");
                     long length = info.Length / 1024;
                     lbl_entries.Content = "Entries Eigenschaften: \r\n"
                                          + " Größe: " + length + " kb \r\n"
                                          + "  Extension: " + info.Extension + "\r\n";
                 }
 
-                lbl_Path.Content = "Logger Pfad: " + Logger.path;
+                lbl_Path.Content = "Logger Pfad: " + Logger.Path;
             }
             catch ( Exception ex )
             {
                 lbl_entries.Content = "Entries.log wurde nicht gefunden!";
                 File.AppendAllText(Logger.currentdir + @"\log.log", ex.Message);
             }
-             
-            
+        }
 
+        private void btnspeichern_Click(object sender, RoutedEventArgs e)
+        {
+            var ConfigFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            var settings = ConfigFile.AppSettings.Settings;
+            
         }
     }
 }

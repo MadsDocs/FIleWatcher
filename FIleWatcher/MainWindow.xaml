@@ -79,5 +79,6 @@
         <ComboBox x:Name="cmb_festplatten" HorizontalAlignment="Left" Margin="10,284,0,0" VerticalAlignment="Top" Width="189" Loaded="cmb_festplatten_Loaded"/>
         <Button x:Name="btn_stop" Content="Stop" HorizontalAlignment="Left" Margin="209,310,0,0" VerticalAlignment="Top" Width="75" Click="btn_stop_Click"/>
         <Label x:Name="lbl_Messages" Content="Label" HorizontalAlignment="Left" Margin="420,312,0,0" VerticalAlignment="Top" Width="126" FontSize="10"/>
+        <Button Content="EXPERMIMENTAL" HorizontalAlignment="Left" Margin="289,309,0,0" VerticalAlignment="Top" Width="104" Click="Button_Click"/>
     </Grid>
 </Window>
