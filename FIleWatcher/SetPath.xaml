@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileWatcher"
         mc:Ignorable="d"
-        Title="SetPath" Height="124" Width="500">
+        Title="SetPath" Height="130" Width="700">
     <Grid>
         <Button x:Name="btn_save" Content="Save" HorizontalAlignment="Left" Margin="184,6,0,0" VerticalAlignment="Top" Width="76" Click="btn_save_Click"/>
         <TextBox x:Name="txt_pfad" HorizontalAlignment="Left" Height="23" Margin="3,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176"/>
-        <Label x:Name="lbl_Hinweis" Content="Label" HorizontalAlignment="Left" Margin="3,31,0,0" VerticalAlignment="Top"/>
+        <Expander x:Name="txtbl_help" Header="Hilfe" HorizontalAlignment="Left" Height="99" Margin="297,1,0,-1" VerticalAlignment="Top" Width="390" FontSize="10">
+            <TextBlock Margin="10,0,-2,0"  TextWrapping="Wrap" Height="72">
+            </TextBlock>
+        </Expander>
+        <Label x:Name="lbl_version" Content="Label" HorizontalAlignment="Left" Margin="3,31,0,0" VerticalAlignment="Top" Width="176" FontSize="10"/>
 
     </Grid>
 </Window>

@@ -16,6 +16,7 @@ using System.IO;
 using System.Diagnostics;
 
 using FileWatcher.Classes.Logging;
+using FileWatcher.Classes;
 
 namespace FileWatcher
 {
@@ -63,7 +64,7 @@ namespace FileWatcher
             }
             catch (Exception ex)
             {
-                Log._eLogger(ex);
+                Log.ExLogger(ex);
             }
         }
 
@@ -74,13 +75,13 @@ namespace FileWatcher
                 int counter = 0;
                 string line;
 
-                if ( !File.Exists(Classes.FileSystem.Init.appdata + @"\FileWatcher\Logs\log.log"))
+                if ( !File.Exists(Statics.appdata + @"\FileWatcher\Logs\log.log"))
                 {
                     MessageBox.Show("Log Datei nicht gefunden!");
                 }
                 else
                 {
-                    StreamReader reader = new StreamReader(Classes.FileSystem.Init.appdata + @"\FileWatcher\Logs\log.log");
+                    StreamReader reader = new StreamReader(Statics.appdata + @"\FileWatcher\Logs\log.log");
                     lstbx_show.Items.Clear();
 
                     while ((line = reader.ReadLine()) != null)
@@ -97,7 +98,7 @@ namespace FileWatcher
             }
             catch (Exception ex)
             {
-                Log._eLogger(ex);
+                Log.ExLogger(ex);
             }
         }
 
@@ -141,13 +142,13 @@ namespace FileWatcher
                     int counter = 0;
                     string line;
 
-                    if ( !File.Exists ( Classes.FileSystem.Init.appdata + @"\FileWatcher\Logs\log.log"))
+                    if ( !File.Exists (Statics.appdata + @"\FileWatcher\Logs\log.log"))
                     {
                         MessageBox.Show("Log Datei wurde nicht gefunden!");
                     }
                     else
                     {
-                        StreamReader reader = new StreamReader(Classes.FileSystem.Init.appdata + @"\FileWatcher\Logs\log.log");
+                        StreamReader reader = new StreamReader(Statics.appdata + @"\FileWatcher\Logs\log.log");
 
                         lstbx_show.Items.Clear();
                         while ((line = reader.ReadLine()) != null)
@@ -166,28 +167,15 @@ namespace FileWatcher
             }
             catch (Exception ex)
             {
-                Log._eLogger(ex);
+                Log.ExLogger(ex);
             }
 
         }
 
         private void btn_showstats_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (!File.Exists(Classes.FileSystem.Init.appdata + @"\FileWatcher\Extensions\CPU Counter.exe"))
-                {
-                    lstbx_show.Items.Add("Kann keine Programm Statistiken anzeigen, da kein Programm vorhanden ist!");
-                }
-                else
-                {
-                    Process.Start(Classes.FileSystem.Init.appdata + @"\FileWatcher\Extensions\CPUCounter.exe");
-                }
-            }
-            catch (Exception ex)
-            {
-                File.AppendAllText(Logger.currentdir + @"\log.log", ex.Message);
-            }
+            Stats stats = new Stats();
+            stats.Show();
         }
     }
 }

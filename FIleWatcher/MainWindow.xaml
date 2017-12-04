@@ -51,26 +51,21 @@
         <Label x:Name="lbl_fwversion" Content="Label" HorizontalAlignment="Left" Margin="420,282,0,0" VerticalAlignment="Top" Width="167" FontSize="10"/>
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="18" Margin="10,5,0,0" VerticalAlignment="Top" Width="669">
             <MenuItem Header="Datei">
-                <MenuItem Header="Einstellungen">
-                    <MenuItem Header="Einstellungen" Click="MenuItem_Click">
-                        <MenuItem.Icon>
-                            <Image Source="Images/settings_icon.png">
-                            </Image>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <!-- END EINSTELLUNGEN AUSWAHL-->
-                    <MenuItem Header="Log Dateien auslesen" Click="MenuItem_Click_1">
-                        <MenuItem.Icon>
-                            <Image Source="Images/settings_icon.png">
-                            </Image>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <!-- END LOG DATEI-->
-                </MenuItem>
-                <!-- END EINSTELLUNGEN-->
                 <MenuItem Header="Überwachungsoptionen" >
                     <MenuItem Header="Ordnerüberwachung" Click="DirectoryWatch_Click">
 
+                    </MenuItem>
+                 <!-- END Ordnerüberwachung-->
+                   
+                </MenuItem>
+                <MenuItem Header="System" >
+                    <MenuItem Header="SetPath" Click="SetPath_Click"></MenuItem>
+                    <MenuItem Header="FileWatcher Ordner anzeigen" Click="FWOA_Click"></MenuItem>
+                    <MenuItem Header=" Log Ordner" Click="GoToLogOrdner_Click">
+                        <Label Name="lbl_ordner"></Label>
+                    </MenuItem>
+                    <MenuItem Header=" Log Dateien anzeigen" Click="LoDa_Click">
+                        
                     </MenuItem>
                 </MenuItem>
             </MenuItem>
@@ -79,6 +74,5 @@
         <ComboBox x:Name="cmb_festplatten" HorizontalAlignment="Left" Margin="10,284,0,0" VerticalAlignment="Top" Width="189" Loaded="cmb_festplatten_Loaded"/>
         <Button x:Name="btn_stop" Content="Stop" HorizontalAlignment="Left" Margin="209,310,0,0" VerticalAlignment="Top" Width="75" Click="btn_stop_Click"/>
         <Label x:Name="lbl_Messages" Content="Label" HorizontalAlignment="Left" Margin="420,312,0,0" VerticalAlignment="Top" Width="126" FontSize="10"/>
-        <Button Content="EXPERMIMENTAL" HorizontalAlignment="Left" Margin="289,309,0,0" VerticalAlignment="Top" Width="104" Click="Button_Click"/>
     </Grid>
 </Window>

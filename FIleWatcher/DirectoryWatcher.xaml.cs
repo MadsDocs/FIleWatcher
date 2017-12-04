@@ -39,86 +39,39 @@ namespace FileWatcher
             try
             {
                 string WatchDir = txtbx_Dir.Text;
-                string overwatchpath = cmb_lastdir.SelectedItem.ToString();
 
-                if (overwatchpath != string.Empty)
-                {
-                    WatchDir = overwatchpath;
-                }
+                fsw.Path = WatchDir;
+                fsw.Filter = "*.*";
 
-                if (WatchDir == string.Empty)
+                fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+                fsw.IncludeSubdirectories = true;
+
+                if (fsw.EnableRaisingEvents == false)
                 {
-                    lbl_fehler.Content = " Fehlendes Verzeichnis!";
-                }
-                else if (!Directory.Exists(WatchDir))
-                {
-                    lbl_fehler.Content = "Verzeichnis existiert nicht!";
-                }
-                else
-                {
-                    if (overwatchpath != string.Empty)
+                    try
                     {
-                        fsw.Path = overwatchpath;
-                        fsw.Filter = "*.*";
-
-                        fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-                        fsw.IncludeSubdirectories = true;
-
-                        if (fsw.EnableRaisingEvents == false)
-                        {
-                            try
-                            {
-                                fsw.EnableRaisingEvents = true;
-                            }
-                            catch (Exception ex)
-                            {
-                                lbl_fehler.Content = ex.Message;
-                            }
-                        }
-
-                        fsw.Changed += Fsw_Changed;
-                        fsw.Created += Fsw_Created;
-                        fsw.Deleted += Fsw_Deleted;
-                        fsw.Renamed += Fsw_Renamed;
-                        lbl_fehler.Content = "Überwachung gestartet";
-
-                        log.LogDirs(WatchDir);
-
+                        fsw.EnableRaisingEvents = true;
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        fsw.Path = WatchDir;
-                        fsw.Filter = "*.*";
-
-                        fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-                        fsw.IncludeSubdirectories = true;
-
-                        if (fsw.EnableRaisingEvents == false)
-                        {
-                            try
-                            {
-                                fsw.EnableRaisingEvents = true;
-                            }
-                            catch (Exception ex)
-                            {
-                                lbl_fehler.Content = ex.Message;
-                            }
-                        }
-
-                        fsw.Changed += Fsw_Changed;
-                        fsw.Created += Fsw_Created;
-                        fsw.Deleted += Fsw_Deleted;
-                        fsw.Renamed += Fsw_Renamed;
-                        lbl_fehler.Content = "Überwachung gestartet";
-
-                        log.LogDirs(WatchDir);
-
+                        lbl_fehler.Content = ex.Message;
                     }
                 }
+
+                  fsw.Changed += Fsw_Changed;
+                  fsw.Created += Fsw_Created;
+                  fsw.Deleted += Fsw_Deleted;
+                  fsw.Renamed += Fsw_Renamed;
+                  lbl_fehler.Content = "Überwachung gestartet";
+
+                 log.LogDirs(WatchDir);
+
+                    
+                
             }
             catch ( Exception ex)
             {
-
+                log.ExLogger( ex );
             }
             
             
@@ -141,7 +94,7 @@ namespace FileWatcher
             }
             catch ( Exception ex)
             {
-                lbl_fehler.Content = ex.Message;
+                log.ExLogger( ex );
             }
 
         }
@@ -163,7 +116,8 @@ namespace FileWatcher
             }
             catch (Exception ex)
             {
-                lbl_fehler.Content = ex.Message;
+                log.ExLogger(ex); 
+
             }
         }
 
@@ -184,7 +138,7 @@ namespace FileWatcher
             }
             catch (Exception ex)
             {
-                lbl_fehler.Content = ex.Message;
+                log.ExLogger(ex);
             }
         }
 
@@ -205,7 +159,7 @@ namespace FileWatcher
             }
             catch (Exception ex)
             {
-                lbl_fehler.Content = ex.Message;
+                log.ExLogger(ex);
             }
         }
 
@@ -241,7 +195,7 @@ namespace FileWatcher
             }
             catch (Exception ex)
             {
-                lbl_fehler.Content = ex.Message;
+                log.ExLogger(ex);
             }
         }
 
@@ -282,7 +236,7 @@ namespace FileWatcher
             }
             catch (Exception ex)
             {
-                lbl_fehler.Content = ex.Message;
+                log.ExLogger(ex);
             }
 
         }
@@ -296,7 +250,7 @@ namespace FileWatcher
             }
             catch ( Exception ex)
             {
-                lbl_fehler.Content = ex.Message;
+                log.ExLogger(ex);
             }
             
 
@@ -304,27 +258,34 @@ namespace FileWatcher
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            if ( !File.Exists ( Logger.Path + @"\dirs.log" ))
+            try
             {
-
-            }
-            else
-            {
-                string line;
-                StreamReader reader = new StreamReader(Logger.Path + @"\dirs.log");
-                
-                while ((line = reader.ReadLine()) != null)
+                if (!File.Exists(Logger.Path + @"\dirs.log"))
                 {
-                    if ( !cmb_lastdir.Items.Contains(line))
+
+                }
+                else
+                {
+                    string line;
+                    StreamReader reader = new StreamReader(Logger.Path + @"\dirs.log");
+
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        cmb_lastdir.Items.Add(line);
+                        if (!cmb_lastdir.Items.Contains(line))
+                        {
+                            cmb_lastdir.Items.Add(line);
+                        }
+
+
                     }
 
-                   
+                    reader.Close();
+                    reader.Dispose();
                 }
-
-                reader.Close();
-                reader.Dispose();
+            }
+            catch ( Exception ex)
+            {
+                log.ExLogger(ex);
             }
 
         }

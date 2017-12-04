@@ -45,3 +45,8 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+.vs/FIleWatcher/v15/.suo
+FIleWatcher/bin/Debug/.vs/FileWatcher/v15/.suo
+*.log
+*.csproj
+*.user

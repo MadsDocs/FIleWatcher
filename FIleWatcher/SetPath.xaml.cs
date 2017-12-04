@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 
 using System.IO;
 using System.Diagnostics;
+using FileWatcher;
+using FileWatcher.Classes.Logging;
 
 namespace FileWatcher
 {
@@ -22,11 +24,19 @@ namespace FileWatcher
     /// </summary>
     public partial class SetPath : Window
     {
+
+        private static Logger log = new Logger();
+
         public SetPath()
         {
+            Classes.FileSystem.Init init = new Classes.FileSystem.Init();
+
             InitializeComponent();
-            lbl_Hinweis.Content = " Dieser Dialog soll Ihnen helfen ein Verzeichnis für den FileWatcher zu erstellen, \r\n"
-                                    + " damit dieser gefundene Einträge in eine Datei speichern kann!";
+            string helping = " Dieser Dialog soll Ihnen helfen ein Verzeichnis für den FileWatcher \r\n zu erstellen, damit dieser gefundene Einträge in eine Datei \r\n speichern kann!";
+            string version = " Installierte Version: " + init.ReadVersion();
+
+            txtbl_help.Content = helping;
+            lbl_version.Content = version;
         }
 
         private void btn_save_Click(object sender, RoutedEventArgs e)
@@ -63,7 +73,7 @@ namespace FileWatcher
                             if (result == MessageBoxResult.Yes)
                             {
                                 Directory.CreateDirectory(pfad);
-                                File.AppendAllText(Options.appdata + @"\FileWatcher\save", pfad);
+                                File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad);
                                 Close();
                             }
                             else
@@ -80,15 +90,15 @@ namespace FileWatcher
 
                                 if (result == MessageBoxResult.Yes)
                                 {
-                                    if (File.Exists(Options.appdata + @"\FileWatcher\save"))
+                                    if (File.Exists(Classes.Statics.appdata + @"\FileWatcher\save"))
                                     {
-                                        File.Delete(Options.appdata + @"\FileWatcher\save");
-                                        File.AppendAllText(Options.appdata + @"\FileWatcher\save", pfad);
+                                        File.Delete(Classes.Statics.appdata + @"\FileWatcher\save");
+                                        File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad);
                                         Close();
                                     }
                                     else
                                     {
-                                        File.AppendAllText(Options.appdata + @"\FileWatcher\save", pfad);
+                                        File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad);
                                         Close();
                                     }
                                 }
@@ -103,15 +113,15 @@ namespace FileWatcher
                             }
                             else
                             {
-                                if (File.Exists(Options.appdata + @"\FileWatcher\save"))
+                                if (File.Exists(Classes.Statics.appdata + @"\FileWatcher\save"))
                                 {
-                                    File.Delete(Options.appdata + @"\FileWatcher\save");
-                                    File.AppendAllText(Options.appdata + @"\FileWatcher\save", pfad);
+                                    File.Delete(Classes.Statics.appdata + @"\FileWatcher\save");
+                                    File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad);
                                     Close();
                                 }
                                 else
                                 {
-                                    File.AppendAllText(Options.appdata + @"\FileWatcher\save", pfad);
+                                    File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad);
                                     Close();
                                 }
                             }
@@ -122,8 +132,8 @@ namespace FileWatcher
             catch (Exception ex)
             {
                 MessageBox.Show(" Konnte den Pfad: " + txt_pfad.Text + " nicht finden!", " Fehler beim erstellen der save Datei!", MessageBoxButton.OK, MessageBoxImage.Error);
-                MessageBox.Show(ex.Message);
-                
+                log.ExLogger(ex);
+
             }
 
         }

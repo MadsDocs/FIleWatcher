@@ -20,8 +20,8 @@ namespace FileWatcher.Classes.Logging
         private static StringBuilder sb2 = new StringBuilder();
         private static StringBuilder error = new StringBuilder();
         private static StringBuilder sb3 = new StringBuilder();
-        private static string path = "";
 
+        private static string path = "";
         public static string Path { get => path; set => path = value; }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace FileWatcher.Classes.Logging
         {
             try
             {
-                if (!Directory.Exists(FileSystem.Init.appdata + @"\FileWatcher"))
+                if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
                 {
                     sb.Append(DateTime.Now.ToLongDateString() + "\t" + "<ROOT DIR NOT CREATED... MAYBE INSUFFIENT PERMISSIONS?");
                     File.AppendAllText(currentdir + @"\log.log", sb.ToString());
@@ -42,13 +42,42 @@ namespace FileWatcher.Classes.Logging
                 else
                 {
                     sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "| ERROR |" +  "\t" + ex.Message + "\r\n").ToString();
-                    File.AppendAllText(FileSystem.Init.appdata + @"\FileWatcher\Logs\log.log", sb.ToString());
+                    File.AppendAllText(Statics.appdata + @"\FileWatcher\Logs\log.log", sb.ToString());
                     sb.Clear();
                 }
             }
             catch (Exception exe)
             {
                 MessageBox.Show(exe.Message);
+            }
+        }
+        
+        public void ExLogger ( Exception ex)
+        {
+            try
+            {
+                if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
+                {
+                    error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.Message + "\r\n");
+                    error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.StackTrace + "\rn");
+
+                    File.AppendAllText(Statics.appdata + @"\FileWatcher\error.log", error.ToString() + "\r\n");
+                    error.Clear();
+                }
+                else
+                {
+                    string fwpath = GetPath();
+
+                    error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.Message + "\r\n") ;
+                    error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.StackTrace + "\r\n");
+
+                    File.AppendAllText(fwpath + @"\error.log", error.ToString()  + "\r\n");
+                    error.Clear();
+                }
+            }
+            catch ( Exception exe)
+            {
+
             }
         }
 
@@ -61,7 +90,7 @@ namespace FileWatcher.Classes.Logging
             try
             {
 
-                if (!Directory.Exists(FileSystem.Init.appdata + @"\FileWatcher"))
+                if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
                 {
                     sb.Append(DateTime.Now.ToLongDateString() + "\t" + "<ROOT DIR NOT CREATED... MAYBE INSUFFIENT PERMISSIONS?");
                     File.AppendAllText(currentdir + @"\log.log", sb.ToString());
@@ -70,7 +99,7 @@ namespace FileWatcher.Classes.Logging
                 else
                 {
                     sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + message + "\r\n").ToString();
-                    File.AppendAllText(FileSystem.Init.appdata + @"\FileWatcher\Logs\log.log", sb.ToString());
+                    File.AppendAllText(Statics.appdata + @"\FileWatcher\Logs\log.log", sb.ToString());
                     sb.Clear();
                 }
             }
@@ -79,7 +108,6 @@ namespace FileWatcher.Classes.Logging
                 File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");
             }
         }
-
         public void LogEntrys (string name, DateTime time, WatcherChangeTypes types)
         {
             try
@@ -176,7 +204,7 @@ namespace FileWatcher.Classes.Logging
                         sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
 
                         sb3.Append("\r\n");
-                        File.AppendAllText(Path + @"\entries.log", sb3.ToString());
+                        File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
                         sb3.Clear();
                     }
                 }
@@ -199,7 +227,7 @@ namespace FileWatcher.Classes.Logging
                         sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
 
                         sb3.Append("\r\n");
-                        File.AppendAllText(Path + @"\entries.log", sb3.ToString());
+                        File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
                         sb3.Clear();
                     }
                 }
@@ -229,11 +257,11 @@ namespace FileWatcher.Classes.Logging
 
         public string GetPath ()
         {
-            if ( File.Exists ( Options.appdata + @"\FileWatcher\save"))
+            if ( File.Exists (Classes.Statics.appdata + @"\FileWatcher\save"))
             {
                 int counter = 0;
                 string line;
-                StreamReader reader = new StreamReader(Options.appdata + @"\FileWatcher\save");
+                StreamReader reader = new StreamReader(Classes.Statics.appdata + @"\FileWatcher\save");
 
                 while ((line = reader.ReadLine()) != null)
                 {

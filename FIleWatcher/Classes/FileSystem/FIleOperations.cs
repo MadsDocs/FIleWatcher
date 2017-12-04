@@ -27,6 +27,21 @@ namespace FileWatcher.Classes.FileSystem
             return config.AppSettings.Settings[key].Value;
         }
 
+        public static string getLoggerDir ()
+        {
+            try
+            {
+                StreamReader loggerReader = new StreamReader(Classes.Statics.appdata + @"\FileWatcher\save");
+                string content = loggerReader.ReadToEnd();
+
+                return content;
+            }
+            catch ( Exception ex )
+            {
+                return " Cant find the save File!";
+            }
+        }
+
 
     }
 }

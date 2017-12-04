@@ -22,7 +22,7 @@ namespace FileWatcher.Classes.FileSystem
 
     class Init
     {
-        public static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static string os;
         private static string currdir;
         public static string eversion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -30,7 +30,6 @@ namespace FileWatcher.Classes.FileSystem
         public static bool is_Home = false;
 
         private static Logger log = new Logger();
-        //private static Database.DBCreate dbcreate = new Database.DBCreate();
 
         public void _Init()
         {
@@ -38,9 +37,8 @@ namespace FileWatcher.Classes.FileSystem
             {
                 CreateHomeDir();
                 Gatherer();
-                //dbcreate.CreateDatabase();
 
-                if ( !File.Exists ( Options.appdata + @"\FileWatcher\save"))
+                if ( !File.Exists (Classes.Statics.appdata + @"\FileWatcher\save"))
                 {
                     SetPath path = new SetPath();
                     path.ShowDialog();
@@ -107,8 +105,7 @@ namespace FileWatcher.Classes.FileSystem
                 {
                     if ( is_Home )
                     {
-                        log._wLogger(" Konnte CurrDir nicht setzen!");
-                        log._eLogger(ex);
+                        log.ExLogger(ex);
                     }
                     else
                     {
@@ -117,7 +114,6 @@ namespace FileWatcher.Classes.FileSystem
                 }
 
                 log._wLogger("OS: " + os);
-                log._wLogger("GATHERER() fertig, versuche nun die neuerste Version zu bekommen!");
 
                 ///TODO Updater schreiben!
             }
@@ -149,6 +145,7 @@ namespace FileWatcher.Classes.FileSystem
             }
             catch ( Exception ex)
             {
+                log.ExLogger(ex);
                 return null;
             }
          
