@@ -42,6 +42,23 @@ namespace FileWatcher.Classes.FileSystem
             }
         }
 
+        public bool IsLongerthan260(string filename)
+        {
+            try
+            {
+                FileInfo fi = new FileInfo(filename);
+                long flength = fi.Length;
+
+                if (flength != Statics.max_length)
+                    return false;
+                else
+                    return true;
+            }
+            catch ( Exception ex)
+            {
+                return false;
+            }
+        }
 
     }
 }

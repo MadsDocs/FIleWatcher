@@ -220,12 +220,6 @@ namespace FileWatcher
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { log.LogEntrys(name, DateTime.Now, watcherTypes); }));
-                   // Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { dbc.InsertMessage(name, watcherTypes, DateTime.Now, "", ""); }));
-
-                    //Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { logger.EntriesWatcher(); }));
-
-
-
                 }
                 else if (watcherTypes == WatcherChangeTypes.Created)
                 {
@@ -233,8 +227,6 @@ namespace FileWatcher
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(name, DateTime.Now, watcherTypes); }));
-                  //  Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { dbc.InsertMessage(name, watcherTypes, DateTime.Now, "", ""); }));
-                    //Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { logger.EntriesWatcher(); }));
                 }
                 else if (watcherTypes == WatcherChangeTypes.Deleted)
                 {
@@ -242,8 +234,6 @@ namespace FileWatcher
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(name, DateTime.Now, watcherTypes); }));
-                  //  Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { dbc.InsertMessage(name, watcherTypes, DateTime.Now, "", ""); }));
-                    //Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { logger.EntriesWatcher(); }));
                 }
                 else if (watcherTypes == WatcherChangeTypes.Renamed)
                 {
@@ -251,7 +241,6 @@ namespace FileWatcher
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(name, DateTime.Now, watcherTypes); }));
-                 //   Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { dbc.InsertMessage(name, watcherTypes, DateTime.Now, "", ""); }));
                 }
             }
             catch (Exception ex)
@@ -439,6 +428,11 @@ namespace FileWatcher
         {
             ShowLog sLog = new ShowLog();
             sLog.Show();
+        }
+
+        private void btn_instance_Click(object sender, RoutedEventArgs e)
+        {
+            Instanz.StartNewInstanz();
         }
     }
 }

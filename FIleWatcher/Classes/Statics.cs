@@ -9,6 +9,7 @@ namespace FileWatcher.Classes
     class Statics
     {
         public static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public static int max_length = 260;
 
     }
 }
