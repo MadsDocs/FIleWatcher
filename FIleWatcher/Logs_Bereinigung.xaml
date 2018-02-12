@@ -1,0 +1,21 @@
+﻿<Window x:Class="FileWatcher.Logs_Bereinigung"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FileWatcher"
+        mc:Ignorable="d"
+        Title="Logs Bereinigung" Height="150" Width="400">
+    <Grid Margin="0,0,0,-2">
+        <Button Content="Logs bereinigen" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="113" Click="Button_Click" Name="btn_backup"/>
+        <Expander Header="Hilfe" HorizontalAlignment="Left" Height="100" Margin="128,5,0,0" VerticalAlignment="Top" Width="254">
+            <Grid Background="#FFFF">
+                <TextBlock Name="txt_help" TextWrapping="Wrap">
+                    
+                </TextBlock>
+            </Grid>
+        </Expander>
+        <RadioButton Content="Logs Backup" HorizontalAlignment="Left" Margin="16,35,0,0" VerticalAlignment="Top" Name="rdb_backup"/>
+
+    </Grid>
+</Window>

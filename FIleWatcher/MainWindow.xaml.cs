@@ -28,8 +28,6 @@ using System.Diagnostics;
 
 namespace FileWatcher
 {
-    
-
 
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
@@ -433,6 +431,12 @@ namespace FileWatcher
         private void btn_instance_Click(object sender, RoutedEventArgs e)
         {
             Instanz.StartNewInstanz();
+        }
+
+        private void lbl_ordner_clean_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Logs_Bereinigung logs_Bereinigung = new Logs_Bereinigung();
+            logs_Bereinigung.ShowDialog();
         }
     }
 }

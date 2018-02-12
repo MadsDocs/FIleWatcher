@@ -45,3 +45,5 @@ C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\DirectoryWatc
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.csproj.CoreCompileInputs.cache
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Stats.g.cs
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Stats.baml
+C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Logs_Bereinigung.g.cs
+C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Logs_Bereinigung.baml

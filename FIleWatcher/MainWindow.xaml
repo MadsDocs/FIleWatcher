@@ -63,6 +63,7 @@
                     <MenuItem Header="FileWatcher Ordner anzeigen" Click="FWOA_Click"></MenuItem>
                     <MenuItem Header=" Log Ordner" Click="GoToLogOrdner_Click">
                         <Label Name="lbl_ordner"></Label>
+                        <Label Name="lbl_ordner_clean" MouseDown="lbl_ordner_clean_MouseDown">Log Ordner bereinigen</Label>
                     </MenuItem>
                     <MenuItem Header=" Log Dateien anzeigen" Click="LoDa_Click">
                         

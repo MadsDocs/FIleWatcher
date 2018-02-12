@@ -13,6 +13,7 @@ namespace FileWatcher.Classes.FileSystem
     {
         public static void StartNewInstanz ()
         {
+         /*
             // Diese Methode startet eine neue Instanz vom FileWatcher!
             try
             {
@@ -37,6 +38,18 @@ namespace FileWatcher.Classes.FileSystem
             {
 
             }
+
+            */
+
+        }
+
+
+        public static void InstanzManager ()
+        {
+            int id = 0;
+
+
+
 
         }
 
