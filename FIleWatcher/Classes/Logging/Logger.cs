@@ -248,11 +248,9 @@ namespace FileWatcher.Classes.Logging
         {
             try
             {
-                    StreamWriter dirwriter = new StreamWriter(Path + @"\dirs.log", true, ASCIIEncoding.UTF8, 20);
-                    dirwriter.WriteLine(pfad);
-                    dirwriter.WriteLine("\r\n");
-                    dirwriter.Close();
-                    dirwriter.Dispose();
+                File.AppendAllText(Logger.path + @"\dir.log", pfad);
+
+
             }
             catch ( Exception ex)
             {

@@ -262,7 +262,7 @@ namespace FileWatcher
             {
                 if (!File.Exists(Logger.Path + @"\dirs.log"))
                 {
-
+                    log._wLogger(" Keine Directory Log Datei gefunden!");
                 }
                 else
                 {

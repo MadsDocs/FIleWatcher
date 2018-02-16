@@ -40,7 +40,7 @@ namespace FileWatcher
                 if ( rdb_backup.IsChecked == true)
                 {
                     
-                    MessageBox.Show("CLICK!");
+                    //MessageBox.Show("CLICK!");
                     var folderbrowser = new wf.FolderBrowserDialog();
                     folderbrowser.ShowDialog();
                     var pfad = folderbrowser.SelectedPath;
