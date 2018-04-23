@@ -11,12 +11,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 using System.IO;
 using System.Diagnostics;
 
 using FileWatcher.Classes.Logging;
 using FileWatcher.Classes;
+using System.Windows.Threading;
 
 namespace FileWatcher
 {
@@ -36,6 +38,10 @@ namespace FileWatcher
 
         private void rdb_showEntry_Checked(object sender, RoutedEventArgs e)
         {
+            BackgroundWorker testWorker = new BackgroundWorker();
+            DoWorkEventArgs dow = null;
+
+
             try
             {
 
@@ -45,27 +51,51 @@ namespace FileWatcher
 
                 if ( path == string.Empty)
                 {
-                    MessageBox.Show("Konnte keine entries.log finden!", "Datei wurde nicht gefunden!");
+                    MessageBox.Show(" Konnte entries.log nicht finden!", "Datei wurde nicht gefunden", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
-                    StreamReader reader = new StreamReader(path + @"\entries.log");
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
 
-                    lstbx_show.Items.Clear();
-                    while ((line = reader.ReadLine()) != null)
+                    using (StreamReader reader = new StreamReader(path + @"\entries.log"))
                     {
-                        counter++;
-                        lstbx_show.Items.Add(line);
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if ( testWorker.CancellationPending)
+                            {
+                                dow.Cancel = true;
 
-                        lbl_counter.Content = "Counter ( Log ) : " + counter;
+                            }
+                            else
+                            {
+                                counter++;
+                                lstbx_show.Items.Add(line);
+                                lbl_counter.Content = "Counter ( Log ): " + counter;
+                            }
+                        }
                     }
-                    reader.Close();
+
+                    stopwatch.Stop();
+                    MessageBox.Show("Elapsed Time: " + stopwatch.Elapsed);
+
+
+
+
+
+
+
                 }
             }
             catch (Exception ex)
             {
                 Log.ExLogger(ex);
             }
+        }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void rdb_showLog_Checked(object sender, RoutedEventArgs e)
