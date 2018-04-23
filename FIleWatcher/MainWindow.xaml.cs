@@ -39,8 +39,7 @@ namespace FileWatcher
         private Errorbehandlung behandlung = new Errorbehandlung();
         private Logger logger = new Logger();
         private static Logger log = new Logger();
-        public List<String> gDrives = new List<string>();
-        //static Classes.Database.DBCreate dbc = new Classes.Database.DBCreate();
+        private List<String> gDrives = new List<string>();
 
         public MainWindow()
         {
@@ -292,7 +291,8 @@ namespace FileWatcher
         private void btn_beenden_Click(object sender, RoutedEventArgs e)
         {
             logger.ClearAllTheGarbage();
-            Environment.Exit(-1);
+            Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            Application.Current.Shutdown();
         }
 
         void DisplayCounter()
@@ -361,7 +361,7 @@ namespace FileWatcher
             try
             {
                 var item = lstview_anzeige.SelectedItems[0];
-                //MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
                 
 
 
