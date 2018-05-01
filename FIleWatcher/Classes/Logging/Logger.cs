@@ -15,7 +15,7 @@ namespace FileWatcher.Classes.Logging
 {
    class Logger
     {
-        public static string currentdir = Environment.CurrentDirectory;
+        private static string currentdir = Environment.CurrentDirectory;
         private static StringBuilder sb = new StringBuilder();
         private static StringBuilder sb2 = new StringBuilder();
         private static StringBuilder error = new StringBuilder();
@@ -116,58 +116,66 @@ namespace FileWatcher.Classes.Logging
                 DateTime creationTime = attributes.CreationTimeUtc;
                 string fattributes = attributes.Attributes.ToString();
 
-                var besitzer = File.GetAccessControl(name).GetOwner(typeof(NTAccount));
-                var gruppe = File.GetAccessControl(name).GetGroup(typeof(NTAccount));
 
-                if (attributes.Length != Statics.max_length)
+                if (File.GetAccessControl(name).GetOwner(typeof(NTAccount)) != null)
                 {
+                    var besitzer = File.GetAccessControl(name).GetOwner(typeof(NTAccount));
+                    var gruppe = File.GetAccessControl(name).GetGroup(typeof(NTAccount));
 
-                    string extension = attributes.Extension;
-
-                    if (extension == ".tmp")
+                    if (attributes.Length != Statics.max_length)
                     {
-                        if (Path == "INVALID" || Path == string.Empty)
+
+                        string extension = attributes.Extension;
+
+                        if (extension == ".tmp")
                         {
-                            _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
+                            if (Path == "INVALID" || Path == string.Empty)
+                            {
+                                _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
+                            }
+                            else
+                            {
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + name + "\r\n");
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Changed to Type: " + types + "\r\n");
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Creation Time: " + creationTime.ToString() + "\r\n");
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Attributes: " + fattributes + "\r\n");
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Besitzer: " + besitzer + "\r\n");
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
+                                sb2.Append("\r\n");
+                                File.AppendAllText(Path + @"\entries.log", sb2.ToString());
+                                sb2.Clear();
+                            }
                         }
                         else
                         {
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + name + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Changed to Type: " + types + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Creation Time: " + creationTime.ToString() + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Attributes: " + fattributes + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Besitzer: " + besitzer + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
-                            sb2.Append("\r\n");
-                            File.AppendAllText(Path + @"\entries.log", sb2.ToString());
-                            sb2.Clear();
+                            if (Path == "INVALID" || Path == string.Empty)
+                            {
+                                _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
+                            }
+                            else
+                            {
+                                long length2 = attributes.Length;
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + name + "\r\n");
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Changed to Type: " + types + "\r\n");
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Creation Time: " + creationTime.ToString() + "\r\n");
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Attributes: " + fattributes + "\r\n");
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Length: " + length2 + "\r\n");
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Besitzer: " + besitzer + "\r\n");
+                                sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
+                                sb2.Append("\r\n");
+                                File.AppendAllText(Path + @"\entries.log", sb2.ToString());
+                                sb2.Clear();
+                            }
                         }
                     }
                     else
                     {
-                        if (Path == "INVALID" || Path == string.Empty)
-                        {
-                            _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
-                        }
-                        else
-                        {
-                            long length2 = attributes.Length;
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + name + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Changed to Type: " + types + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Creation Time: " + creationTime.ToString() + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Attributes: " + fattributes + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Length: " + length2 + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Besitzer: " + besitzer + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
-                            sb2.Append("\r\n");
-                            File.AppendAllText(Path + @"\entries.log", sb2.ToString());
-                            sb2.Clear();
-                        }
+                        sb2.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "== Datei wurde nicht mitgeloggt! " + attributes.Name + " == ");
                     }
                 }
                 else
                 {
-                    sb2.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "== Datei wurde nicht mitgeloggt! " + attributes.Name + " == ");
+                    _wLogger(" Besitzer der Datei nicht verfügbar!");
                 }
             }
             catch (Exception ex)
@@ -186,58 +194,70 @@ namespace FileWatcher.Classes.Logging
 
                 string fattributes = attributes.Attributes.ToString();
 
-               var besitzer = File.GetAccessControl(name).GetOwner(typeof(NTAccount));
-               var gruppe = File.GetAccessControl(name).GetGroup(typeof(NTAccount));
 
-
-
-                string extension = attributes.Extension;
-
-                if (extension == ".tmp")
+                if (File.GetAccessControl(name).GetOwner(typeof(NTAccount)) != null)
                 {
-                    if (Path == "INVALID" || Path == string.Empty)
+
+
+
+                    var besitzer = File.GetAccessControl(name).GetOwner(typeof(NTAccount));
+                    var gruppe = File.GetAccessControl(name).GetGroup(typeof(NTAccount));
+
+
+
+                    string extension = attributes.Extension;
+
+                    if (extension == ".tmp")
                     {
-                        _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
+                        if (Path == "INVALID" || Path == string.Empty)
+                        {
+                            _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
+                        }
+                        else
+                        {
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "= DirectoryWatcher =" + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + name + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Changed to Type: " + types + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Creation Time: " + creationTime.ToString() + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Attributes: " + fattributes + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Besitzer: " + besitzer + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
+
+                            sb3.Append("\r\n");
+                            File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
+                            sb3.Clear();
+                        }
                     }
                     else
                     {
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "= DirectoryWatcher =" + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + name + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Changed to Type: " + types + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Creation Time: " + creationTime.ToString() + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Attributes: " + fattributes + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Besitzer: " + besitzer + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
+                        if (Path == "INVALID" || Path == string.Empty)
+                        {
+                            _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
+                        }
+                        else
+                        {
+                            long length2 = attributes.Length;
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "= DirectoryWatcher =" + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + name + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Changed to Type: " + types + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Creation Time: " + creationTime.ToString() + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Attributes: " + fattributes + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Length: " + length2 + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Besitzer: " + besitzer + "\r\n");
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
 
-                        sb3.Append("\r\n");
-                        File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
-                        sb3.Clear();
+                            sb3.Append("\r\n");
+                            File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
+                            sb3.Clear();
+                        }
                     }
                 }
                 else
                 {
-                    if (Path == "INVALID" || Path == string.Empty)
-                    {
-                        _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
-                    }
-                    else
-                    {
-                        long length2 = attributes.Length;
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "= DirectoryWatcher =" + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + name + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Changed to Type: " + types + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Creation Time: " + creationTime.ToString() + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Attributes: " + fattributes + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Length: " + length2 + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Besitzer: " + besitzer + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
-
-                        sb3.Append("\r\n");
-                        File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
-                        sb3.Clear();
-                    }
+                    _wLogger("Besitzer der Datei nicht verfügbar!");
                 }
             }
+            
             catch (Exception ex)
             {
                 File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");

@@ -361,8 +361,8 @@ namespace FileWatcher
             try
             {
                 var item = lstview_anzeige.SelectedItems[0];
+                lstview_anzeige.SelectionMode = SelectionMode.Extended;
                 MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
-                
 
 
             }

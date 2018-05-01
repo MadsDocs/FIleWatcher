@@ -41,7 +41,6 @@ namespace FileWatcher
             BackgroundWorker testWorker = new BackgroundWorker();
             DoWorkEventArgs dow = null;
 
-
             try
             {
 
@@ -78,13 +77,6 @@ namespace FileWatcher
 
                     stopwatch.Stop();
                     MessageBox.Show("Elapsed Time: " + stopwatch.Elapsed);
-
-
-
-
-
-
-
                 }
             }
             catch (Exception ex)
