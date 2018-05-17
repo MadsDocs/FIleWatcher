@@ -17,7 +17,7 @@ using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 
 using FileWatcher.Classes.Logging;
-
+using FileWatcher.Classes;
 
 namespace FileWatcher
 {
@@ -260,14 +260,14 @@ namespace FileWatcher
         {
             try
             {
-                if (!File.Exists(Logger.Path + @"\dirs.log"))
+                if (!File.Exists(Logger.Path + @"\dir.log"))
                 {
                     log._wLogger(" Keine Directory Log Datei gefunden!");
                 }
                 else
                 {
                     string line;
-                    StreamReader reader = new StreamReader(Logger.Path + @"\dirs.log");
+                    StreamReader reader = new StreamReader(Logger.Path + @"\dir.log");
 
                     while ((line = reader.ReadLine()) != null)
                     {

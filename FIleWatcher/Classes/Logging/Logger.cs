@@ -94,6 +94,7 @@ namespace FileWatcher.Classes.Logging
                 {
                     sb.Append(DateTime.Now.ToLongDateString() + "\t" + "<ROOT DIR NOT CREATED... MAYBE INSUFFIENT PERMISSIONS?");
                     File.AppendAllText(currentdir + @"\log.log", sb.ToString());
+                    
                     sb.Clear();
                 }
                 else
@@ -105,7 +106,7 @@ namespace FileWatcher.Classes.Logging
             }
             catch (Exception ex)
             {
-                File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");
+                File.AppendAllText(Statics.appdata + @"\log.log", ex.Message + "\r\n");
             }
         }
         public void LogEntrys (string name, DateTime time, WatcherChangeTypes types)
@@ -247,7 +248,7 @@ namespace FileWatcher.Classes.Logging
                             sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Gruppe: " + gruppe + "\r\n");
 
                             sb3.Append("\r\n");
-                            File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
+                            File.AppendAllText(Path + @"\dir.log", sb3.ToString());
                             sb3.Clear();
                         }
                     }
@@ -268,13 +269,14 @@ namespace FileWatcher.Classes.Logging
         {
             try
             {
-                File.AppendAllText(Logger.path + @"\dir.log", pfad);
+                File.AppendAllText(Path + @"\dir.log", sb3.ToString());
 
 
             }
             catch ( Exception ex)
             {
-                File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");
+                File.AppendAllText(Path + @"\dir.log", ex.Message + "\r\n");
+
             }
            
         }
@@ -299,6 +301,8 @@ namespace FileWatcher.Classes.Logging
                 Path = "INVALID";
             }
 
+
+
             return Path;
             
         }
@@ -314,6 +318,11 @@ namespace FileWatcher.Classes.Logging
             {
                 _wLogger("Can´t clear the Garbage: " + ex.Message);
             }
+        }
+
+        private void FetchLogFile()
+        {
+
         }
     }
 }
