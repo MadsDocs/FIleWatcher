@@ -39,6 +39,7 @@ namespace FileWatcher
         private Errorbehandlung behandlung = new Errorbehandlung();
         private Logger logger = new Logger();
         private static Logger log = new Logger();
+        private static FIleOperations fo = new FIleOperations();
         public List<String> gDrives = new List<string>();
 
         public MainWindow()
@@ -57,6 +58,8 @@ namespace FileWatcher
             {
                 string pfad = log.GetPath();
                 Logger.Path = pfad;
+
+                SetPathMenu.IsEnabled = false;
             }
 
 
@@ -128,14 +131,24 @@ namespace FileWatcher
             try
             {
                 FileInfo info = new FileInfo(e.Name);
+                string owner = fo.GetOwnerofFile(e.Name);
                 if (info.Name == "entries.log" || info.Name == "log.log")
                 {
 
                 }
                 else
                 {
-                    DisplayFiles(WatcherChangeTypes.Deleted, e.Name);
-                    counter++;
+                    if ( owner == string.Empty)
+                    {
+                        logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                    }
+                    else
+                    {
+                        DisplayFiles(WatcherChangeTypes.Deleted, e.Name);
+                        counter++;
+                    }
+
+               
                 }
             }
             catch (Exception ex)
@@ -151,14 +164,22 @@ namespace FileWatcher
             try
             {
                 FileInfo info = new FileInfo(e.Name);
-
+                string owner = fo.GetOwnerofFile(e.Name);
                 if (info.Name == "entries.log" || info.Name == "log.log")
                 {
                 }
                 else
                 {
-                    DisplayFiles(WatcherChangeTypes.Renamed, e.FullPath);
-                    counter++;
+                    if (owner == string.Empty)
+                    {
+                        logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                    }
+                    else
+                    {
+                        DisplayFiles(WatcherChangeTypes.Renamed, e.FullPath);
+                        counter++;
+                    }
+                   
                 }
             }
             catch (Exception ex)
@@ -172,14 +193,23 @@ namespace FileWatcher
             try
             {
                 FileInfo info = new FileInfo(e.Name);
+                string owner = fo.GetOwnerofFile(e.Name);
+
 
                 if (info.Name == "entries.log" || info.Name == "log.log" )
                 {
                 }
                 else
                 {
-                    DisplayFiles(WatcherChangeTypes.Created, e.FullPath);
-                    counter++;
+                    if (owner == string.Empty)
+                    {
+                        logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                    }
+                    else
+                    {
+                        DisplayFiles(WatcherChangeTypes.Created, e.FullPath);
+                        counter++;
+                    }
                 }
             }
             catch (Exception ex)
@@ -196,14 +226,22 @@ namespace FileWatcher
             try
             {
                 FileInfo info = new FileInfo(e.Name);
+                string owner = fo.GetOwnerofFile(e.Name);
 
                 if (info.Name == "entries.log" || info.Name == "log.log" )
                 {
                 }
                 else
                 {
-                    DisplayFiles(WatcherChangeTypes.Changed, e.FullPath);
-                    counter++;
+                    if (owner == string.Empty)
+                    {
+                        logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                    }
+                    else
+                    {
+                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath);
+                        counter++;
+                    }
                 }
 
             }

@@ -59,7 +59,7 @@
                    
                 </MenuItem>
                 <MenuItem Header="System" >
-                    <MenuItem Header="SetPath" Click="SetPath_Click"></MenuItem>
+                    <MenuItem Header="SetPath" Click="SetPath_Click" Name="SetPathMenu"></MenuItem>
                     <MenuItem Header="FileWatcher Ordner anzeigen" Click="FWOA_Click"></MenuItem>
                     <MenuItem Header=" Log Ordner" Click="GoToLogOrdner_Click">
                         <Label Name="lbl_ordner"></Label>

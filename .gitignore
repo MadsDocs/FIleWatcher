@@ -54,3 +54,9 @@ FIleWatcher/bin/Debug/.vs/FileWatcher/v15/.suo
 *.lock
 *.ide
 *.ide-shm
+.vs/FIleWatcher/v15/.suo
+*.pdb
+*.exe
+FIleWatcher/bin/Debug/FIleWatcher.pdb
+FIleWatcher/bin/Debug/FIleWatcher.exe
+*.log

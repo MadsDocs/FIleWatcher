@@ -11,6 +11,8 @@ using System.IO;
 using FileWatcher.Classes.Logging;
 using System.Security.Cryptography;
 
+using System.Security.Principal;
+
 namespace FileWatcher.Classes.FileSystem
 {
     class FIleOperations
@@ -88,5 +90,23 @@ namespace FileWatcher.Classes.FileSystem
             return !Directory.EnumerateFileSystemEntries(path).Any();
         }
 
+        /// <summary>
+        /// Diese Methode gibt den Benutzer einer Datei zurück
+        /// </summary>
+        /// <param name="Filename"></param>
+        /// <returns></returns>
+        public string GetOwnerofFile ( string Filename)
+        {
+            try
+            {
+                FileInfo info = new FileInfo(Filename);
+                var owner = info.GetAccessControl().GetOwner(typeof(NTAccount));
+                return owner.ToString();
+            }
+            catch ( Exception ex)
+            {
+                return "FEHLER!";
+            }
+        }
     }
 }
