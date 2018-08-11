@@ -71,7 +71,8 @@ namespace FileWatcher
                             File.Delete(files);
                         }
 
-                        MessageBox.Show(" Backup der Dateien ist abgeschlossen! \tSie finden diese nun unter: " + pfad, "Backupvorgang abgeschlossen!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show(" Backup der Dateien ist abgeschlossen! \r\n " +
+                            "  Sie finden diese nun unter: " + pfad, "Backupvorgang abgeschlossen!", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     }
                 }
@@ -86,7 +87,7 @@ namespace FileWatcher
             }
             catch ( Exception ex)
             {
-
+                log._eLogger(ex);
             }
         }
     }

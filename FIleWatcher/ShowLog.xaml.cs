@@ -82,6 +82,7 @@ namespace FileWatcher
             catch (Exception ex)
             {
                 Log.ExLogger(ex);
+                MessageBox.Show("entires.log wurde nicht gefunden!", "Datei wurde nicht gefunden", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -121,6 +122,7 @@ namespace FileWatcher
             catch (Exception ex)
             {
                 Log.ExLogger(ex);
+                MessageBox.Show("Konnte keine Log Datei finden!", "Log Datei nicht vorhanden", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

@@ -51,3 +51,11 @@ FIleWatcher/bin/Debug/.vs/FileWatcher/v15/.suo
 *.csproj
 *.user
 *.exe
+*.ide-wal
+*.lock
+*.ide
+*.ide-shm
+*.ide
+*.cache
+*.Cache
+FIleWatcher/obj/Debug/FileWatcher.csproj.GenerateResource.Cache
