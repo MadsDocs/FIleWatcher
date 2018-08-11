@@ -51,3 +51,6 @@ FIleWatcher/bin/Debug/.vs/FileWatcher/v15/.suo
 *.csproj
 *.user
 *.ide-wal
+*.lock
+*.ide
+*.ide-shm
