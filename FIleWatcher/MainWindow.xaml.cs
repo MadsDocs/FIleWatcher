@@ -40,7 +40,6 @@ namespace FileWatcher
         private Logger logger = new Logger();
         private static Logger log = new Logger();
         public List<String> gDrives = new List<string>();
-        //static Classes.Database.DBCreate dbc = new Classes.Database.DBCreate();
 
         public MainWindow()
         {
@@ -67,41 +66,50 @@ namespace FileWatcher
         {
             try
             {
-                string path = cmb_festplatten.SelectedItem.ToString();
-                lbl_Messages.Visibility = Visibility.Visible;
-                lbl_Messages.Content = "Überwachung gestartet!";
-
-                if (path == string.Empty)
+                //Check if the Logger Dir is empty!
+                string loggerDir = FIleOperations.getLoggerDir();
+                if (loggerDir == string.Empty)
                 {
-                    
+                    MessageBox.Show("Konnte keinen Log Ordner finden! Bitte einmal SetPath ausführen!", "Logger Dir nicht gefunden!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
-                    fsw.Path = path;
-                    fsw.IncludeSubdirectories = true;
-                    fsw.Filter = "*.*";
-                    
-                    
-                    fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-                    
-                    if (fsw.EnableRaisingEvents == false)
+                    string path = cmb_festplatten.SelectedItem.ToString();
+                    lbl_Messages.Visibility = Visibility.Visible;
+                    lbl_Messages.Content = "Überwachung gestartet!";
+
+                    if (path == string.Empty)
                     {
-                        try
-                        {
-                            fsw.EnableRaisingEvents = true;
-                        }
-                        catch (Exception ex)
-                        {
-                            behandlung.DisplayError(ex);
-                        }
+
                     }
+                    else
+                    {
+                        fsw.Path = path;
+                        fsw.IncludeSubdirectories = true;
+                        fsw.Filter = "*.*";
 
 
-                    fsw.Changed += Fsw_Changed;
-                    fsw.Created += Fsw_Created;
-                    fsw.Renamed += Fsw_Renamed;
-                    fsw.Deleted += Fsw_Deleted;
-                    
+                        fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+
+                        if (fsw.EnableRaisingEvents == false)
+                        {
+                            try
+                            {
+                                fsw.EnableRaisingEvents = true;
+                            }
+                            catch (Exception ex)
+                            {
+                                behandlung.DisplayError(ex);
+                            }
+                        }
+
+
+                        fsw.Changed += Fsw_Changed;
+                        fsw.Created += Fsw_Created;
+                        fsw.Renamed += Fsw_Renamed;
+                        fsw.Deleted += Fsw_Deleted;
+
+                    }
                 }
 
                 
@@ -361,7 +369,7 @@ namespace FileWatcher
             try
             {
                 var item = lstview_anzeige.SelectedItems[0];
-                //MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
                 
 
 

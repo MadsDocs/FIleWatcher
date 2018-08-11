@@ -25,7 +25,6 @@ C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.e
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.pdb
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\bin\Debug\FileWatcher.exe
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\bin\Debug\FileWatcher.pdb
-C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.csprojResolveAssemblyReference.cache
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Errorbehandlung.g.cs
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\MainWindow.g.cs
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\SetPath.g.cs
@@ -47,3 +46,4 @@ C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Stats.g.cs
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Stats.baml
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Logs_Bereinigung.g.cs
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Logs_Bereinigung.baml
+C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.csprojAssemblyReference.cache

@@ -52,6 +52,7 @@ namespace FileWatcher
                     StreamReader reader = new StreamReader(path + @"\entries.log");
 
                     lstbx_show.Items.Clear();
+                    
                     while ((line = reader.ReadLine()) != null)
                     {
                         counter++;
