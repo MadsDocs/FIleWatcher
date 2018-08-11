@@ -50,3 +50,4 @@ FIleWatcher/bin/Debug/.vs/FileWatcher/v15/.suo
 *.log
 *.csproj
 *.user
+*.ide-wal
