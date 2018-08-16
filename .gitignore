@@ -60,3 +60,10 @@ FIleWatcher/bin/Debug/.vs/FileWatcher/v15/.suo
 FIleWatcher/bin/Debug/FIleWatcher.pdb
 FIleWatcher/bin/Debug/FIleWatcher.exe
 *.log
+*.resources
+.vs/FIleWatcher/v14/.suo
+.vs/FIleWatcher/v15/.suo
+*.pdb
+FIleWatcher/obj/Debug/MainWindow.g.i.cs
+FIleWatcher/obj/Debug/MainWindow.g.cs
+FIleWatcher/obj/Debug/MainWindow.baml

@@ -380,11 +380,22 @@ namespace FileWatcher
                 {
                     if (d.IsReady)
                     {
-                        cmb_festplatten.Items.Add(d);
+                        if ( d.DriveType == DriveType.CDRom)
+                        {
+                            // Wir ignorieren einfach mal jegliche DVD Drives...
+                            logger._wLogger(" DVD Drive found... aborting!");
+                            
+                        }
+                        else
+                        {
+                            cmb_festplatten.Items.Add(d + d.VolumeLabel);
+                        }
+                        
                     }
                     else
                     {
-
+                        logger._wLogger(" No ready Drives found... aborting...");
+                        MessageBox.Show("Es wurden keine Festplatten gefunden die angezeigt werden können!", "", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
 
                 }
