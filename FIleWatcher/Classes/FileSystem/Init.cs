@@ -89,8 +89,7 @@ namespace FileWatcher.Classes.FileSystem
                 {
                     if ( currdir == @"C:\Users\mario\documents\visual studio 2015\Projects\FileWatcher\FileWatcher\bin\Debug")
                     {
-                        //DEBUG
-                        log._wLogger("DEBUGGING AKTIV!");
+
                     }
                     else
                     {

@@ -417,11 +417,9 @@ namespace FileWatcher
         {
             try
             {
+                ///TODO: Implment a better Design to Show Information...
                 var item = lstview_anzeige.SelectedItems[0];
                 MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
-                
-
-
             }
             catch (Exception ex)
             {
@@ -485,15 +483,18 @@ namespace FileWatcher
             sLog.Show();
         }
 
-        private void btn_instance_Click(object sender, RoutedEventArgs e)
-        {
-            Instanz.StartNewInstanz();
-        }
-
         private void lbl_ordner_clean_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Logs_Bereinigung logs_Bereinigung = new Logs_Bereinigung();
             logs_Bereinigung.ShowDialog();
+        }
+
+        private void lbl_ShowChangelog_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Changelog change = new Changelog();
+            change.wb_showchangelog.Navigate("https://themadbrainz.net/FileWatcher/Changelog.txt");
+            change.ShowDialog();
+           
         }
     }
 }
