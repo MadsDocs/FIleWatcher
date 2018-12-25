@@ -5,9 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FileWatcher"
         mc:Ignorable="d"
-        Title="Changelog" Height="800" Width="1250" Initialized="Window_Initialized">
+        Title="Changelog" Height="1000" Width="1000" Initialized="Window_Initialized">
     <Grid>
-        <WebBrowser Name="wb_showchangelog" HorizontalAlignment="Left" Height="769" VerticalAlignment="Top" Width="1242"/>
-
+        <WebBrowser Name="webBrowser_changelog" HorizontalAlignment="Left" Height="949" Margin="10,10,0,0" VerticalAlignment="Top" Width="972"/>
     </Grid>
 </Window>

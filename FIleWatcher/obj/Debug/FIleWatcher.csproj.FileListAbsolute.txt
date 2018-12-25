@@ -47,3 +47,5 @@ C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Stats.baml
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Logs_Bereinigung.g.cs
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Logs_Bereinigung.baml
 C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.csprojAssemblyReference.cache
+C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Changelog.g.cs
+C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Changelog.baml

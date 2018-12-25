@@ -10,6 +10,6 @@ namespace FileWatcher.Classes
     {
         public static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         public static int max_length = 260;
-
+        public bool emptydir = false;
     }
 }

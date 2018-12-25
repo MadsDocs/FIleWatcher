@@ -34,13 +34,14 @@ namespace FileWatcher
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static int counter = 0;
-        public static FileSystemWatcher fsw = new FileSystemWatcher();
+        private static int counter = 0;
+        private static FileSystemWatcher fsw = new FileSystemWatcher();
         private Errorbehandlung behandlung = new Errorbehandlung();
+        private Classes.Statics st;
         private Logger logger = new Logger();
         private static Logger log = new Logger();
         private static FIleOperations fo = new FIleOperations();
-        public List<String> gDrives = new List<string>();
+        private List<String> gDrives = new List<string>();
 
         public MainWindow()
         {
@@ -49,8 +50,7 @@ namespace FileWatcher
             windows.ResizeMode = ResizeMode.CanMinimize;
             Init inti = new Init();
             inti._Init();
-            string filewatcherversion = inti.ReadVersion();
-            lbl_fwversion.Content = "Installierte Version: "  + filewatcherversion;
+            lbl_fwversion.Content = "Installierte Version: " + inti.Fwversion;
             lbl_Messages.Visibility = Visibility.Hidden;
             lbl_ordner.Content = "LogOrdner: " + FIleOperations.getLoggerDir(); 
 
@@ -74,6 +74,7 @@ namespace FileWatcher
                 if (loggerDir == string.Empty)
                 {
                     MessageBox.Show("Konnte keinen Log Ordner finden! Bitte einmal SetPath ausführen!", "Logger Dir nicht gefunden!", MessageBoxButton.OK, MessageBoxImage.Error);
+                  
                 }
                 else
                 {
@@ -251,7 +252,7 @@ namespace FileWatcher
             }
         }
 
-        void DisplayFiles ( WatcherChangeTypes watcherTypes, string name, string oldname = null)
+        void DisplayFiles ( WatcherChangeTypes watcherTypes, string FileName, string oldname = null)
         {
 
             Logger logger = new Classes.Logging.Logger();
@@ -260,31 +261,31 @@ namespace FileWatcher
             {
                 if (watcherTypes == WatcherChangeTypes.Changed)
                 {
-                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, name, watcherTypes.ToString()), watcherTypes); }));
+                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes); }));
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
-                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { log.LogEntrys(name, DateTime.Now, watcherTypes); }));
+                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
                 }
                 else if (watcherTypes == WatcherChangeTypes.Created)
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, name, watcherTypes.ToString()), watcherTypes); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(name, DateTime.Now, watcherTypes); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
                 }
                 else if (watcherTypes == WatcherChangeTypes.Deleted)
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, name, watcherTypes.ToString()), watcherTypes); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(name, DateTime.Now, watcherTypes); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
                 }
                 else if (watcherTypes == WatcherChangeTypes.Renamed)
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, name, watcherTypes.ToString()), watcherTypes); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(name, DateTime.Now, watcherTypes); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
                 }
             }
             catch (Exception ex)
@@ -491,10 +492,8 @@ namespace FileWatcher
 
         private void lbl_ShowChangelog_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Changelog change = new Changelog();
-            change.wb_showchangelog.Navigate("https://themadbrainz.net/FileWatcher/Changelog.txt");
-            change.ShowDialog();
-           
+            Changelog log = new Changelog();
+            log.ShowDialog();
         }
     }
 }

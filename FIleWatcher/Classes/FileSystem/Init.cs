@@ -25,11 +25,13 @@ namespace FileWatcher.Classes.FileSystem
         private static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static string os;
         private static string currdir;
-        public static string eversion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
 
         public static bool is_Home = false;
 
         private static Logger log = new Logger();
+
+        public string Fwversion { get => ReadVersion(); }
 
         public void _Init()
         {
@@ -93,10 +95,11 @@ namespace FileWatcher.Classes.FileSystem
                     }
                     else
                     {
+                        string fwversion = ReadVersion();
                         RegistryKey key;
                         key = Registry.CurrentUser.CreateSubKey("FileWatcher");
                         key.SetValue("Dir", currdir);
-                        key.SetValue("Version", eversion);
+                        key.SetValue("Version", fwversion);
                         key.Close();
                     }
                 }
@@ -122,7 +125,7 @@ namespace FileWatcher.Classes.FileSystem
             }
         }
 
-        public string ReadVersion ()
+        private string ReadVersion ()
         {
             try
             {
