@@ -127,6 +127,7 @@ namespace FileWatcher.Classes.FileSystem
 
         public string ReadVersion ()
         {
+            //BLA
             try
             {
                 RegistryKey version;
