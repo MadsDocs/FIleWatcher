@@ -125,7 +125,7 @@ namespace FileWatcher.Classes.FileSystem
             }
         }
 
-        private string ReadVersion ()
+        public string ReadVersion ()
         {
             try
             {

@@ -18,7 +18,6 @@ using FileWatcher;
 using FileWatcher.Classes.Logging;
 
 using FileWatcher.Classes;
-using System.IO;
 
 namespace FileWatcher
 {
@@ -33,16 +32,20 @@ namespace FileWatcher
         public SetPath()
         {
             Classes.FileSystem.Init init = new Classes.FileSystem.Init();
+            Classes.Statics st = new Statics();
 
             InitializeComponent();
             string helping = " Dieser Dialog soll Ihnen helfen ein Verzeichnis für den FileWatcher \r\n zu erstellen, damit dieser gefundene Einträge in eine Datei \r\n speichern kann!";
-            string version = " Installierte Version: " + init.ReadVersion();
+            
 
             txtbl_help.Content = helping;
-            lbl_version.Content = version;
+            lbl_version.Content = init.Fwversion;
+
 
             if (File.Exists(Statics.appdata + @"\FileWatcher\save"))
                 MessageBox.Show(@" Log Ordner wurde eingerichtet! Sollten Sie den Ort wechseln wollten, können Sie einfach die save Datei unter %appdata%\save editieren!", "Log Ordner wurde eingerichtet", MessageBoxButton.OK, MessageBoxImage.Error);
+
+
 
 
         }

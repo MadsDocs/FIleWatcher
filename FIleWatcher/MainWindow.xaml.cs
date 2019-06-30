@@ -145,7 +145,7 @@ namespace FileWatcher
                     }
                     else
                     {
-                        DisplayFiles(WatcherChangeTypes.Deleted, e.Name);
+                        DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
                         counter++;
                     }
 
@@ -177,7 +177,7 @@ namespace FileWatcher
                     }
                     else
                     {
-                        DisplayFiles(WatcherChangeTypes.Renamed, e.FullPath);
+                        DisplayFiles(WatcherChangeTypes.Renamed, e.FullPath, owner);
                         counter++;
                     }
                    
@@ -208,7 +208,7 @@ namespace FileWatcher
                     }
                     else
                     {
-                        DisplayFiles(WatcherChangeTypes.Created, e.FullPath);
+                        DisplayFiles(WatcherChangeTypes.Created, e.FullPath, owner);
                         counter++;
                     }
                 }
@@ -240,7 +240,7 @@ namespace FileWatcher
                     }
                     else
                     {
-                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath);
+                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
                         counter++;
                     }
                 }
@@ -252,7 +252,7 @@ namespace FileWatcher
             }
         }
 
-        void DisplayFiles ( WatcherChangeTypes watcherTypes, string FileName, string oldname = null)
+        void DisplayFiles ( WatcherChangeTypes watcherTypes, string FileName, string owner, string oldname = null)
         {
 
             Logger logger = new Classes.Logging.Logger();
@@ -261,28 +261,28 @@ namespace FileWatcher
             {
                 if (watcherTypes == WatcherChangeTypes.Changed)
                 {
-                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes); }));
-                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
-                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
-                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes, owner); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
                 }
                 else if (watcherTypes == WatcherChangeTypes.Created)
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes,owner); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
                 }
                 else if (watcherTypes == WatcherChangeTypes.Deleted)
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes,owner); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
                 }
                 else if (watcherTypes == WatcherChangeTypes.Renamed)
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes); }));
+                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes,owner); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
@@ -294,7 +294,7 @@ namespace FileWatcher
             }
         }
 
-        public void AddtoList(string text, WatcherChangeTypes types)
+        public void AddtoList(string text, WatcherChangeTypes types, string owner)
         {
             switch (types)
             {
