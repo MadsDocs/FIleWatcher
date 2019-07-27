@@ -37,11 +37,12 @@ namespace FileWatcher
         private static int counter = 0;
         private static FileSystemWatcher fsw = new FileSystemWatcher();
         private Errorbehandlung behandlung = new Errorbehandlung();
-        private Classes.Statics st;
+        private readonly Classes.Statics st;
         private Logger logger = new Logger();
         private static Logger log = new Logger();
         private static FIleOperations fo = new FIleOperations();
         private List<String> gDrives = new List<string>();
+        private static string LoggerDirPath;
 
         public MainWindow()
         {
@@ -52,7 +53,18 @@ namespace FileWatcher
             inti._Init();
             lbl_fwversion.Content = "Installierte Version: " + inti.Fwversion;
             lbl_Messages.Visibility = Visibility.Hidden;
-            lbl_ordner.Content = "LogOrdner: " + FIleOperations.getLoggerDir(); 
+
+            try
+            {
+                lbl_ordner.Content = "LogOrdner: " + FIleOperations.getLoggerDir();
+                LoggerDirPath = FIleOperations.getLoggerDir();
+            }
+            catch ( Exception ex )
+            {
+                MessageBox.Show("Konnte lbl_ordner_content nicht binden!", "getLoggerDir ist null", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(-1);
+            }
+             
 
             if ( File.Exists (Classes.Statics.appdata + @"\FileWatcher\save"))
             {
@@ -70,8 +82,8 @@ namespace FileWatcher
             try
             {
                 //Check if the Logger Dir is empty!
-                string loggerDir = FIleOperations.getLoggerDir();
-                if (loggerDir == string.Empty)
+               
+                if (LoggerDirPath == string.Empty)
                 {
                     MessageBox.Show("Konnte keinen Log Ordner finden! Bitte einmal SetPath ausführen!", "Logger Dir nicht gefunden!", MessageBoxButton.OK, MessageBoxImage.Error);
                   
@@ -84,7 +96,7 @@ namespace FileWatcher
 
                     if (path == string.Empty)
                     {
-
+                        logger._wLogger("Pfad is empty, skipping..");
                     }
                     else
                     {
