@@ -94,7 +94,7 @@ namespace FileWatcher
                     string path = cmb_festplatten.SelectedItem.ToString();
                     string trimmedpath = path.Substring(0,3);
 
-                    MessageBox.Show(trimmedpath);
+                    //MessageBox.Show(trimmedpath);
 
                     lbl_Messages.Visibility = Visibility.Visible;
                     lbl_Messages.Content = "Überwachung gestartet!";

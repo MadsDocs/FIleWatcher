@@ -98,7 +98,7 @@ namespace FileWatcher.Classes.FileSystem
                     {
                         string fwversion = ReadVersion();
 
-                        MessageBox.Show(fwversion);
+                        //MessageBox.Show(fwversion);
 
                         if (string.IsNullOrEmpty(fwversion))
                         {
