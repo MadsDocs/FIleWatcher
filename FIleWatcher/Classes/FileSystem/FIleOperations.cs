@@ -12,12 +12,17 @@ using FileWatcher.Classes.Logging;
 using System.Security.Cryptography;
 
 using System.Security.Principal;
+using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace FileWatcher.Classes.FileSystem
 {
     class FIleOperations
     {
         private static Logger log = new Logger();
+        private static string appdata = Classes.FileSystem.Init.appdata;
+
+
 
         public static string getFileExt( string path )
         {
@@ -37,10 +42,27 @@ namespace FileWatcher.Classes.FileSystem
         {
             try
             {
-                StreamReader loggerReader = new StreamReader(Classes.Statics.appdata + @"\FileWatcher\save");
+                StreamReader loggerReader = new StreamReader(appdata + @"\FileWatcher\save");
                 string content = loggerReader.ReadToEnd();
 
-                return content;
+                if (!Directory.Exists(content))
+                {
+                    DialogResult result = MessageBox.Show("Directory not found, do you want to edit the save File?", "Directory not found", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        Process.Start("notepad.exe", appdata + @"\FileWatcher\save");
+                        return "";
+                    }
+                    else
+                    {
+                        MessageBox.Show(@"To continue with the Programm please edit the save File under %appdata%\FileWatcher\save", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Environment.Exit(-1);
+                        return "";
+                    }
+                }
+                else
+                    return content;
             }
             catch ( Exception ex )
             {

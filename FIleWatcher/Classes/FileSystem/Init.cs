@@ -22,9 +22,10 @@ namespace FileWatcher.Classes.FileSystem
 
     class Init
     {
-        private static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static string os;
         private static string currdir;
+        private bool isRegistrySet = false;
 
 
         public static bool is_Home = false;
@@ -96,11 +97,28 @@ namespace FileWatcher.Classes.FileSystem
                     else
                     {
                         string fwversion = ReadVersion();
-                        RegistryKey key;
-                        key = Registry.CurrentUser.CreateSubKey("FileWatcher");
-                        key.SetValue("Dir", currdir);
-                        key.SetValue("Version", fwversion);
-                        key.Close();
+
+                        MessageBox.Show(fwversion);
+
+                        if (string.IsNullOrEmpty(fwversion))
+                        {
+                            // Display a MessageBox... or do something with it, i do not really care :)
+                        }
+                        else
+                        {
+                            RegistryKey key;
+                            key = Registry.CurrentUser.CreateSubKey("FileWatcher");
+                            key.SetValue("Dir", currdir);
+                            key.SetValue("Version", fwversion);
+                            key.Close();
+
+                            isRegistrySet = true;
+
+
+
+                        }
+
+
                     }
                 }
                 catch ( Exception ex )

@@ -90,7 +90,12 @@ namespace FileWatcher
                 }
                 else
                 {
+
                     string path = cmb_festplatten.SelectedItem.ToString();
+                    string trimmedpath = path.Substring(0,3);
+
+                    MessageBox.Show(trimmedpath);
+
                     lbl_Messages.Visibility = Visibility.Visible;
                     lbl_Messages.Content = "Überwachung gestartet!";
 
@@ -100,7 +105,7 @@ namespace FileWatcher
                     }
                     else
                     {
-                        fsw.Path = path;
+                        fsw.Path = trimmedpath;
                         fsw.IncludeSubdirectories = true;
                         fsw.Filter = "*.*";
 
