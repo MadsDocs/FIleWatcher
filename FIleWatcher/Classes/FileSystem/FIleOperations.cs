@@ -66,7 +66,7 @@ namespace FileWatcher.Classes.FileSystem
             }
             catch ( Exception ex )
             {
-                return " Cant find the save File!";
+                return MessageBox.Show(ex.Message + ex.StackTrace, "Can´t find SAVE FILE", MessageBoxButtons.OK, MessageBoxIcon.Error).ToString();
             }
         }
 
@@ -84,6 +84,7 @@ namespace FileWatcher.Classes.FileSystem
             }
             catch ( Exception ex )
             {
+                log.ExLogger(ex);
                 return false;
             }
         }
@@ -127,6 +128,7 @@ namespace FileWatcher.Classes.FileSystem
             }
             catch ( Exception ex)
             {
+                log.ExLogger(ex);
                 return "FEHLER!";
             }
         }

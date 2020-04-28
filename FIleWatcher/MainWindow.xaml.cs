@@ -61,7 +61,8 @@ namespace FileWatcher
             }
             catch ( Exception ex )
             {
-                MessageBox.Show("Konnte lbl_ordner_content nicht binden!", "getLoggerDir ist null", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(@"Konnte lbl_ordner_content nicht binden!" + "\t" + ex.Message, "getLoggerDir ist null", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 Environment.Exit(-1);
             }
              
@@ -93,8 +94,6 @@ namespace FileWatcher
 
                     string path = cmb_festplatten.SelectedItem.ToString();
                     string trimmedpath = path.Substring(0,3);
-
-                    //MessageBox.Show(trimmedpath);
 
                     lbl_Messages.Visibility = Visibility.Visible;
                     lbl_Messages.Content = "Überwachung gestartet!";
@@ -476,7 +475,7 @@ namespace FileWatcher
             }
             catch ( Exception ex)
             {
-
+                log.ExLogger(ex);
             }
             
         }
@@ -490,7 +489,7 @@ namespace FileWatcher
             }
             catch ( Exception ex)
             {
-
+                log.ExLogger(ex);
             }
             
         }

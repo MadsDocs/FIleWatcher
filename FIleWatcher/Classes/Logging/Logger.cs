@@ -77,7 +77,8 @@ namespace FileWatcher.Classes.Logging
             }
             catch ( Exception exe)
             {
-
+                MessageBox.Show(@"Can´t write into the Log File, please check the save file under %appdata%\FileWatcher\save" + "\t" + exe.Message + exe.StackTrace
+                                , "Error while Logging", MessageBoxButton.OK, MessageBoxImage.Error); ;
             }
         }
 

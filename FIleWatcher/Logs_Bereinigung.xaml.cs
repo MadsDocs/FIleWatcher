@@ -88,7 +88,7 @@ namespace FileWatcher
             }
             catch ( Exception ex)
             {
-
+                MessageBox.Show(ex.Message + ex.StackTrace);
             }
         }
     }
