@@ -17,6 +17,7 @@ using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 
 using FileWatcher.Classes.Logging;
+using FileWatcher.Classes.FileSystem;
 
 
 namespace FileWatcher
@@ -33,6 +34,8 @@ namespace FileWatcher
 
         private static FileSystemWatcher fsw = new FileSystemWatcher();
         private static Logger log = new Logger();
+        private int counter;
+        private FIleOperations ops = new FIleOperations();
 
         private void btn_Start_Click(object sender, RoutedEventArgs e)
         {
@@ -64,7 +67,8 @@ namespace FileWatcher
                   fsw.Renamed += Fsw_Renamed;
                   lbl_fehler.Content = "Überwachung gestartet";
 
-                 log.LogDirs(WatchDir);
+
+                ops.SaveDirHistory(WatchDir);
 
                     
                 
@@ -90,6 +94,7 @@ namespace FileWatcher
                 else
                 {
                     DisplayFiles(WatcherChangeTypes.Deleted, e.FullPath);
+                    counter++;
                 }
             }
             catch ( Exception ex)
@@ -112,6 +117,7 @@ namespace FileWatcher
                 else
                 {
                     DisplayFiles(WatcherChangeTypes.Deleted, e.FullPath);
+                    counter++;
                 }
             }
             catch (Exception ex)
@@ -134,6 +140,7 @@ namespace FileWatcher
                 else
                 {
                     DisplayFiles(WatcherChangeTypes.Deleted, e.FullPath);
+                    counter++;
                 }
             }
             catch (Exception ex)
@@ -155,6 +162,7 @@ namespace FileWatcher
                 else
                 {
                     DisplayFiles(WatcherChangeTypes.Deleted, e.FullPath);
+                    counter++;
                 }
             }
             catch (Exception ex)
@@ -172,24 +180,28 @@ namespace FileWatcher
                 {
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, name, wtypes.ToString()), wtypes); }));
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
+                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { log.LogDirEntrys(name, DateTime.Now, wtypes); }));
                 }
                 else if (wtypes == WatcherChangeTypes.Created)
                 {
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, name, wtypes.ToString()), wtypes); }));
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
+                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { log.LogDirEntrys(name, DateTime.Now, wtypes); }));
                 }
                 else if (wtypes == WatcherChangeTypes.Deleted)
                 {
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, name, wtypes.ToString()), wtypes); }));
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
+                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { log.LogDirEntrys(name, DateTime.Now, wtypes); }));
                 }
                 else if (wtypes == WatcherChangeTypes.Renamed)
                 {
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, name, wtypes.ToString()), wtypes); }));
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
+                    Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Send, new Action(() => { log.LogDirEntrys(name, DateTime.Now, wtypes); }));
                 }
             }
@@ -256,38 +268,58 @@ namespace FileWatcher
 
         }
 
+        void DisplayCounter()
+        {
+            lbl_dircounter.Visibility = Visibility.Visible;
+            lbl_dircounter.Content = "Dateizugriffe: " + counter;
+        }
+
+
         private void Window_Initialized(object sender, EventArgs e)
         {
             try
             {
-                if (!File.Exists(Logger.Path + @"\dirs.log"))
+                string line = "";
+                string loggerdir = FileWatcher.Classes.FileSystem.FIleOperations.getLoggerDir();
+
+                if ( loggerdir == string.Empty)
                 {
-                    log._wLogger(" Keine Directory Log Datei gefunden!");
+                    log._wLogger("LoggerDir not found");
                 }
                 else
                 {
-                    string line;
-                    StreamReader reader = new StreamReader(Logger.Path + @"\dirs.log");
+                    StreamReader readDirLog = new StreamReader(loggerdir + @"\dirhistory.log");
 
-                    while ((line = reader.ReadLine()) != null)
+                    while ((line = readDirLog.ReadLine()) != null)
                     {
-                        if (!cmb_lastdir.Items.Contains(line))
+                        if ( !cmb_lastdir.Items.Contains(line))
                         {
                             cmb_lastdir.Items.Add(line);
                         }
-
-
+                        else
+                        {
+                            log._wLogger("Tried to enter a Line that is already added!");
+                        }
                     }
-
-                    reader.Close();
-                    reader.Dispose();
                 }
+
             }
             catch ( Exception ex)
             {
                 log.ExLogger(ex);
             }
 
+        }
+
+        private void cmb_lastdir_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //var item = lstview_anzeige.SelectedItems[0];
+
+        }
+
+        private void btn_save_Click(object sender, RoutedEventArgs e)
+        {
+            txtbx_Dir.Text = cmb_lastdir.SelectedItem.ToString();
         }
     }
 }

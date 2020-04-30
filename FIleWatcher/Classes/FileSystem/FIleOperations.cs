@@ -21,6 +21,7 @@ namespace FileWatcher.Classes.FileSystem
     {
         private static Logger log = new Logger();
         private static string appdata = Classes.FileSystem.Init.appdata;
+        private StringBuilder dirWatcher = new StringBuilder();
 
 
 
@@ -132,5 +133,29 @@ namespace FileWatcher.Classes.FileSystem
                 return "FEHLER!";
             }
         }
+
+        public void SaveDirHistory (string path)
+        {
+            if ( path == string.Empty)
+            {
+                log._wLogger("No Path given!");
+            }
+            else
+            {
+                string loggerdir = getLoggerDir();
+
+                if (loggerdir == string.Empty)
+                {
+                    log._wLogger("No Path given!");
+                }
+                else
+                {
+                    dirWatcher.Append(path + "\r\n");
+                    File.AppendAllText(loggerdir + @"\dirhistory.log", dirWatcher.ToString());
+                }
+
+            }
+        }
+
     }
 }

@@ -19,6 +19,8 @@
         <TextBox x:Name="txtbx_Dir" HorizontalAlignment="Left" Height="23" Margin="10,275,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="347"/>
         <Label x:Name="lbl_fehler" Content="Label" HorizontalAlignment="Left" Margin="522,275,0,0" VerticalAlignment="Top" Width="150" Height="26"/>
         <ComboBox x:Name="cmb_lastdir" HorizontalAlignment="Left" Margin="10,303,0,0" VerticalAlignment="Top" Width="347"/>
+        <Label x:Name="lbl_dircounter" Content="Label" HorizontalAlignment="Left" Margin="522,301,0,0" VerticalAlignment="Top" Width="150"/>
+        <Button x:Name="btn_save" Content="Überwachen" HorizontalAlignment="Left" Margin="362,305,0,0" VerticalAlignment="Top" Width="88" RenderTransformOrigin="0.071,-0.904" Click="btn_save_Click"/>
 
     </Grid>
 </Window>
