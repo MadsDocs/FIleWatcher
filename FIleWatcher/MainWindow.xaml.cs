@@ -37,7 +37,7 @@ namespace FileWatcher
         private static int counter = 0;
         private static FileSystemWatcher fsw = new FileSystemWatcher();
         private Errorbehandlung behandlung = new Errorbehandlung();
-        private readonly Classes.Statics st;
+        //private readonly Classes.Statics st;
         private Logger logger = new Logger();
         private static Logger log = new Logger();
         private static FIleOperations fo = new FIleOperations();
@@ -149,7 +149,7 @@ namespace FileWatcher
             {
                 FileInfo info = new FileInfo(e.Name);
                 string owner = fo.GetOwnerofFile(e.Name);
-                if (info.Name == "entries.log" || info.Name == "log.log")
+                if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                 {
 
                 }
@@ -182,7 +182,7 @@ namespace FileWatcher
             {
                 FileInfo info = new FileInfo(e.Name);
                 string owner = fo.GetOwnerofFile(e.Name);
-                if (info.Name == "entries.log" || info.Name == "log.log")
+                if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                 {
                 }
                 else
@@ -213,7 +213,7 @@ namespace FileWatcher
                 string owner = fo.GetOwnerofFile(e.Name);
 
 
-                if (info.Name == "entries.log" || info.Name == "log.log" )
+                if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                 {
                 }
                 else
@@ -245,7 +245,7 @@ namespace FileWatcher
                 FileInfo info = new FileInfo(e.Name);
                 string owner = fo.GetOwnerofFile(e.Name);
 
-                if (info.Name == "entries.log" || info.Name == "log.log" )
+                if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                 {
                 }
                 else
@@ -403,6 +403,10 @@ namespace FileWatcher
                             logger._wLogger(" DVD Drive found... aborting!");
                             
                         }
+                        else if ( d.DriveType == DriveType.Unknown)
+                        {
+                            MessageBox.Show("DEBUG: UNKNOW DEVICE DETECTED!");
+                        }
                         else
                         {
                             cmb_festplatten.Items.Add(d + d.VolumeLabel);
@@ -411,8 +415,8 @@ namespace FileWatcher
                     }
                     else
                     {
-                        logger._wLogger(" No ready Drives found... aborting...");
-                        MessageBox.Show("Es wurden keine Festplatten gefunden die angezeigt werden können!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                       logger._wLogger(" No ready Drives found... aborting...");
+                       MessageBox.Show("Es wurden keine Festplatten gefunden die angezeigt werden können!", "", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
 
                 }

@@ -124,12 +124,28 @@ namespace FileWatcher.Classes.FileSystem
             try
             {
                 FileInfo info = new FileInfo(Filename);
-                var owner = info.GetAccessControl().GetOwner(typeof(NTAccount));
-                return owner.ToString();
+
+                string extenstion = info.Extension;
+                extenstion.ToLower();
+                switch (extenstion)
+                {
+                    case ".pf":
+                    case ".tmp":
+                    case ".lock":
+                    case "*.lock":
+                    case ".xml.lock":
+                    case "db-wal":
+                        log._wLogger("Hitting the Great Filter, arrrghhhhhh");
+                        return "Hitting Filter!";
+                    default:
+                        return "";
+                }
+
             }
             catch ( Exception ex)
             {
                 log.ExLogger(ex);
+                log._wLogger(Filename);
                 return "FEHLER!";
             }
         }

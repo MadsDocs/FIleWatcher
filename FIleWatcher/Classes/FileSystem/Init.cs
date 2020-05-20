@@ -25,7 +25,6 @@ namespace FileWatcher.Classes.FileSystem
         public static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static string os;
         private static string currdir;
-        private bool isRegistrySet = false;
 
 
         public static bool is_Home = false;
@@ -106,14 +105,6 @@ namespace FileWatcher.Classes.FileSystem
                         }
                         else
                         {
-                            RegistryKey key;
-                            key = Registry.CurrentUser.CreateSubKey("FileWatcher");
-                            key.SetValue("Dir", currdir);
-                            key.SetValue("Version", fwversion);
-                            key.Close();
-
-                            isRegistrySet = true;
-
 
 
                         }
@@ -145,24 +136,10 @@ namespace FileWatcher.Classes.FileSystem
 
         public string ReadVersion ()
         {
-            //BLA
             try
             {
-                RegistryKey version;
-                version = Registry.CurrentUser.OpenSubKey("FileWatcher");
-                version.GetValue("Version");
+                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-                if (version.ToString() == string.Empty)
-                {
-                    //Tja, dann ist wohl noch nie was in die Registry geschrieben worden!
-                    // Und wir werden wohl oder übel die Version über die Assembly auslesen müssen!
-                    return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                }
-                else
-                {
-                    string dVersion = version.GetValue("Version").ToString();
-                    return dVersion;
-                }
             }
             catch ( Exception ex)
             {

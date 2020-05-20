@@ -65,6 +65,7 @@ namespace FileWatcher
                   fsw.Created += Fsw_Created;
                   fsw.Deleted += Fsw_Deleted;
                   fsw.Renamed += Fsw_Renamed;
+                    
                   lbl_fehler.Content = "Überwachung gestartet";
 
 
