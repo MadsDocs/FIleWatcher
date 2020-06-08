@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\Filewatcher\FileWatcher\obj\Debug\
+F:\Filewatcher\FIleWatcher\obj\Release\
 FileWatcher
 none
 false
-DEBUG;TRACE
-F:\Filewatcher\FileWatcher\App.xaml
+TRACE
+F:\Filewatcher\FIleWatcher\App.xaml
 81730919236
 
-17-937553563
+16-1243232328
 18-618026137
 Changelog.xaml;DirectoryWatcher.xaml;Errorbehandlung.xaml;Logs_Bereinigung.xaml;MainWindow.xaml;SetPath.xaml;ShowLog.xaml;Stats.xaml;
 
-False
+True
 
