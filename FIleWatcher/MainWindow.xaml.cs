@@ -411,6 +411,12 @@ namespace FileWatcher
                         {
                             cmb_festplatten.Items.Add(d + d.VolumeLabel);
                         }
+
+                        if ( d.DriveType == DriveType.Network)
+                        {
+                            logger._wLogger("Network Drive found");
+                            cmb_festplatten.Items.Add(d + d.VolumeLabel);
+                        }
                         
                     }
                     else
