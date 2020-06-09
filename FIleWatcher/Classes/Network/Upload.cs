@@ -14,39 +14,46 @@ namespace FileWatcher.Classes.Network
 {
     class Upload
     {
-        public void UploadErrorLog ( string pathtoerror)
+        public void UploadErrorLog(string pathtoerror)
         {
             try
             {
-
-
-                FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://84.115.70.116");
-                request.Method = WebRequestMethods.Ftp.UploadFile;
-
-                request.Credentials = new NetworkCredential("upload", "a3hJDLdFIKsMILIpCQywFDjAc");
-                byte[] contents;
-                using (StreamReader errorlog = new StreamReader(pathtoerror))
+                if (pathtoerror == string.Empty)
                 {
-                    contents = Encoding.UTF8.GetBytes(errorlog.ReadToEnd());
+                    MessageBox.Show("Please specify the error.log!");
                 }
-
-                request.ContentLength = contents.Length;
-
-                using (Stream requeststream = request.GetRequestStream())
+                else
                 {
-                    requeststream.Write(contents, 0, contents.Length);
-                }
 
-                using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
-                {
-                    MessageBox.Show("error.log was successfully uploaded!");
+                    FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://84.115.70.116");
+                    request.Method = WebRequestMethods.Ftp.UploadFile;
+
+                    request.Credentials = new NetworkCredential("upload", "a3hJDLdFIKsMILIpCQywFDjAc");
+                    byte[] contents;
+                    using (StreamReader errorlog = new StreamReader(pathtoerror))
+                    {
+                        contents = Encoding.UTF8.GetBytes(errorlog.ReadToEnd());
+                    }
+
+                    request.ContentLength = contents.Length;
+
+                    using (Stream requeststream = request.GetRequestStream())
+                    {
+                        requeststream.Write(contents, 0, contents.Length);
+                    }
+
+                    using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+                    {
+                        MessageBox.Show("error.log was successfully uploaded!");
+                    }
                 }
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
                 Logger log = new Logger();
                 log._eLogger(ex);
             }
+        
 
 
         }
