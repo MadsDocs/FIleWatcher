@@ -521,5 +521,11 @@ namespace FileWatcher
             Changelog log = new Changelog();
             log.ShowDialog();
         }
+
+        private void ShowInfra(object sender, RoutedEventArgs e)
+        {
+            ShowInfra infra = new ShowInfra();
+            infra.Show();
+        }
     }
 }

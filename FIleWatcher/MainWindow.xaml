@@ -67,8 +67,9 @@
                         <Label Name="lbl_ShowChangelog" MouseDown="lbl_ShowChangelog_MouseDown">Show Changelog</Label>
                     </MenuItem>
                     <MenuItem Header=" Log Dateien anzeigen" Click="LoDa_Click">
-                        
+                                               
                     </MenuItem>
+                    <MenuItem Header="Infrastruktur Status anzeigen" Click="ShowInfra"></MenuItem>
                 </MenuItem>
             </MenuItem>
             <Separator></Separator>

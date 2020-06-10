@@ -11,7 +11,7 @@ namespace FileWatcher.Classes.Network
 {
     class infrachecker
     {
-        public void checkInfra()
+        public string checkInfra()
         {
             //Diese Methode soll checken ob alle Server verfügbar sind
             //Derzeit ist es genau ein Server (FTP) aber vl. werden es ja mal mehr...
@@ -19,7 +19,7 @@ namespace FileWatcher.Classes.Network
 
             try
             {
-                FtpWebRequest testrequest = (FtpWebRequest)WebRequest.Create("84.115.70.116");
+                FtpWebRequest testrequest = (FtpWebRequest)WebRequest.Create("ftp://84.115.70.116");
                 testrequest.Credentials = new NetworkCredential("", "");
                 testrequest.Method = WebRequestMethods.Ftp.ListDirectory;
 
@@ -27,18 +27,18 @@ namespace FileWatcher.Classes.Network
 
                 if ( response.StatusCode == FtpStatusCode.NeedLoginAccount)
                 {
-                    MessageBox.Show("FTP Server is up");
+                    return "FTP Server is up!";
                 }
                 else if ( response.StatusCode == FtpStatusCode.CantOpenData)
                 {
-                    MessageBox.Show("FTP Server is not up");
+                    return "FTP Server is not up!";
                 }
-                    
+                return "";
 
             }
             catch ( Exception ex)
             {
-
+                return "FTP Server is not up!";
             }
         }
     }
