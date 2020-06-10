@@ -105,12 +105,12 @@ namespace FileWatcher
                                         if (File.Exists(Classes.Statics.appdata + @"\FileWatcher\save"))
                                         {
                                             File.Delete(Classes.Statics.appdata + @"\FileWatcher\save");
-                                            File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad + @"\n");
+                                            File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad);
                                             Close();
                                         }
                                         else
                                         {
-                                            File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad + @"\n");
+                                            File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad);
                                             Close();
                                         }
                                     }
@@ -128,12 +128,12 @@ namespace FileWatcher
                                     if (File.Exists(Classes.Statics.appdata + @"\FileWatcher\save"))
                                     {
                                         File.Delete(Classes.Statics.appdata + @"\FileWatcher\save");
-                                        File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad + @"\n");
+                                        File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad);
                                         Close();
                                     }
                                     else
                                     {
-                                        File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad + @"\n");
+                                        File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad);
                                         Close();
                                     }
                                 }
