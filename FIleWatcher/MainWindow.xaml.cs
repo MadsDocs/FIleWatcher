@@ -252,7 +252,10 @@ namespace FileWatcher
                 {
                     if (owner == string.Empty)
                     {
-                        logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                        //logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                        logger._wLogger("Found Owner:" + owner);
+                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                        counter++;
                     }
                     else
                     {
@@ -395,34 +398,24 @@ namespace FileWatcher
 
                 foreach (var d in drives)
                 {
-                    if (d.IsReady)
+                    switch (d.DriveType)
                     {
-                        if ( d.DriveType == DriveType.CDRom)
-                        {
-                            // Wir ignorieren einfach mal jegliche DVD Drives...
-                            logger._wLogger(" DVD Drive found... aborting!");
-                            
-                        }
-                        else if ( d.DriveType == DriveType.Unknown)
-                        {
-                            MessageBox.Show("DEBUG: UNKNOW DEVICE DETECTED!");
-                        }
-                        else
-                        {
+                        case DriveType.CDRom:
+                            logger._wLogger("DVD / CD ROM found... aborting");
+                            break;
+                        case DriveType.Unknown:
+                            logger._wLogger("Unknown Drive found, aborting");
+                            break;
+                        case DriveType.Fixed:
                             cmb_festplatten.Items.Add(d + d.VolumeLabel);
-                        }
-
-                        if ( d.DriveType == DriveType.Network)
-                        {
-                            logger._wLogger("Network Drive found");
+                            break;
+                        case DriveType.Network:
                             cmb_festplatten.Items.Add(d + d.VolumeLabel);
-                        }
-                        
-                    }
-                    else
-                    {
-                       logger._wLogger(" No ready Drives found... aborting...");
-                       MessageBox.Show("Es wurden keine Festplatten gefunden die angezeigt werden können!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
+                        default:
+                            logger._wLogger(" No ready Drives found... aborting...");
+                            MessageBox.Show("Es wurden keine Festplatten gefunden die angezeigt werden können!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
                     }
 
                 }
