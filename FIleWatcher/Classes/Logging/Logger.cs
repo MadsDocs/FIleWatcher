@@ -34,9 +34,7 @@ namespace FileWatcher.Classes.Logging
             {
                 if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
                 {
-                    sb.Append(DateTime.Now.ToLongDateString() + "\t" + "<ROOT DIR NOT CREATED... MAYBE INSUFFIENT PERMISSIONS?");
-                    File.AppendAllText(currentdir + @"\log.log", sb.ToString());
-                    sb.Clear();
+                    MessageBox.Show("There is no FileWatcher Directory, please restart the FileWatcher, or create a new Direcotry under %appdata% named FileWatcher!", "No FileWatcher Directory", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 }
                 else
@@ -58,11 +56,7 @@ namespace FileWatcher.Classes.Logging
             {
                 if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
                 {
-                    error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.Message + "\r\n");
-                    error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.StackTrace + "\rn");
-
-                    File.AppendAllText(Statics.appdata + @"\FileWatcher\error.log", error.ToString() + "\r\n");
-                    error.Clear();
+                    MessageBox.Show("There is no FileWatcher Directory, please restart the FileWatcher, or create a new Direcotry under %appdata% named FileWatcher!", "No FileWatcher Directory", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
@@ -93,9 +87,7 @@ namespace FileWatcher.Classes.Logging
 
                 if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
                 {
-                    sb.Append(DateTime.Now.ToLongDateString() + "\t" + "<ROOT DIR NOT CREATED... MAYBE INSUFFIENT PERMISSIONS?");
-                    File.AppendAllText(currentdir + @"\log.log", sb.ToString());
-                    sb.Clear();
+                    MessageBox.Show("There is no FileWatcher Directory, please restart the FileWatcher, or create a new Direcotry under %appdata% named FileWatcher!", "No FileWatcher Directory", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
