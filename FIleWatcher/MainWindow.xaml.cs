@@ -414,7 +414,6 @@ namespace FileWatcher
                             break;
                         default:
                             logger._wLogger(" No ready Drives found... aborting...");
-                            MessageBox.Show("Es wurden keine Festplatten gefunden die angezeigt werden können!", "", MessageBoxButton.OK, MessageBoxImage.Error);
                             break;
                     }
 

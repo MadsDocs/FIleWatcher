@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 using System.Net;
 using System.Windows.Forms;
+using FileWatcher.Classes.Logging;
 
 namespace FileWatcher.Classes.Network
 {
     class infrachecker
     {
+        private Logger log = new Logger();
+
         public string checkInfra()
         {
             //Diese Methode soll checken ob alle Server verfügbar sind
@@ -38,6 +41,7 @@ namespace FileWatcher.Classes.Network
             }
             catch ( Exception ex)
             {
+                log._eLogger(ex);
                 return "FTP Server is not up!";
             }
         }
