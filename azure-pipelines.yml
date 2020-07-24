@@ -32,11 +32,8 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: UniversalPackages@0
+- task: PublishBuildArtifacts@1
   inputs:
-    command: 'publish'
-    publishDirectory: '$(Build.ArtifactStagingDirectory)'
-    feedsToUsePublish: 'internal'
-    vstsFeedPublish: '9c2d6d1f-bac8-43d1-a52c-a00b43b1de5a/fbcf8a38-23d5-4da2-8655-d5e0231a8fc3'
-    vstsFeedPackagePublish: 'FileWatcher'
-    versionOption: 'patch'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'FileWatcher'
+    publishLocation: 'Container'
