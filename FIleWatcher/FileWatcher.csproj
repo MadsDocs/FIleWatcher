@@ -83,8 +83,8 @@
     <Compile Include="Changelog.xaml.cs">
       <DependentUpon>Changelog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\FW_Network\infrachecker.cs" />
-    <Compile Include="Classes\FW_Network\Upload.cs" />
+    <Compile Include="Classes\CORE\FW_Network\infrachecker.cs" />
+    <Compile Include="Classes\CORE\FW_Network\Upload.cs" />
     <Compile Include="Classes\Statics.cs" />
     <Compile Include="DirectoryWatcher.xaml.cs">
       <DependentUpon>DirectoryWatcher.xaml</DependentUpon>
@@ -128,9 +128,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\FileSystem\FIleOperations.cs" />
-    <Compile Include="Classes\FileSystem\Init.cs" />
-    <Compile Include="Classes\Logging\Logger.cs" />
+    <Compile Include="Classes\CORE\FileSystem\FIleOperations.cs" />
+    <Compile Include="Classes\CORE\FileSystem\Init.cs" />
+    <Compile Include="Classes\CORE\Logging\Logger.cs" />
     <Compile Include="Errorbehandlung.xaml.cs">
       <DependentUpon>Errorbehandlung.xaml</DependentUpon>
     </Compile>
