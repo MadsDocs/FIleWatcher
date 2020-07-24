@@ -134,3 +134,5 @@ F:\Filewatcher\FileWatcher\obj\Debug\FileWatcher.Properties.Resources.resources
 F:\Filewatcher\FileWatcher\obj\Debug\FileWatcher.csproj.GenerateResource.cache
 F:\Filewatcher\FileWatcher\obj\Debug\FileWatcher.exe
 F:\Filewatcher\FileWatcher\obj\Debug\FileWatcher.pdb
+F:\Filewatcher\FileWatcher\obj\Debug\ShowInfra.g.cs
+F:\Filewatcher\FileWatcher\obj\Debug\ShowInfra.baml
