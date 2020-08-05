@@ -60,6 +60,7 @@ namespace FileWatcher
 
                         lbl_counter.Content = "Counter ( Log ) : " + counter;
                     }
+                    reader.Dispose();
                     reader.Close();
                 }
             }
@@ -90,6 +91,7 @@ namespace FileWatcher
                         counter++;
                         lstbx_show.Items.Add(line);
                     }
+                    reader.Dispose();
                     reader.Close();
                     lbl_counter.Content = "Counter ( Log ) : " + counter;
                 }
@@ -106,15 +108,26 @@ namespace FileWatcher
         private void btn_update_Click(object sender, RoutedEventArgs e)
         {
             string path = Logger.Path;
-
-
+            
             try
             {
 
+                if (File.Exists((path + @"\entries.log.tmp")))
+                {
+                    File.Delete(path + @"\entries.log.tmp");
+                    File.Copy(path + @"\entries.log", path + @"\entries.log.tmp");
+
+                }
+                else
+                {
+                    File.Copy(path + @"\entries.log", path + @"\entries.log.tmp");
+                }
+
                 if (rdb_showEntry.IsChecked == true)
                 {
+                    lstbx_show.Items.Refresh();
                     int counter = 0;
-                    string line;
+                    string line;    
                     
                     if ( path == string.Empty)
                     {
@@ -122,18 +135,22 @@ namespace FileWatcher
                     }
                     else
                     {
-
-                        StreamReader reader = new StreamReader(path);
+                        StreamReader reader = new StreamReader(path + @"\entries.log.tmp");
+                        
 
                         lstbx_show.Items.Clear();
                         while ((line = reader.ReadLine()) != null)
                         {
                             counter++;
-                            lstbx_show.Items.Add(" ( " + counter + " ) " + line);
+                            lstbx_show.Items.Add(line);
 
                             lbl_counter.Content = "Counter ( Log ) : " + counter;
                         }
+                        reader.Dispose();
                         reader.Close();
+
+                        File.Delete(path + @"\entries.log.tmp");
+
 
                     }
 
@@ -159,6 +176,7 @@ namespace FileWatcher
 
                             lbl_counter.Content = "Counter ( Log ) : " + counter;
                         }
+                        reader.Dispose();
                         reader.Close();
                     }
 
