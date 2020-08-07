@@ -1,29 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 using System.IO;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
-using System.Reflection;
 
 using FileWatcher.Classes.Logging;
 using FileWatcher.Classes.FileSystem;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Threading;
-using System.Net;
 using System.Diagnostics;
 
 namespace FileWatcher
@@ -35,13 +21,12 @@ namespace FileWatcher
     public partial class MainWindow : Window
     {
         private static int counter = 0;
-        private static FileSystemWatcher fsw = new FileSystemWatcher();
+        public static FileSystemWatcher fsw = new FileSystemWatcher();
         private Errorbehandlung behandlung = new Errorbehandlung();
         //private readonly Classes.Statics st;
         private Logger logger = new Logger();
         private static Logger log = new Logger();
         private static FIleOperations fo = new FIleOperations();
-        private List<String> gDrives = new List<string>();
         private static string LoggerDirPath;
 
         public MainWindow()
@@ -74,6 +59,10 @@ namespace FileWatcher
 
                 SetPathMenu.IsEnabled = false;
             }
+
+            ShowLog logs = new ShowLog();
+            logs.Show();
+            logs.rdb_showEntry.IsChecked = true;
 
 
         }
@@ -315,22 +304,24 @@ namespace FileWatcher
 
         public void AddtoList(string text, WatcherChangeTypes types, string owner)
         {
+            string addlist = text + owner;
+
             switch (types)
             {
                 case WatcherChangeTypes.Changed:
-                    lstview_anzeige.Items.Add(text);
+                    lstview_anzeige.Items.Add(addlist);
                     break;
                 case WatcherChangeTypes.Created:
-                    lstview_anzeige.Items.Add(text);
+                    lstview_anzeige.Items.Add(addlist);
                     break;
                 case WatcherChangeTypes.Deleted:
-                    lstview_anzeige.Items.Add(text);
+                    lstview_anzeige.Items.Add(addlist);
                     break;
                 case WatcherChangeTypes.Renamed:
-                    lstview_anzeige.Items.Add(text);
+                    lstview_anzeige.Items.Add(addlist);
                     break;
                 default:
-                    lstview_anzeige.Items.Add(text);
+                    lstview_anzeige.Items.Add(addlist);
                     break;
             }
         }
@@ -394,7 +385,7 @@ namespace FileWatcher
             {
                 //Alle verfügbaren Festplatten herausfinden, in eine Liste speichern
                 DriveInfo[] drives = DriveInfo.GetDrives();
-                
+                int counter = 0;
 
                 foreach (var d in drives)
                 {
@@ -402,15 +393,19 @@ namespace FileWatcher
                     {
                         case DriveType.CDRom:
                             logger._wLogger("DVD / CD ROM found... aborting");
+                            counter++;
                             break;
                         case DriveType.Unknown:
                             logger._wLogger("Unknown Drive found, aborting");
+                            counter++;
                             break;
                         case DriveType.Fixed:
                             cmb_festplatten.Items.Add(d + d.VolumeLabel);
+                            counter++;
                             break;
                         case DriveType.Network:
                             cmb_festplatten.Items.Add(d + d.VolumeLabel);
+                            counter++;
                             break;
                         default:
                             logger._wLogger(" No ready Drives found... aborting...");
@@ -418,6 +413,7 @@ namespace FileWatcher
                     }
 
                 }
+                log._wLogger("Found " + counter + " Drives....");
             }
             catch (Exception ex)
             {
