@@ -4,15 +4,15 @@
 winexe
 C#
 .cs
-F:\Filewatcher\FileWatcher\obj\Debug\
+D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\
 FileWatcher
 none
 false
 DEBUG;TRACE
-F:\Filewatcher\FileWatcher\App.xaml
+D:\FileWatcher_BITBUCKET\FileWatcher\App.xaml
 9192355493
 
-20-151656721
+20-1211905270
 18-618026137
 Changelog.xaml;DirectoryWatcher.xaml;Errorbehandlung.xaml;Logs_Bereinigung.xaml;MainWindow.xaml;SetPath.xaml;ShowInfra.xaml;ShowLog.xaml;Stats.xaml;
 

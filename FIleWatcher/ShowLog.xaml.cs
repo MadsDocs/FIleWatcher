@@ -17,6 +17,9 @@ using System.Diagnostics;
 
 using FileWatcher.Classes.Logging;
 using FileWatcher.Classes;
+using FileWatcher.Classes.FileSystem;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace FileWatcher
 {
@@ -27,18 +30,21 @@ namespace FileWatcher
     {
 
         static Logger Log = new Logger();
+        static FIleOperations operations = new FIleOperations();
 
 
         public ShowLog()
         {
             InitializeComponent();
+            string fwpath = Log.GetPath();
+            FIleOperations fIleOperations = new FIleOperations();
+            fIleOperations.deleteFile(fwpath + @"\entries.log");
         }
 
         private void rdb_showEntry_Checked(object sender, RoutedEventArgs e)
         {
             try
             {
-
                 string path = Logger.Path;
                 int counter = 0;
                 string line;
@@ -51,8 +57,6 @@ namespace FileWatcher
                 {
                     StreamReader reader = new StreamReader(path + @"\entries.log");
 
-                    lstbx_show.Items.Clear();
-                    
                     while ((line = reader.ReadLine()) != null)
                     {
                         counter++;
@@ -62,42 +66,9 @@ namespace FileWatcher
                     }
                     reader.Dispose();
                     reader.Close();
+
+
                 }
-            }
-            catch (Exception ex)
-            {
-                Log.ExLogger(ex);
-            }
-        }
-
-        private void rdb_showLog_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                int counter = 0;
-                string line;
-
-                if ( !File.Exists(Statics.appdata + @"\FileWatcher\Logs\log.log"))
-                {
-                    MessageBox.Show("Log Datei nicht gefunden!");
-                }
-                else
-                {
-                    StreamReader reader = new StreamReader(Statics.appdata + @"\FileWatcher\Logs\log.log");
-                    lstbx_show.Items.Clear();
-
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        counter++;
-                        lstbx_show.Items.Add(line);
-                    }
-                    reader.Dispose();
-                    reader.Close();
-                    lbl_counter.Content = "Counter ( Log ) : " + counter;
-                }
-
-
-                
             }
             catch (Exception ex)
             {
@@ -112,76 +83,48 @@ namespace FileWatcher
             try
             {
 
-                if (File.Exists((path + @"\entries.log.tmp")))
-                {
-                    File.Delete(path + @"\entries.log.tmp");
-                    File.Copy(path + @"\entries.log", path + @"\entries.log.tmp");
+                bool isModified = operations.checkLastWriteFile(path + @"\entries.log");
 
-                }
-                else
-                {
-                    File.Copy(path + @"\entries.log", path + @"\entries.log.tmp");
-                }
 
-                if (rdb_showEntry.IsChecked == true)
+                if (isModified)
                 {
+
+                    if (File.Exists((path + @"\entries.log.tmp")))
+                    {
+                        File.Delete(path + @"\entries.log.tmp");
+                        File.Copy(path + @"\entries.log", path + @"\entries.log.tmp");
+
+                    }
+                    else
+                    {
+                        File.Copy(path + @"\entries.log", path + @"\entries.log.tmp");
+                    }
+
                     lstbx_show.Items.Refresh();
                     int counter = 0;
-                    string line;    
-                    
-                    if ( path == string.Empty)
+                    string line;
+
+                    if (path == string.Empty)
                     {
                         MessageBox.Show("entries.log wurde nicht gefunden!");
                     }
                     else
                     {
                         StreamReader reader = new StreamReader(path + @"\entries.log.tmp");
-                        
-
                         lstbx_show.Items.Clear();
                         while ((line = reader.ReadLine()) != null)
                         {
                             counter++;
                             lstbx_show.Items.Add(line);
-
                             lbl_counter.Content = "Counter ( Log ) : " + counter;
                         }
                         reader.Dispose();
                         reader.Close();
-
                         File.Delete(path + @"\entries.log.tmp");
-
-
                     }
-
                 }
-                else if (rdb_showLog.IsChecked == true)
+                else
                 {
-                    int counter = 0;
-                    string line;
-
-                    if ( !File.Exists (Statics.appdata + @"\FileWatcher\Logs\log.log"))
-                    {
-                        MessageBox.Show("Log Datei wurde nicht gefunden!");
-                    }
-                    else
-                    {
-                        StreamReader reader = new StreamReader(Statics.appdata + @"\FileWatcher\Logs\log.log");
-
-                        lstbx_show.Items.Clear();
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            counter++;
-                            lstbx_show.Items.Add(" ( " + counter + " ) " + line);
-
-                            lbl_counter.Content = "Counter ( Log ) : " + counter;
-                        }
-                        reader.Dispose();
-                        reader.Close();
-                    }
-
-
-                 
                 }
             }
             catch (Exception ex)

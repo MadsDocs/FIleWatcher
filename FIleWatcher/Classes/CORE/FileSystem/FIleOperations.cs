@@ -173,5 +173,67 @@ namespace FileWatcher.Classes.FileSystem
             }
         }
 
+        public void deleteFile ( string filename )
+        {
+            try
+            {
+
+
+                if (filename == string.Empty)
+                {
+                    log._wLogger("Can´t delete an empty or non-existent File!");
+                }
+                else
+                {
+                    File.Delete(filename);
+                    log._wLogger("Deleted File: " + filename);
+                }
+            }
+            catch ( IOException ioe)
+            {
+                log.ExLogger(ioe);
+            }
+        }
+
+        public bool checkLastWriteFile ( string filename)
+        {
+            //Checks if a File was modified...
+            try
+            {
+                if (string.IsNullOrEmpty(filename))
+                {
+                    log._wLogger("Can´t access File!");
+                    return false;
+                }
+                else
+                {
+                    FileInfo fileInfo = new FileInfo(filename);
+                    DateTime currentModifed = fileInfo.LastWriteTime;
+                    DateTime currentTime = DateTime.Now;
+
+                    if (currentModifed != currentTime)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                    
+
+
+                }
+
+
+
+            }
+            catch ( Exception ex)
+            {
+                log.ExLogger(ex);
+                return false;
+            }
+        }
+
     }
 }
