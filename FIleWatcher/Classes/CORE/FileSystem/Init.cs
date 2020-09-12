@@ -25,6 +25,8 @@ namespace FileWatcher.Classes.FileSystem
         public static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static string os;
         private static string currdir;
+        public static bool is_entriesenabled = false;
+        public static bool is_statsenabled = false;
 
 
         public static bool is_Home = false;
@@ -54,6 +56,58 @@ namespace FileWatcher.Classes.FileSystem
             catch (Exception ex)
             {
                 MessageBox.Show(ex.StackTrace, ex.Message);
+            }
+
+            if ( File.Exists (Classes.Statics.appdata + @"\FileWatcher\App.config"))
+            {
+                //Read the Settings
+                string toggleentries = FIleOperations.getAppSettings("showentries");
+                if ( toggleentries == "true")
+                {
+                    is_entriesenabled = true;
+                }
+                else
+                {
+                    is_entriesenabled = false;
+                }
+
+                string togglestats = FIleOperations.getAppSettings("showstats");
+                if (togglestats == "True")
+                {
+                    is_statsenabled = true;
+                }
+                else
+                {
+                    is_statsenabled = false;
+                }
+            }
+            else if (File.Exists(@"D:\FileWatcher_BITBUCKET\FileWatcher\App.config"))
+            {
+                //Read the Settings
+                string toggleentries = FIleOperations.getAppSettings("showentries");
+                if (toggleentries == "True")
+                {
+                    is_entriesenabled = true;
+                }
+                else
+                {
+                    is_entriesenabled = false;
+                }
+
+                string togglestats = FIleOperations.getAppSettings("showstats");
+                if (togglestats == "True")
+                {
+                    is_statsenabled = true;
+                }
+                else
+                {
+                    is_statsenabled = false;
+                }
+            }
+            else
+            {
+                is_entriesenabled = true;
+                is_statsenabled = true;
             }
 
         }

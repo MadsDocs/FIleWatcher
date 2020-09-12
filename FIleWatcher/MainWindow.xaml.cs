@@ -28,6 +28,7 @@ namespace FileWatcher
         private static Logger log = new Logger();
         private static FIleOperations fo = new FIleOperations();
         private static string LoggerDirPath;
+        private static ShowLog logs = new ShowLog();
 
         public MainWindow()
         {
@@ -60,9 +61,30 @@ namespace FileWatcher
                 SetPathMenu.IsEnabled = false;
             }
 
-            ShowLog logs = new ShowLog();
-            logs.Show();
-            logs.rdb_showEntry.IsChecked = true;
+            
+
+            //Enable or disable the Stats / entries Window:
+            if ( Init.is_entriesenabled == true )
+            {
+                
+                logs.Show();
+                logs.rdb_showEntry.IsChecked = true;
+            }
+            else
+            {
+                //We will show no logs...
+            }
+
+            if ( Init.is_statsenabled == true)
+            {
+                logs.btn_showstats.IsEnabled = true;
+            }
+            else
+            {
+                logs.btn_showstats.IsEnabled = false;
+            }
+
+
 
 
         }

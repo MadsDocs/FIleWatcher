@@ -262,5 +262,36 @@ namespace FileWatcher.Classes.FileSystem
             }
         }
 
+        public bool createsettingsfile ( string path )
+        {
+            if ( string.IsNullOrEmpty(path))
+            {
+                return false;
+            }
+            else
+            {
+                if (File.Exists(path + @"\settings.settings"))
+                {
+                    File.Delete(path + @"\settings.settings");
+                    StreamWriter settingswriter2 = new StreamWriter(path + @"\settings.settings");
+                    settingswriter2.WriteLine("togglestatswindow = true");
+                    settingswriter2.WriteLine("toggleentriewindow = true");
+                    settingswriter2.Flush();
+                    settingswriter2.Close();
+                }
+                else
+                {
+
+                    StreamWriter settingswriter = new StreamWriter(path + @"\settings.settings");
+                    settingswriter.WriteLine("togglestatswindow = true");
+                    settingswriter.WriteLine("toggleentriewindow = true");
+                    settingswriter.Flush();
+                    settingswriter.Close();
+                }
+
+                return true;
+            }
+        }
+
     }
 }
