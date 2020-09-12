@@ -235,5 +235,32 @@ namespace FileWatcher.Classes.FileSystem
             }
         }
 
+        public long getFileSize ( string filename )
+        {
+            try
+            {
+
+
+                if (string.IsNullOrEmpty(filename))
+                {
+                    return 0;
+                }
+                else
+                {
+                    FileInfo info = new FileInfo(filename);
+                    long filesize = info.Length;
+
+                    return filesize;
+                }
+            }
+            catch ( Exception ex)
+            {
+                MessageBox.Show("Can´t find File: " + filename);
+                log.ExLogger(ex);
+                return 0;
+
+            }
+        }
+
     }
 }
