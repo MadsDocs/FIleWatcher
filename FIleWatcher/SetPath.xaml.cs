@@ -39,7 +39,7 @@ namespace FileWatcher
             
 
             txtbl_help.Content = helping;
-            lbl_version.Content = init.Fwversion;
+            //lbl_version.Content = init.Fwversion;
 
 
             if (File.Exists(Statics.appdata + @"\FileWatcher\save"))

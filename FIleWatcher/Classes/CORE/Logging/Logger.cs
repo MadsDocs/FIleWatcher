@@ -21,8 +21,9 @@ namespace FileWatcher.Classes.Logging
         private static StringBuilder error = new StringBuilder();
         private static StringBuilder sb3 = new StringBuilder();
 
-        private static string path = "";
-        public static string Path { get => path; set => path = value; }
+        public static string Path = MainWindow.pfad;
+        //public static string Path { get => path; set => path = value; }
+        
 
         /// <summary>
         /// Dies ist der Error Logger
@@ -243,7 +244,7 @@ namespace FileWatcher.Classes.Logging
         {
             try
             {
-                File.AppendAllText(Logger.path + @"\dir.log", pfad);
+                File.AppendAllText(Logger.Path + @"\dir.log", pfad);
 
 
             }

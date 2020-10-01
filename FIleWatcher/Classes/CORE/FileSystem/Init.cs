@@ -27,13 +27,12 @@ namespace FileWatcher.Classes.FileSystem
         private static string currdir;
         public static bool is_entriesenabled = false;
         public static bool is_statsenabled = false;
-
-
+        
         public static bool is_Home = false;
 
         private static Logger log = new Logger();
 
-        public string Fwversion { get => ReadVersion(); }
+        //public string Fwversion = 
 
         public void _Init()
         {

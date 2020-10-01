@@ -29,6 +29,7 @@ namespace FileWatcher
         private static FIleOperations fo = new FIleOperations();
         private static string LoggerDirPath;
         private static ShowLog logs = new ShowLog();
+        public static string pfad = log.GetPath();
 
         public MainWindow()
         {
@@ -37,7 +38,7 @@ namespace FileWatcher
             windows.ResizeMode = ResizeMode.CanMinimize;
             Init inti = new Init();
             inti._Init();
-            lbl_fwversion.Content = "Installierte Version: " + inti.Fwversion;
+            //lbl_fwversion.Content = "Installierte Version: " + inti.Fwversion;
             lbl_Messages.Visibility = Visibility.Hidden;
 
             try
@@ -55,9 +56,7 @@ namespace FileWatcher
 
             if ( File.Exists (Classes.Statics.appdata + @"\FileWatcher\save"))
             {
-                string pfad = log.GetPath();
-                Logger.Path = pfad;
-
+                
                 SetPathMenu.IsEnabled = false;
             }
 
