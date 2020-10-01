@@ -35,7 +35,7 @@ namespace FileWatcher.Classes.Logging
             {
                 if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
                 {
-                    MessageBox.Show("There is no FileWatcher Directory, please restart the FileWatcher, or create a new Direcotry under %appdata% named FileWatcher!", "No FileWatcher Directory", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("There is no FileWatcher Directory, please restart FileWatcher, or create a new Direcotry under %appdata% named FileWatcher!", "No FileWatcher Directory", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 }
                 else
