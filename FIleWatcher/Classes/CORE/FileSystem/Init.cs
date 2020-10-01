@@ -42,72 +42,71 @@ namespace FileWatcher.Classes.FileSystem
                 CreateHomeDir();
                 Gatherer();
 
-                if ( !File.Exists (Classes.Statics.appdata + @"\FileWatcher\save"))
+                if (!File.Exists(Classes.Statics.appdata + @"\FileWatcher\save"))
                 {
                     SetPath path = new SetPath();
                     path.ShowDialog();
                 }
                 else
                 {
-                        log._wLogger("Logging aktiv... ");  
+                    log._wLogger("Logging aktiv... ");
                 }
 
+                if (File.Exists(Classes.Statics.appdata + @"\FileWatcher\config\App.config"))
+                {
+                    //Read the Settings
+                    string toggleentries = FIleOperations.getAppSettings("showentries");
+                    if (toggleentries == "true")
+                    {
+                        is_entriesenabled = true;
+                    }
+                    else
+                    {
+                        is_entriesenabled = false;
+                    }
+
+                    string togglestats = FIleOperations.getAppSettings("showstats");
+                    if (togglestats == "True")
+                    {
+                        is_statsenabled = true;
+                    }
+                    else
+                    {
+                        is_statsenabled = false;
+                    }
+                }
+                else if (File.Exists(@"D:\FileWatcher_BITBUCKET\FileWatcher\App.config"))
+                {
+                    //Read the Settings
+                    string toggleentries = FIleOperations.getAppSettings("showentries");
+                    if (toggleentries == "True")
+                    {
+                        is_entriesenabled = true;
+                    }
+                    else
+                    {
+                        is_entriesenabled = false;
+                    }
+
+                    string togglestats = FIleOperations.getAppSettings("showstats");
+                    if (togglestats == "True")
+                    {
+                        is_statsenabled = true;
+                    }
+                    else
+                    {
+                        is_statsenabled = false;
+                    }
+                }
+                else
+                {
+                    is_entriesenabled = true;
+                    is_statsenabled = true;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.StackTrace, ex.Message);
-            }
-
-            if ( File.Exists (Classes.Statics.appdata + @"\FileWatcher\App.config"))
-            {
-                //Read the Settings
-                string toggleentries = FIleOperations.getAppSettings("showentries");
-                if ( toggleentries == "true")
-                {
-                    is_entriesenabled = true;
-                }
-                else
-                {
-                    is_entriesenabled = false;
-                }
-
-                string togglestats = FIleOperations.getAppSettings("showstats");
-                if (togglestats == "True")
-                {
-                    is_statsenabled = true;
-                }
-                else
-                {
-                    is_statsenabled = false;
-                }
-            }
-            else if (File.Exists(@"D:\FileWatcher_BITBUCKET\FileWatcher\App.config"))
-            {
-                //Read the Settings
-                string toggleentries = FIleOperations.getAppSettings("showentries");
-                if (toggleentries == "True")
-                {
-                    is_entriesenabled = true;
-                }
-                else
-                {
-                    is_entriesenabled = false;
-                }
-
-                string togglestats = FIleOperations.getAppSettings("showstats");
-                if (togglestats == "True")
-                {
-                    is_statsenabled = true;
-                }
-                else
-                {
-                    is_statsenabled = false;
-                }
-            }
-            else
-            {
-                is_entriesenabled = true;
-                is_statsenabled = true;
             }
 
         }
@@ -121,6 +120,7 @@ namespace FileWatcher.Classes.FileSystem
                 Directory.CreateDirectory(appdata + @"\FileWatcher\Patches");
                 Directory.CreateDirectory(appdata + @"\FileWatcher\Rollback");
                 Directory.CreateDirectory(appdata + @"\FileWatcher\Extensions");
+                Directory.CreateDirectory(appdata + @"\FileWatcher\config");
 
                 is_Home = true;
 

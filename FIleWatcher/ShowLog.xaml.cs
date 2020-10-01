@@ -37,8 +37,6 @@ namespace FileWatcher
         {
             InitializeComponent();
             string fwpath = Log.GetPath();
-            FIleOperations fIleOperations = new FIleOperations();
-            fIleOperations.deleteFile(fwpath + @"\entries.log");
         }
 
         private void rdb_showEntry_Checked(object sender, RoutedEventArgs e)
@@ -56,10 +54,10 @@ namespace FileWatcher
                 else
                 {
                     StreamReader reader = new StreamReader(path + @"\entries.log");
-
+                    counter++;
                     while ((line = reader.ReadLine()) != null)
                     {
-                        counter++;
+                        
                         lstbx_show.Items.Add(line);
 
                         lbl_counter.Content = "Counter ( Log ) : " + counter;

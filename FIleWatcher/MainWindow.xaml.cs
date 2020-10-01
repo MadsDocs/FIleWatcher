@@ -263,7 +263,6 @@ namespace FileWatcher
                 {
                     if (owner == string.Empty)
                     {
-                        //logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
                         logger._wLogger("Found Owner:" + owner);
                         DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
                         counter++;

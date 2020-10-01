@@ -125,12 +125,13 @@ namespace FileWatcher.Classes.Logging
                         }
                         else
                         {
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + name + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Changed to Type: " + types + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Creation Time: " + creationTime.ToString() + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Attributes: " + fattributes + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Owner: " + besitzer + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Group: " + gruppe + "\r\n");
+                            sb2.Append(DateTime.Now.Date.ToLongDateString() + " "+ DateTime.Now.ToLongTimeString() + "\r\n");
+                            sb2.Append(name + "\r\n");
+                            sb2.Append("Changed to Type: " + types + "\r\n");
+                            sb2.Append("Creation Time: " + creationTime.ToString() + "\r\n");
+                            sb2.Append("Attributes: " + fattributes + "\r\n");
+                            sb2.Append("Owner: " + besitzer + "\r\n");
+                            sb2.Append("Group: " + gruppe + "\r\n");
                             sb2.Append("\r\n");
                             File.AppendAllText(Path + @"\entries.log", sb2.ToString());
                             sb2.Clear();
@@ -145,13 +146,14 @@ namespace FileWatcher.Classes.Logging
                         else
                         {
                             long length2 = attributes.Length;
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + name + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Changed to Type: " + types + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Creation Time: " + creationTime.ToString() + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Attributes: " + fattributes + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Length: " + length2 + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Owner: " + besitzer + "\r\n");
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Group: " + gruppe + "\r\n");
+                            sb2.Append(DateTime.Now.Date.ToLongDateString() + " " + DateTime.Now.ToLongTimeString() + "\r\n");
+                            sb2.Append(name + "\r\n");
+                            sb2.Append("Changed to Type: " + types + "\r\n");
+                            sb2.Append("Creation Time: " + creationTime.ToString() + "\r\n");
+                            sb2.Append("Attributes: " + fattributes + "\r\n");
+                            sb2.Append("Length: " + length2 + "\r\n");
+                            sb2.Append("Owner: " + besitzer + "\r\n");
+                            sb2.Append("Group: " + gruppe + "\r\n");
                             sb2.Append("\r\n");
                             File.AppendAllText(Path + @"\entries.log", sb2.ToString());
                             sb2.Clear();
@@ -194,13 +196,13 @@ namespace FileWatcher.Classes.Logging
                     }
                     else
                     {
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "= DirectoryWatcher =" + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + name + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Changed to Type: " + types + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Creation Time: " + creationTime.ToString() + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Attributes: " + fattributes + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Owner: " + besitzer + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Group: " + gruppe + "\r\n");
+                        sb3.Append(DateTime.Now.Date.ToLongDateString() + " " + DateTime.Now.ToLongTimeString() + "\t" + "= DirectoryWatcher =" + "\r\n");
+                        sb3.Append(name + "\r\n");
+                        sb3.Append("Changed to Type: " + types + "\r\n");
+                        sb3.Append("Creation Time: " + creationTime.ToString() + "\r\n");
+                        sb3.Append("Attributes: " + fattributes + "\r\n");
+                        sb3.Append("Owner: " + besitzer + "\r\n");
+                        sb3.Append("Group: " + gruppe + "\r\n");
 
                         sb3.Append("\r\n");
                         File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
@@ -216,14 +218,14 @@ namespace FileWatcher.Classes.Logging
                     else
                     {
                         long length2 = attributes.Length;
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "= DirectoryWatcher =" + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + name + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Changed to Type: " + types + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Creation Time: " + creationTime.ToString() + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Attributes: " + fattributes + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Length: " + length2 + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Owner: " + besitzer + "\r\n");
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "Group: " + gruppe + "\r\n");
+                        sb3.Append(DateTime.Now.Date.ToLongDateString() + " " + DateTime.Now.ToLongTimeString() + "\t" + "= DirectoryWatcher =" + "\r\n");
+                        sb3.Append(name + "\r\n");
+                        sb3.Append("Changed to Type: " + types + "\r\n");
+                        sb3.Append("Creation Time: " + creationTime.ToString() + "\r\n");
+                        sb3.Append("Attributes: " + fattributes + "\r\n");
+                        sb3.Append("Length: " + length2 + "\r\n");
+                        sb3.Append("Owner: " + besitzer + "\r\n");
+                        sb3.Append("Group: " + gruppe + "\r\n");
 
                         sb3.Append("\r\n");
                         File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
