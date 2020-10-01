@@ -56,7 +56,6 @@ namespace FileWatcher
 
             if ( File.Exists (Classes.Statics.appdata + @"\FileWatcher\save"))
             {
-                
                 SetPathMenu.IsEnabled = false;
             }
 
