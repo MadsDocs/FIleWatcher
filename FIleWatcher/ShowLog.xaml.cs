@@ -20,6 +20,7 @@ using FileWatcher.Classes;
 using FileWatcher.Classes.FileSystem;
 using System.Threading;
 using System.Windows.Threading;
+using System.Security.Principal;
 
 namespace FileWatcher
 {
@@ -136,6 +137,27 @@ namespace FileWatcher
         {
             Stats stats = new Stats();
             stats.Show();
+        }
+
+        private void lstbx_show_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var item = lstbx_show.SelectedItems[0];
+                //MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
+
+                //MessageBox.Show(item.ToString());
+                FileInfo finfo = new FileInfo(item.ToString());
+
+                var besitzer = File.GetAccessControl(item.ToString()).GetOwner(typeof(NTAccount));
+                var gruppe = File.GetAccessControl(item.ToString()).GetGroup(typeof(NTAccount));
+
+                MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + besitzer + "(" + gruppe + ")" + "\n\r" + "Size: " + finfo.Length + "\n\r" + "Path: " + item.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                Log._eLogger(ex);
+            }
         }
     }
 }

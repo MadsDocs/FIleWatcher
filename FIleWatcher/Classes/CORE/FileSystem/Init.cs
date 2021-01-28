@@ -32,7 +32,7 @@ namespace FileWatcher.Classes.FileSystem
 
         private static Logger log = new Logger();
 
-        //public string Fwversion = 
+        public string Fwversion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         public void _Init()
         {

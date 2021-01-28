@@ -11,6 +11,7 @@ using FileWatcher.Classes.Logging;
 using FileWatcher.Classes.FileSystem;
 using System.Windows.Threading;
 using System.Diagnostics;
+using System.Security.Principal;
 
 namespace FileWatcher
 {
@@ -30,6 +31,7 @@ namespace FileWatcher
         private static string LoggerDirPath;
         private static ShowLog logs = new ShowLog();
         public static string pfad = log.GetPath();
+        private int pfcounter = 0;
 
         public MainWindow()
         {
@@ -38,7 +40,7 @@ namespace FileWatcher
             windows.ResizeMode = ResizeMode.CanMinimize;
             Init inti = new Init();
             inti._Init();
-            //lbl_fwversion.Content = "Installierte Version: " + inti.Fwversion;
+            lbl_fwversion.Content = "Installierte Version: " + inti.Fwversion;
             lbl_Messages.Visibility = Visibility.Hidden;
 
             try
@@ -162,6 +164,12 @@ namespace FileWatcher
                 {
 
                 }
+                else if ( info.Extension == ".pf" || info.Extension == ".PF")
+                {
+                    pfcounter++;
+                    logger._wLogger("Skipping .pf Files...");
+                    logger._wLogger("Current PF Counter: " + pfcounter);
+                }
                 else
                 {
                     if ( owner == string.Empty)
@@ -176,6 +184,7 @@ namespace FileWatcher
 
                
                 }
+                //Original Code
             }
             catch (Exception ex)
             {
@@ -191,22 +200,31 @@ namespace FileWatcher
             {
                 FileInfo info = new FileInfo(e.Name);
                 string owner = fo.GetOwnerofFile(e.Name);
+
                 if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                 {
+                }
+                else if (info.Extension == ".pf" || info.Extension == ".PF")
+                {
+                    pfcounter++;
+                    logger._wLogger("Skipping .pf Files...");
+                    logger._wLogger("Current PF Counter: " + pfcounter);
                 }
                 else
                 {
                     if (owner == string.Empty)
                     {
-                        logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                        logger._wLogger("Found Owner:" + owner);
+                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                        counter++;
                     }
                     else
                     {
-                        DisplayFiles(WatcherChangeTypes.Renamed, e.FullPath, owner);
+                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
                         counter++;
                     }
-                   
                 }
+
             }
             catch (Exception ex)
             {
@@ -220,23 +238,32 @@ namespace FileWatcher
             {
                 FileInfo info = new FileInfo(e.Name);
                 string owner = fo.GetOwnerofFile(e.Name);
-
-
                 if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                 {
+                }
+                else if (info.Extension == ".pf" || info.Extension == ".PF")
+                {
+                    pfcounter++;
+                    logger._wLogger("Skipping .pf Files...");
+                    logger._wLogger("Current PF Counter: " + pfcounter);
                 }
                 else
                 {
                     if (owner == string.Empty)
                     {
-                        logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                        logger._wLogger("Found Owner:" + owner);
+                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                        counter++;
                     }
                     else
                     {
-                        DisplayFiles(WatcherChangeTypes.Created, e.FullPath, owner);
+                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
                         counter++;
                     }
                 }
+
+
+
             }
             catch (Exception ex)
             {
@@ -257,6 +284,12 @@ namespace FileWatcher
                 if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                 {
                 }
+                else if (info.Extension == ".pf" || info.Extension == ".PF")
+                {
+                    pfcounter++;
+                    logger._wLogger("Skipping .pf Files...");
+                    logger._wLogger("Current PF Counter: " + pfcounter);
+                }
                 else
                 {
                     if (owner == string.Empty)
@@ -271,6 +304,7 @@ namespace FileWatcher
                         counter++;
                     }
                 }
+
 
             }
             catch (Exception ex)
@@ -453,11 +487,24 @@ namespace FileWatcher
             {
                 ///TODO: Implment a better Design to Show Information...
                 var item = lstview_anzeige.SelectedItems[0];
-                MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
+                //MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
+
+                MessageBox.Show(item.ToString());
+                FileInfo finfo = new FileInfo(item.ToString());
+                
+                var besitzer = File.GetAccessControl(item.ToString()).GetOwner(typeof(NTAccount));
+                var gruppe = File.GetAccessControl(item.ToString()).GetGroup(typeof(NTAccount));
+
+                MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + besitzer + "(" + gruppe + ")" +   "\n\r" + "Size: " +  finfo.Length + "\n\r" + "Path: " + item.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
+
+
+
+
             }
             catch (Exception ex)
             {
                 log._eLogger(ex);
+                MessageBox.Show(ex.Message);
             }
             
         }
