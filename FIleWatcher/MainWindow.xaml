@@ -65,6 +65,7 @@
                         <Label Name="lbl_ordner"></Label>
                         <Label Name="lbl_ordner_clean" MouseDown="lbl_ordner_clean_MouseDown">Log Ordner bereinigen</Label>
                         <Label Name="lbl_ShowChangelog" MouseDown="lbl_ShowChangelog_MouseDown">Show Changelog</Label>
+                        <Label Name="lbl_Settings" MouseDown="lbl_Settings_MouseDown">Settings</Label>
                     </MenuItem>
                     <MenuItem Header=" Log Dateien anzeigen" Click="LoDa_Click">
                                                

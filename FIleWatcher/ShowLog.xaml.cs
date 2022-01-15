@@ -21,6 +21,7 @@ using FileWatcher.Classes.FileSystem;
 using System.Threading;
 using System.Windows.Threading;
 using System.Security.Principal;
+using System.Security.AccessControl;
 
 namespace FileWatcher
 {
@@ -151,7 +152,7 @@ namespace FileWatcher
 
                 var besitzer = File.GetAccessControl(item.ToString()).GetOwner(typeof(NTAccount));
                 var gruppe = File.GetAccessControl(item.ToString()).GetGroup(typeof(NTAccount));
-
+                
                 MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + besitzer + "(" + gruppe + ")" + "\n\r" + "Size: " + finfo.Length + "\n\r" + "Path: " + item.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)

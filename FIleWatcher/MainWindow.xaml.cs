@@ -42,6 +42,7 @@ namespace FileWatcher
             inti._Init();
             lbl_fwversion.Content = "Installierte Version: " + inti.Fwversion;
             lbl_Messages.Visibility = Visibility.Hidden;
+            SetPath spath = new SetPath();
 
             try
             {
@@ -61,7 +62,16 @@ namespace FileWatcher
                 SetPathMenu.IsEnabled = false;
             }
 
-            
+            if ( SetPath.firsttime == true)
+            {
+                btn_go.IsEnabled = false;
+                lbl_Messages.Visibility = Visibility.Visible;
+                lbl_Messages.Content = "Please restart Application!";
+            }
+            else
+            {
+                btn_go.IsEnabled = true;
+            }
 
             //Enable or disable the Stats / entries Window:
             if ( Init.is_entriesenabled == true )
@@ -120,7 +130,7 @@ namespace FileWatcher
                         fsw.Filter = "*.*";
 
 
-                        fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+                        fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.CreationTime | NotifyFilters.Size;
 
                         if (fsw.EnableRaisingEvents == false)
                         {
@@ -580,6 +590,12 @@ namespace FileWatcher
         {
             ShowInfra infra = new ShowInfra();
             infra.Show();
+        }
+
+        private void lbl_Settings_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Settings sett = new Settings();
+            sett.Show();
         }
     }
 }

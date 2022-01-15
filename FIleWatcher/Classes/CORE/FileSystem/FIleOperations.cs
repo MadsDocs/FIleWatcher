@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Collections;
 
 namespace FileWatcher.Classes.FileSystem
 {
@@ -22,6 +23,7 @@ namespace FileWatcher.Classes.FileSystem
         private static Logger log = new Logger();
         private static string appdata = Classes.FileSystem.Init.appdata;
         private StringBuilder dirWatcher = new StringBuilder();
+        private string line;
 
 
 
@@ -177,8 +179,6 @@ namespace FileWatcher.Classes.FileSystem
         {
             try
             {
-
-
                 if (filename == string.Empty)
                 {
                     log._wLogger("Can´t delete an empty or non-existent File!");
@@ -219,12 +219,7 @@ namespace FileWatcher.Classes.FileSystem
                     {
                         return false;
                     }
-
-                    
-
-
                 }
-
 
 
             }
@@ -290,6 +285,67 @@ namespace FileWatcher.Classes.FileSystem
                 }
 
                 return true;
+            }
+        }
+
+        public void writeFilterFile ()
+        {
+            // This Method will create a Filter File (FILEWATCH-14)
+            if ( !File.Exists(Logger.Path + @"\filter.txt"))
+            {
+                File.Create(Logger.Path + @"\filter.txt");
+            }
+            else
+            {
+                log._wLogger("filter.txt exists, will not overwrite...");
+            }
+
+        }
+
+        public ArrayList readFilterFile()
+        {
+            ArrayList filter = new ArrayList(10000);
+            int counter = 0;
+            try
+            {
+                if (!File.Exists(Logger.Path + @"\filter.txt"))
+                {
+                    log._wLogger("No Filter File found...");
+                    return filter;
+                }
+                else
+                {
+
+                    StreamReader reader = new StreamReader(Logger.Path + @"\filter.txt");
+
+
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        counter++;
+                        filter.Add(line + @"\r\n");
+
+                    }
+
+                    log._wLogger("Found " + counter + "Filter Entries..");
+                    return filter;
+
+                }
+            }
+            catch ( Exception ex)
+            {
+                log._eLogger(ex);
+                return filter;
+            }
+        }
+
+        public void writeSettingsFile ( string setting, int capacity)
+        {
+            try
+            {
+            }
+            catch ( Exception ex)
+            {
+                log.ExLogger(ex);
             }
         }
 

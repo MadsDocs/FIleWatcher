@@ -40,6 +40,8 @@ namespace FileWatcher.Classes.FileSystem
             {
                 CreateHomeDir();
                 Gatherer();
+                FIleOperations ops = new FIleOperations();
+                
 
                 if (!File.Exists(Classes.Statics.appdata + @"\FileWatcher\save"))
                 {

@@ -92,7 +92,7 @@ namespace FileWatcher.Classes.Logging
                 }
                 else
                 {
-                    sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + message + "\r\n").ToString();
+                    sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now + "\t" + message + "\r\n").ToString();
                     File.AppendAllText(Statics.appdata + @"\FileWatcher\Logs\log.log", sb.ToString());
                     sb.Clear();
                 }

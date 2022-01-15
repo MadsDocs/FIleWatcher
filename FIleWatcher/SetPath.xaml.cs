@@ -28,6 +28,8 @@ namespace FileWatcher
     {
 
         private static Logger log = new Logger();
+        public static bool firsttime = false;
+        private static StringBuilder sb = new StringBuilder();
 
         public SetPath()
         {
@@ -35,15 +37,16 @@ namespace FileWatcher
             Classes.Statics st = new Statics();
 
             InitializeComponent();
-            string helping = " Dieser Dialog soll Ihnen helfen ein Verzeichnis für den FileWatcher \r\n zu erstellen, damit dieser gefundene Einträge in eine Datei \r\n speichern kann!";
-            
 
+            string helping = " Dieser Dialog soll Ihnen helfen ein Verzeichnis für den FileWatcher \r\n zu erstellen, damit dieser gefundene Einträge in eine Datei \r\n speichern kann!\r\nBitte starten Sie das Programm nach eingabe neu!";
+
+            txtbl_help.IsExpanded = true;
             txtbl_help.Content = helping;
+
             //lbl_version.Content = init.Fwversion;
 
-
             if (File.Exists(Statics.appdata + @"\FileWatcher\save"))
-                MessageBox.Show(@" Log Ordner wurde eingerichtet! Sollten Sie den Ort wechseln wollten, können Sie einfach die save Datei unter %appdata%\save editieren!", "Log Ordner wurde eingerichtet", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(@" Log Ordner wurde eingerichtet! Sollten Sie den Ort wechseln wollten, können Sie einfach die save Datei unter %appdata%\save editieren!", "Log Ordner wurde eingerichtet", MessageBoxButton.OK, MessageBoxImage.Information);
 
 
 
@@ -85,7 +88,9 @@ namespace FileWatcher
                                 {
                                     Directory.CreateDirectory(pfad);
                                     File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad);
+                                    firsttime = true;
                                     Close();
+                                    
                                 }
                                 else
                                 {
@@ -106,7 +111,9 @@ namespace FileWatcher
                                         {
                                             File.Delete(Classes.Statics.appdata + @"\FileWatcher\save");
                                             File.AppendAllText(Classes.Statics.appdata + @"\FileWatcher\save", pfad);
+                                            
                                             Close();
+                                            Environment.Exit(-1);
                                         }
                                         else
                                         {
@@ -184,6 +191,32 @@ namespace FileWatcher
                 }
             }
             return true;
+        }
+
+        private static void createSave(string path)
+        {
+            try
+            {
+                if (!Directory.Exists(path))
+                {
+                    MessageBox.Show("The FileWatcher path will be: " + path, "FileWatcherPath", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Directory.CreateDirectory(path);
+
+                    File.Create(path + @"\save");
+                    string content = sb.Append(path).ToString();
+                    File.AppendAllText(path + @"\save", content);
+                }
+                else if (!File.Exists(path + @"\save"))
+                {
+                    MessageBox.Show("Save File not found, will create it in the path:" + path, "SAVE FILE NOI FOUND", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not establish Save File", "Could not establish Save File", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

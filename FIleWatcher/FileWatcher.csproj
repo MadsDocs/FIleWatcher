@@ -113,6 +113,7 @@
     <Compile Include="Changelog.xaml.cs">
       <DependentUpon>Changelog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\CORE\FileSystem\CreateFileObject.cs" />
     <Compile Include="Classes\CORE\FW_Network\Downloader.cs" />
     <Compile Include="Classes\CORE\FW_Network\infrachecker.cs" />
     <Compile Include="Classes\CORE\FW_Network\Upload.cs" />
@@ -125,6 +126,9 @@
     </Compile>
     <Compile Include="SetPath.xaml.cs">
       <DependentUpon>SetPath.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShowInfra.xaml.cs">
       <DependentUpon>ShowInfra.xaml</DependentUpon>
@@ -170,6 +174,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SetPath.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

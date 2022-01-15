@@ -139,7 +139,6 @@ F:\Filewatcher\FileWatcher\obj\Debug\ShowInfra.baml
 D:\FileWatcher_BITBUCKET\FileWatcher\bin\Debug\FileWatcher.exe.config
 D:\FileWatcher_BITBUCKET\FileWatcher\bin\Debug\FileWatcher.exe
 D:\FileWatcher_BITBUCKET\FileWatcher\bin\Debug\FileWatcher.pdb
-D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\FileWatcher.csprojAssemblyReference.cache
 D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\Changelog.g.cs
 D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\DirectoryWatcher.g.cs
 D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\Errorbehandlung.g.cs
@@ -186,3 +185,6 @@ D:\FileWatcher_BITBUCKET\FileWatcher\bin\Debug\System.Numerics.Vectors.xml
 D:\FileWatcher_BITBUCKET\FileWatcher\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\FileWatcher_Content.g.cs
 D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\FileWatcher.csproj.CopyComplete
+D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\Settings.g.cs
+D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\Settings.baml
+D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\FileWatcher.csprojAssemblyReference.cache
