@@ -12,11 +12,10 @@
             <RowDefinition Height="941*"/>
         </Grid.RowDefinitions>
         <RadioButton x:Name="rdb_showEntry" Content="Show Entries" HorizontalAlignment="Left" Margin="189,14,0,0" VerticalAlignment="Top" Checked="rdb_showEntry_Checked" Grid.RowSpan="2"/>
-        <RadioButton x:Name="rdb_showLog" Content="Show Logs" HorizontalAlignment="Left" Margin="281,14,0,0" VerticalAlignment="Top" Checked="rdb_showLog_Checked" Grid.RowSpan="2"/>
-        <ListBox x:Name="lstbx_show" HorizontalAlignment="Center" Height="934" Margin="0,7,0,0" VerticalAlignment="Center" Width="992" Grid.Row="1"/>
         <Label x:Name="lbl_counter" HorizontalAlignment="Left" Margin="492,9,0,0" VerticalAlignment="Top" Width="210" Height="26" Grid.RowSpan="2"/>
-        <Button x:Name="btn_update" Content="Update" HorizontalAlignment="Left" Margin="109,12,0,0" VerticalAlignment="Top" Width="75" Click="btn_update_Click" Grid.RowSpan="2"/>
+        <Button x:Name="btn_update" Content="Update" HorizontalAlignment="Left" Margin="108,0,0,938.667" VerticalAlignment="Bottom" Width="75" Click="btn_update_Click" Grid.RowSpan="2"/>
         <Button x:Name="btn_showstats" Content="Show Stats" HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" Width="94" Click="btn_showstats_Click" Grid.RowSpan="2"/>
+        <ListBox x:Name="lstbx_show" HorizontalAlignment="Left" Height="938" Margin="0,5,0,-0.333" Grid.Row="1" VerticalAlignment="Top" Width="993" MouseDoubleClick="lstbx_show_MouseDoubleClick"/>
 
     </Grid>
 </Window>

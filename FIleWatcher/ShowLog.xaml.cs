@@ -17,6 +17,10 @@ using System.Diagnostics;
 
 using FileWatcher.Classes.Logging;
 using FileWatcher.Classes;
+using FileWatcher.Classes.FileSystem;
+using System.Threading;
+using System.Windows.Threading;
+using System.Security.Principal;
 
 namespace FileWatcher
 {
@@ -27,18 +31,19 @@ namespace FileWatcher
     {
 
         static Logger Log = new Logger();
+        static FIleOperations operations = new FIleOperations();
 
 
         public ShowLog()
         {
             InitializeComponent();
+            string fwpath = Log.GetPath();
         }
 
         private void rdb_showEntry_Checked(object sender, RoutedEventArgs e)
         {
             try
             {
-
                 string path = Logger.Path;
                 int counter = 0;
                 string line;
@@ -50,52 +55,19 @@ namespace FileWatcher
                 else
                 {
                     StreamReader reader = new StreamReader(path + @"\entries.log");
-
-                    lstbx_show.Items.Clear();
-                    
+                    counter++;
                     while ((line = reader.ReadLine()) != null)
                     {
-                        counter++;
+                        
                         lstbx_show.Items.Add(line);
 
                         lbl_counter.Content = "Counter ( Log ) : " + counter;
                     }
+                    reader.Dispose();
                     reader.Close();
+
+
                 }
-            }
-            catch (Exception ex)
-            {
-                Log.ExLogger(ex);
-            }
-        }
-
-        private void rdb_showLog_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                int counter = 0;
-                string line;
-
-                if ( !File.Exists(Statics.appdata + @"\FileWatcher\Logs\log.log"))
-                {
-                    MessageBox.Show("Log Datei nicht gefunden!");
-                }
-                else
-                {
-                    StreamReader reader = new StreamReader(Statics.appdata + @"\FileWatcher\Logs\log.log");
-                    lstbx_show.Items.Clear();
-
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        counter++;
-                        lstbx_show.Items.Add(line);
-                    }
-                    reader.Close();
-                    lbl_counter.Content = "Counter ( Log ) : " + counter;
-                }
-
-
-                
             }
             catch (Exception ex)
             {
@@ -106,64 +78,52 @@ namespace FileWatcher
         private void btn_update_Click(object sender, RoutedEventArgs e)
         {
             string path = Logger.Path;
-
-
+            
             try
             {
 
-                if (rdb_showEntry.IsChecked == true)
+                bool isModified = operations.checkLastWriteFile(path + @"\entries.log");
+
+
+                if (isModified)
                 {
+
+                    if (File.Exists((path + @"\entries.log.tmp")))
+                    {
+                        File.Delete(path + @"\entries.log.tmp");
+                        File.Copy(path + @"\entries.log", path + @"\entries.log.tmp");
+
+                    }
+                    else
+                    {
+                        File.Copy(path + @"\entries.log", path + @"\entries.log.tmp");
+                    }
+
+                    lstbx_show.Items.Refresh();
                     int counter = 0;
                     string line;
-                    
-                    if ( path == string.Empty)
+
+                    if (path == string.Empty)
                     {
                         MessageBox.Show("entries.log wurde nicht gefunden!");
                     }
                     else
                     {
-
-                        StreamReader reader = new StreamReader(path);
-
+                        StreamReader reader = new StreamReader(path + @"\entries.log.tmp");
                         lstbx_show.Items.Clear();
                         while ((line = reader.ReadLine()) != null)
                         {
                             counter++;
-                            lstbx_show.Items.Add(" ( " + counter + " ) " + line);
-
+                            lstbx_show.Items.Add(line);
                             lbl_counter.Content = "Counter ( Log ) : " + counter;
                         }
+                        reader.Dispose();
                         reader.Close();
-
+                        File.Delete(path + @"\entries.log.tmp");
                     }
-
                 }
-                else if (rdb_showLog.IsChecked == true)
+                else
                 {
-                    int counter = 0;
-                    string line;
-
-                    if ( !File.Exists (Statics.appdata + @"\FileWatcher\Logs\log.log"))
-                    {
-                        MessageBox.Show("Log Datei wurde nicht gefunden!");
-                    }
-                    else
-                    {
-                        StreamReader reader = new StreamReader(Statics.appdata + @"\FileWatcher\Logs\log.log");
-
-                        lstbx_show.Items.Clear();
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            counter++;
-                            lstbx_show.Items.Add(" ( " + counter + " ) " + line);
-
-                            lbl_counter.Content = "Counter ( Log ) : " + counter;
-                        }
-                        reader.Close();
-                    }
-
-
-                 
                 }
             }
             catch (Exception ex)
@@ -177,6 +137,27 @@ namespace FileWatcher
         {
             Stats stats = new Stats();
             stats.Show();
+        }
+
+        private void lstbx_show_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var item = lstbx_show.SelectedItems[0];
+                //MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
+
+                //MessageBox.Show(item.ToString());
+                FileInfo finfo = new FileInfo(item.ToString());
+
+                var besitzer = File.GetAccessControl(item.ToString()).GetOwner(typeof(NTAccount));
+                var gruppe = File.GetAccessControl(item.ToString()).GetGroup(typeof(NTAccount));
+
+                MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + besitzer + "(" + gruppe + ")" + "\n\r" + "Size: " + finfo.Length + "\n\r" + "Path: " + item.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                Log._eLogger(ex);
+            }
         }
     }
 }

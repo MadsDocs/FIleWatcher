@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FileWatcher.Classes.FileSystem;
+using FileWatcher.Classes.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,18 @@ namespace FileWatcher
         public Stats()
         {
             InitializeComponent();
+            FIleOperations ops = new FIleOperations();
+            Logger log = new Logger();
+            string path = log.GetPath();
+            long filesize_entries = ops.getFileSize(path + @"\entries.log");
+            long filesize_log = ops.getFileSize(path + @"\log.log");
+            long filesize_error = ops.getFileSize(path + @"\error.log");
+
+            lbl_currentlogsize.Content = "Entries Filesize: " + filesize_entries + "\n"+ 
+                                         "Log Filesize: " + filesize_log + "\n"+ 
+                                         "Error Filesize: " + filesize_error + "\n";
+
+
         }
     }
 }

@@ -1,30 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 using System.IO;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
-using System.Reflection;
 
 using FileWatcher.Classes.Logging;
 using FileWatcher.Classes.FileSystem;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Threading;
-using System.Net;
 using System.Diagnostics;
+using System.Security.Principal;
 
 namespace FileWatcher
 {
@@ -35,14 +22,16 @@ namespace FileWatcher
     public partial class MainWindow : Window
     {
         private static int counter = 0;
-        private static FileSystemWatcher fsw = new FileSystemWatcher();
+        public static FileSystemWatcher fsw = new FileSystemWatcher();
         private Errorbehandlung behandlung = new Errorbehandlung();
         //private readonly Classes.Statics st;
         private Logger logger = new Logger();
         private static Logger log = new Logger();
         private static FIleOperations fo = new FIleOperations();
-        private List<String> gDrives = new List<string>();
         private static string LoggerDirPath;
+        private static ShowLog logs = new ShowLog();
+        public static string pfad = log.GetPath();
+        private int pfcounter = 0;
 
         public MainWindow()
         {
@@ -69,11 +58,33 @@ namespace FileWatcher
 
             if ( File.Exists (Classes.Statics.appdata + @"\FileWatcher\save"))
             {
-                string pfad = log.GetPath();
-                Logger.Path = pfad;
-
                 SetPathMenu.IsEnabled = false;
             }
+
+            
+
+            //Enable or disable the Stats / entries Window:
+            if ( Init.is_entriesenabled == true )
+            {
+                
+                logs.Show();
+                logs.rdb_showEntry.IsChecked = true;
+            }
+            else
+            {
+                //We will show no logs...
+            }
+
+            if ( Init.is_statsenabled == true)
+            {
+                logs.btn_showstats.IsEnabled = true;
+            }
+            else
+            {
+                logs.btn_showstats.IsEnabled = false;
+            }
+
+
 
 
         }
@@ -153,6 +164,12 @@ namespace FileWatcher
                 {
 
                 }
+                else if ( info.Extension == ".pf" || info.Extension == ".PF")
+                {
+                    pfcounter++;
+                    logger._wLogger("Skipping .pf Files...");
+                    logger._wLogger("Current PF Counter: " + pfcounter);
+                }
                 else
                 {
                     if ( owner == string.Empty)
@@ -167,6 +184,7 @@ namespace FileWatcher
 
                
                 }
+                //Original Code
             }
             catch (Exception ex)
             {
@@ -182,22 +200,31 @@ namespace FileWatcher
             {
                 FileInfo info = new FileInfo(e.Name);
                 string owner = fo.GetOwnerofFile(e.Name);
+
                 if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                 {
+                }
+                else if (info.Extension == ".pf" || info.Extension == ".PF")
+                {
+                    pfcounter++;
+                    logger._wLogger("Skipping .pf Files...");
+                    logger._wLogger("Current PF Counter: " + pfcounter);
                 }
                 else
                 {
                     if (owner == string.Empty)
                     {
-                        logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                        logger._wLogger("Found Owner:" + owner);
+                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                        counter++;
                     }
                     else
                     {
-                        DisplayFiles(WatcherChangeTypes.Renamed, e.FullPath, owner);
+                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
                         counter++;
                     }
-                   
                 }
+
             }
             catch (Exception ex)
             {
@@ -211,23 +238,32 @@ namespace FileWatcher
             {
                 FileInfo info = new FileInfo(e.Name);
                 string owner = fo.GetOwnerofFile(e.Name);
-
-
                 if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                 {
+                }
+                else if (info.Extension == ".pf" || info.Extension == ".PF")
+                {
+                    pfcounter++;
+                    logger._wLogger("Skipping .pf Files...");
+                    logger._wLogger("Current PF Counter: " + pfcounter);
                 }
                 else
                 {
                     if (owner == string.Empty)
                     {
-                        logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                        logger._wLogger("Found Owner:" + owner);
+                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                        counter++;
                     }
                     else
                     {
-                        DisplayFiles(WatcherChangeTypes.Created, e.FullPath, owner);
+                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
                         counter++;
                     }
                 }
+
+
+
             }
             catch (Exception ex)
             {
@@ -248,11 +284,19 @@ namespace FileWatcher
                 if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                 {
                 }
+                else if (info.Extension == ".pf" || info.Extension == ".PF")
+                {
+                    pfcounter++;
+                    logger._wLogger("Skipping .pf Files...");
+                    logger._wLogger("Current PF Counter: " + pfcounter);
+                }
                 else
                 {
                     if (owner == string.Empty)
                     {
-                        logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                        logger._wLogger("Found Owner:" + owner);
+                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                        counter++;
                     }
                     else
                     {
@@ -260,6 +304,7 @@ namespace FileWatcher
                         counter++;
                     }
                 }
+
 
             }
             catch (Exception ex)
@@ -312,22 +357,24 @@ namespace FileWatcher
 
         public void AddtoList(string text, WatcherChangeTypes types, string owner)
         {
+            string addlist = text + owner;
+
             switch (types)
             {
                 case WatcherChangeTypes.Changed:
-                    lstview_anzeige.Items.Add(text);
+                    lstview_anzeige.Items.Add(addlist);
                     break;
                 case WatcherChangeTypes.Created:
-                    lstview_anzeige.Items.Add(text);
+                    lstview_anzeige.Items.Add(addlist);
                     break;
                 case WatcherChangeTypes.Deleted:
-                    lstview_anzeige.Items.Add(text);
+                    lstview_anzeige.Items.Add(addlist);
                     break;
                 case WatcherChangeTypes.Renamed:
-                    lstview_anzeige.Items.Add(text);
+                    lstview_anzeige.Items.Add(addlist);
                     break;
                 default:
-                    lstview_anzeige.Items.Add(text);
+                    lstview_anzeige.Items.Add(addlist);
                     break;
             }
         }
@@ -391,35 +438,35 @@ namespace FileWatcher
             {
                 //Alle verfügbaren Festplatten herausfinden, in eine Liste speichern
                 DriveInfo[] drives = DriveInfo.GetDrives();
-                
+                int counter = 0;
 
                 foreach (var d in drives)
                 {
-                    if (d.IsReady)
+                    switch (d.DriveType)
                     {
-                        if ( d.DriveType == DriveType.CDRom)
-                        {
-                            // Wir ignorieren einfach mal jegliche DVD Drives...
-                            logger._wLogger(" DVD Drive found... aborting!");
-                            
-                        }
-                        else if ( d.DriveType == DriveType.Unknown)
-                        {
-                            MessageBox.Show("DEBUG: UNKNOW DEVICE DETECTED!");
-                        }
-                        else
-                        {
+                        case DriveType.CDRom:
+                            logger._wLogger("DVD / CD ROM found... aborting");
+                            counter++;
+                            break;
+                        case DriveType.Unknown:
+                            logger._wLogger("Unknown Drive found, aborting");
+                            counter++;
+                            break;
+                        case DriveType.Fixed:
                             cmb_festplatten.Items.Add(d + d.VolumeLabel);
-                        }
-                        
-                    }
-                    else
-                    {
-                       logger._wLogger(" No ready Drives found... aborting...");
-                       MessageBox.Show("Es wurden keine Festplatten gefunden die angezeigt werden können!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                            counter++;
+                            break;
+                        case DriveType.Network:
+                            cmb_festplatten.Items.Add(d + d.VolumeLabel);
+                            counter++;
+                            break;
+                        default:
+                            logger._wLogger(" No ready Drives found... aborting...");
+                            break;
                     }
 
                 }
+                log._wLogger("Found " + counter + " Drives....");
             }
             catch (Exception ex)
             {
@@ -440,11 +487,24 @@ namespace FileWatcher
             {
                 ///TODO: Implment a better Design to Show Information...
                 var item = lstview_anzeige.SelectedItems[0];
-                MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
+                //MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
+
+                MessageBox.Show(item.ToString());
+                FileInfo finfo = new FileInfo(item.ToString());
+                
+                var besitzer = File.GetAccessControl(item.ToString()).GetOwner(typeof(NTAccount));
+                var gruppe = File.GetAccessControl(item.ToString()).GetGroup(typeof(NTAccount));
+
+                MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + besitzer + "(" + gruppe + ")" +   "\n\r" + "Size: " +  finfo.Length + "\n\r" + "Path: " + item.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
+
+
+
+
             }
             catch (Exception ex)
             {
                 log._eLogger(ex);
+                MessageBox.Show(ex.Message);
             }
             
         }
@@ -514,6 +574,12 @@ namespace FileWatcher
         {
             Changelog log = new Changelog();
             log.ShowDialog();
+        }
+
+        private void ShowInfra(object sender, RoutedEventArgs e)
+        {
+            ShowInfra infra = new ShowInfra();
+            infra.Show();
         }
     }
 }
