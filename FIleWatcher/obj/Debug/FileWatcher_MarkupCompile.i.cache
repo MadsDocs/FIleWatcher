@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\
+C:\Users\mario\OneDrive\Dokumente\GitHub\FIleWatcher\FileWatcher\obj\Debug\
 FileWatcher
 none
 false
 DEBUG;TRACE
-D:\FileWatcher_BITBUCKET\FileWatcher\App.xaml
-10401592127
-3-1751009412
-23-1813943417
-132568912112
+C:\Users\mario\OneDrive\Dokumente\GitHub\FIleWatcher\FileWatcher\App.xaml
+10-751562788
+3-2059205750
+231426588971
+132-481538851
 Changelog.xaml;DirectoryWatcher.xaml;Errorbehandlung.xaml;Logs_Bereinigung.xaml;MainWindow.xaml;SetPath.xaml;Settings.xaml;ShowInfra.xaml;ShowLog.xaml;Stats.xaml;
 
 True
