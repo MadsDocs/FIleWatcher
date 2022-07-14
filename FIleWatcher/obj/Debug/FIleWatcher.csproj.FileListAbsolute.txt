@@ -52,7 +52,6 @@ C:\Users\mario\OneDrive\Projects\FIleWatcher\FileWatcher\obj\Debug\Changelog.bam
 C:\Users\mario\source\repos\MadsDocs\FIleWatcher\FileWatcher\bin\Debug\FileWatcher.exe.config
 C:\Users\mario\source\repos\MadsDocs\FIleWatcher\FileWatcher\bin\Debug\FileWatcher.exe
 C:\Users\mario\source\repos\MadsDocs\FIleWatcher\FileWatcher\bin\Debug\FileWatcher.pdb
-C:\Users\mario\source\repos\MadsDocs\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.csprojAssemblyReference.cache
 C:\Users\mario\source\repos\MadsDocs\FIleWatcher\FileWatcher\obj\Debug\Changelog.g.cs
 C:\Users\mario\source\repos\MadsDocs\FIleWatcher\FileWatcher\obj\Debug\DirectoryWatcher.g.cs
 C:\Users\mario\source\repos\MadsDocs\FIleWatcher\FileWatcher\obj\Debug\Errorbehandlung.g.cs
@@ -186,3 +185,13 @@ D:\FileWatcher_BITBUCKET\FileWatcher\bin\Debug\System.Numerics.Vectors.xml
 D:\FileWatcher_BITBUCKET\FileWatcher\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\FileWatcher_Content.g.cs
 D:\FileWatcher_BITBUCKET\FileWatcher\obj\Debug\FileWatcher.csproj.CopyComplete
+C:\Users\mario\Source\Repos\MadsDocs\FIleWatcher\FileWatcher\bin\Debug\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\mario\Source\Repos\MadsDocs\FIleWatcher\FileWatcher\bin\Debug\runtimes\win-x64\native\e_sqlite3.dll
+C:\Users\mario\Source\Repos\MadsDocs\FIleWatcher\FileWatcher\bin\Debug\runtimes\win-arm\native\e_sqlite3.dll
+C:\Users\mario\Source\Repos\MadsDocs\FIleWatcher\FileWatcher\bin\Debug\System.Memory.dll
+C:\Users\mario\Source\Repos\MadsDocs\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.csproj.AssemblyReference.cache
+C:\Users\mario\Source\Repos\MadsDocs\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.csproj.SuggestedBindingRedirects.cache
+C:\Users\mario\Source\Repos\MadsDocs\FIleWatcher\FileWatcher\obj\Debug\ShowInfra.g.cs
+C:\Users\mario\Source\Repos\MadsDocs\FIleWatcher\FileWatcher\obj\Debug\FileWatcher_Content.g.cs
+C:\Users\mario\Source\Repos\MadsDocs\FIleWatcher\FileWatcher\obj\Debug\ShowInfra.baml
+C:\Users\mario\Source\Repos\MadsDocs\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.csproj.CopyComplete

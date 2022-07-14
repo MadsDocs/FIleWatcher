@@ -77,8 +77,40 @@ namespace FileWatcher
 
         private void btn_update_Click(object sender, RoutedEventArgs e)
         {
+            ReadLog();
+        }
+
+        private void btn_showstats_Click(object sender, RoutedEventArgs e)
+        {
+            Stats stats = new Stats();
+            stats.Show();
+        }
+
+        private void lstbx_show_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                var item = lstbx_show.SelectedItems[0];
+                //MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
+
+                //MessageBox.Show(item.ToString());
+                FileInfo finfo = new FileInfo(item.ToString());
+
+                var besitzer = File.GetAccessControl(item.ToString()).GetOwner(typeof(NTAccount));
+                var gruppe = File.GetAccessControl(item.ToString()).GetGroup(typeof(NTAccount));
+
+                MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + besitzer + "(" + gruppe + ")" + "\n\r" + "Size: " + finfo.Length + "\n\r" + "Path: " + item.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                Log._eLogger(ex);
+            }
+        }
+
+        private void ReadLog()
+        {
             string path = Logger.Path;
-            
+
             try
             {
 
@@ -130,34 +162,11 @@ namespace FileWatcher
             {
                 Log.ExLogger(ex);
             }
-
         }
 
-        private void btn_showstats_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Stats stats = new Stats();
-            stats.Show();
-        }
-
-        private void lstbx_show_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                var item = lstbx_show.SelectedItems[0];
-                //MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
-
-                //MessageBox.Show(item.ToString());
-                FileInfo finfo = new FileInfo(item.ToString());
-
-                var besitzer = File.GetAccessControl(item.ToString()).GetOwner(typeof(NTAccount));
-                var gruppe = File.GetAccessControl(item.ToString()).GetGroup(typeof(NTAccount));
-
-                MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + besitzer + "(" + gruppe + ")" + "\n\r" + "Size: " + finfo.Length + "\n\r" + "Path: " + item.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            catch (Exception ex)
-            {
-                Log._eLogger(ex);
-            }
+            ReadLog();
         }
     }
 }
