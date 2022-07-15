@@ -6,20 +6,34 @@
         xmlns:local="clr-namespace:FileWatcher"
         mc:Ignorable="d"
         Title="ShowLog" Height="1000" Width="1000" Loaded="Window_Loaded">
-    <Grid>
+    <Grid RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform/>
+                <SkewTransform/>
+                <RotateTransform Angle="0.007"/>
+                <TranslateTransform/>
+            </TransformGroup>
+        </Grid.RenderTransform>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="593*"/>
-            <ColumnDefinition Width="407*"/>
+            <ColumnDefinition Width="573*"/>
+            <ColumnDefinition Width="427*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="28*"/>
-            <RowDefinition Height="941*"/>
+            <RowDefinition/>
+            <RowDefinition Height="23*"/>
         </Grid.RowDefinitions>
-        <RadioButton x:Name="rdb_showEntry" Content="Show Entries" HorizontalAlignment="Left" Margin="189,14,0,0" VerticalAlignment="Top" Checked="rdb_showEntry_Checked" Grid.RowSpan="2"/>
-        <Label x:Name="lbl_counter" HorizontalAlignment="Left" Margin="492,9,0,0" VerticalAlignment="Top" Width="210" Height="26" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-        <Button x:Name="btn_update" Content="Update" HorizontalAlignment="Left" Margin="108,0,0,939" VerticalAlignment="Bottom" Width="75" Click="btn_update_Click" Grid.RowSpan="2"/>
-        <Button x:Name="btn_showstats" Content="Show Stats" HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" Width="94" Click="btn_showstats_Click" Grid.RowSpan="2"/>
-        <ListBox x:Name="lstbx_show" HorizontalAlignment="Left" Height="938" Margin="0,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="993" MouseDoubleClick="lstbx_show_MouseDoubleClick" Grid.ColumnSpan="2"/>
+        <RadioButton x:Name="rdb_showEntry" Content="Show Entries" HorizontalAlignment="Left" Margin="250,0,0,0" VerticalAlignment="Center" Checked="rdb_showEntry_Checked" RenderTransformOrigin="0.471,1.102" Height="15" Width="87"/>
+        <Label x:Name="lbl_counter" HorizontalAlignment="Left" Margin="492,0,0,0" VerticalAlignment="Center" Width="210" Height="26" Grid.ColumnSpan="2"/>
+        <Button x:Name="btn_update" Content="Update" HorizontalAlignment="Left" Margin="108,0,0,5" VerticalAlignment="Bottom" Width="75" Click="btn_update_Click" Height="20"/>
+        <Button x:Name="btn_showstats" Content="Show Stats" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="94" Click="btn_showstats_Click" Height="20"/>
+        <ListView x:Name="lstview_logs" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,12,0,0" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
     </Grid>
 </Window>
