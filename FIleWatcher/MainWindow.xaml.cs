@@ -93,10 +93,6 @@ namespace FileWatcher
             {
                 logs.btn_showstats.IsEnabled = false;
             }
-
-
-
-
         }
 
         private void btn_go_Click(object sender, RoutedEventArgs e)

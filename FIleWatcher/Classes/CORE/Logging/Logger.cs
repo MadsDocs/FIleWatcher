@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace FileWatcher.Classes.Logging
 {
-   class Logger
+    class Logger
     {
         public static string currentdir = Environment.CurrentDirectory;
         private static StringBuilder sb = new StringBuilder();
@@ -23,7 +23,7 @@ namespace FileWatcher.Classes.Logging
 
         public static string Path = MainWindow.pfad;
         //public static string Path { get => path; set => path = value; }
-        
+
 
         /// <summary>
         /// Dies ist der Error Logger
@@ -40,7 +40,7 @@ namespace FileWatcher.Classes.Logging
                 }
                 else
                 {
-                    sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "| ERROR |" +  "\t" + ex.Message + "\r\n").ToString();
+                    sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "| ERROR |" + "\t" + ex.Message + "\r\n").ToString();
                     File.AppendAllText(Statics.appdata + @"\FileWatcher\Logs\log.log", sb.ToString());
                     sb.Clear();
                 }
@@ -50,8 +50,8 @@ namespace FileWatcher.Classes.Logging
                 MessageBox.Show(exe.Message);
             }
         }
-        
-        public void ExLogger ( Exception ex)
+
+        public void ExLogger(Exception ex)
         {
             try
             {
@@ -63,14 +63,14 @@ namespace FileWatcher.Classes.Logging
                 {
                     string fwpath = GetPath();
 
-                    error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.Message + "\r\n") ;
+                    error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.Message + "\r\n");
                     error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.StackTrace + "\r\n");
 
-                    File.AppendAllText(fwpath + @"\error.log", error.ToString()  + "\r\n");
+                    File.AppendAllText(fwpath + @"\error.log", error.ToString() + "\r\n");
                     error.Clear();
                 }
             }
-            catch ( Exception exe)
+            catch (Exception exe)
             {
                 MessageBox.Show(@"Can´t write into the Log File, please check the save file under %appdata%\FileWatcher\save" + "\t" + exe.Message + exe.StackTrace
                                 , "Error while Logging", MessageBoxButton.OK, MessageBoxImage.Error); ;
@@ -102,7 +102,7 @@ namespace FileWatcher.Classes.Logging
                 File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");
             }
         }
-        public void LogEntrys (string name, DateTime time, WatcherChangeTypes types)
+        public void LogEntrys(string name, DateTime time, WatcherChangeTypes types)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace FileWatcher.Classes.Logging
                         }
                         else
                         {
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + " "+ DateTime.Now.ToLongTimeString() + "\r\n");
+                            sb2.Append(DateTime.Now.Date.ToLongDateString() + " " + DateTime.Now.ToLongTimeString() + "\r\n");
                             sb2.Append(name + "\r\n");
                             sb2.Append("Changed to Type: " + types + "\r\n");
                             sb2.Append("Creation Time: " + creationTime.ToString() + "\r\n");
@@ -182,8 +182,8 @@ namespace FileWatcher.Classes.Logging
 
                 string fattributes = attributes.Attributes.ToString();
 
-               var besitzer = File.GetAccessControl(name).GetOwner(typeof(NTAccount));
-               var gruppe = File.GetAccessControl(name).GetGroup(typeof(NTAccount));
+                var besitzer = File.GetAccessControl(name).GetOwner(typeof(NTAccount));
+                var gruppe = File.GetAccessControl(name).GetGroup(typeof(NTAccount));
 
 
 
@@ -240,7 +240,7 @@ namespace FileWatcher.Classes.Logging
             }
         }
 
-        public void LogDirs (string pfad)
+        public void LogDirs(string pfad)
         {
             try
             {
@@ -248,16 +248,16 @@ namespace FileWatcher.Classes.Logging
 
 
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
                 File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");
             }
-           
+
         }
 
-        public string GetPath ()
+        public string GetPath()
         {
-            if ( File.Exists (Classes.Statics.appdata + @"\FileWatcher\save"))
+            if (File.Exists(Classes.Statics.appdata + @"\FileWatcher\save"))
             {
                 int counter = 0;
                 string line;
@@ -276,17 +276,17 @@ namespace FileWatcher.Classes.Logging
             }
 
             return Path;
-            
+
         }
 
-        public void ClearAllTheGarbage ()
+        public void ClearAllTheGarbage()
         {
             try
             {
                 sb.Clear();
                 sb2.Clear();
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
                 _wLogger("Can´t clear the Garbage: " + ex.Message);
             }
