@@ -68,9 +68,8 @@
                         <Label Name="lbl_Settings" MouseDown="lbl_Settings_MouseDown">Settings</Label>
                     </MenuItem>
                     <MenuItem Header=" Log Dateien anzeigen" Click="LoDa_Click">
-                                               
+
                     </MenuItem>
-                    <MenuItem Header="Infrastruktur Status anzeigen" Click="ShowInfra"></MenuItem>
                 </MenuItem>
             </MenuItem>
             <Separator></Separator>

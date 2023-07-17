@@ -30,7 +30,7 @@ namespace FileWatcher
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            webBrowser_changelog.Navigate("https://themadbrainz.net/FileWatcher/Changelog.txt");
+            webBrowser_changelog.Navigate("http://themadbrainz.net/FileWatcher/Changelog.txt");
 
         }
     }

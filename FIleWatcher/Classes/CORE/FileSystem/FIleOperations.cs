@@ -271,6 +271,7 @@ namespace FileWatcher.Classes.FileSystem
                     StreamWriter settingswriter2 = new StreamWriter(path + @"\settings.settings");
                     settingswriter2.WriteLine("togglestatswindow = true");
                     settingswriter2.WriteLine("toggleentriewindow = true");
+                    settingswriter2.WriteLine("notifyiffwdirisexists = true");
                     settingswriter2.Flush();
                     settingswriter2.Close();
                 }
@@ -335,17 +336,6 @@ namespace FileWatcher.Classes.FileSystem
             {
                 log._eLogger(ex);
                 return filter;
-            }
-        }
-
-        public void writeSettingsFile ( string setting, int capacity)
-        {
-            try
-            {
-            }
-            catch ( Exception ex)
-            {
-                log.ExLogger(ex);
             }
         }
 

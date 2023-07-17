@@ -538,12 +538,35 @@ namespace FileWatcher
 
                 }
 
-                FileInfo finfo = new FileInfo(FinalPath);
-                
-                var besitzer = File.GetAccessControl(FinalPath).GetOwner(typeof(NTAccount));
-                var gruppe = File.GetAccessControl(FinalPath).GetGroup(typeof(NTAccount));
+                //Before we give a simple: FileNotFound Error Message, maybe we should first check if the bloddy file exists anymore:
+                if (!File.Exists(FinalPath))
+                {
+                    MessageBoxResult result = MessageBox.Show("File is non existent! Would you like to delete it from the list?", "The File you have choosen is not existent.", MessageBoxButton.YesNo, MessageBoxImage.Information);
 
-                MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + besitzer + "(" + gruppe + ")" +   "\n\r" + "Size: " +  finfo.Length + "\n\r" + "Path: " + finalPath.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        //Delete the Entry...
+                        lstview_anzeige.Items.RemoveAt(0);
+                        lstview_anzeige.Items.Refresh();
+                        counter--;
+                        lbl_counter.Content = counter;
+
+                    }
+                    else if (result == MessageBoxResult.No)
+                    {
+
+                    }
+
+                }
+                else
+                {
+                    FileInfo finfo = new FileInfo(FinalPath);
+
+                    var besitzer = File.GetAccessControl(FinalPath).GetOwner(typeof(NTAccount));
+                    var gruppe = File.GetAccessControl(FinalPath).GetGroup(typeof(NTAccount));
+
+                    MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + besitzer + "(" + gruppe + ")" + "\n\r" + "Size: " + finfo.Length + "\n\r" + "Path: " + finalPath.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
 
 
 
