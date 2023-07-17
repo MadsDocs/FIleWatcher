@@ -39,10 +39,10 @@ namespace FileWatcher
         public MainWindow()
         {
             InitializeComponent();
-            log._wLogger("Programm started");
-            windows.ResizeMode = ResizeMode.CanMinimize;
             Init inti = new Init();
             inti._Init();
+            log._wLogger("Programm started");
+            windows.ResizeMode = ResizeMode.CanMinimize;
             lbl_fwversion.Content = "Installierte Version: " + inti.Fwversion;
             lbl_Messages.Visibility = Visibility.Hidden;
             SetPath spath = new SetPath();
@@ -223,12 +223,11 @@ namespace FileWatcher
                 {
                     if (owner == string.Empty)
                     {
-                        logger._wLogger("Found Owner:" + owner);
-                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
-                        counter++;
+                        logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
                     }
                     else
                     {
+                        logger._wLogger("Found Owner:" + owner);
                         DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
                         counter++;
                     }
