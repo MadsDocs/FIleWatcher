@@ -12,6 +12,7 @@ using FileWatcher.Classes.FileSystem;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.Security.Principal;
+using System.Text.RegularExpressions;
 
 namespace FileWatcher
 {
@@ -32,6 +33,8 @@ namespace FileWatcher
         private static ShowLog logs = new ShowLog();
         public static string pfad = log.GetPath();
         private int pfcounter = 0;
+        private static string finalPath = "";
+        private static string FinalPath = "";
 
         public MainWindow()
         {
@@ -492,16 +495,56 @@ namespace FileWatcher
             try
             {
                 ///TODO: Implment a better Design to Show Information...
-                var item = lstview_anzeige.SelectedItems[0];
+                string item = lstview_anzeige.SelectedItems[0].ToString();
                 //MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
 
-                MessageBox.Show(item.ToString());
-                FileInfo finfo = new FileInfo(item.ToString());
-                
-                var besitzer = File.GetAccessControl(item.ToString()).GetOwner(typeof(NTAccount));
-                var gruppe = File.GetAccessControl(item.ToString()).GetGroup(typeof(NTAccount));
+                int itemLength = item.Length;
 
-                MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + besitzer + "(" + gruppe + ")" +   "\n\r" + "Size: " +  finfo.Length + "\n\r" + "Path: " + item.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
+                //string pathName = Path.GetFileName(item);
+                if (item.Contains(@"C:\"))
+                {
+                    int itemIndex = item.IndexOf(@"C:\");
+                    string newPath = item.Remove(0, 22);
+                    int newLength = newPath.Length;
+                    int itemIndex2 = newPath.IndexOf(@"-");
+                    string replacedNewPath = newPath.Replace('-', ' ');
+
+                    if (newPath.Contains("Changed"))
+                    {
+                        int changedIndex = replacedNewPath.IndexOf("Changed");
+                        finalPath = replacedNewPath.Remove(changedIndex);
+                        FinalPath = Regex.Replace(finalPath,@"\s+", "");
+                    }
+                    else if (newPath.Contains("Created"))
+                    {
+                        int changedIndex = replacedNewPath.IndexOf("Created");
+                        finalPath = replacedNewPath.Remove(changedIndex);
+                        FinalPath = Regex.Replace(finalPath, @"\s+", "");
+                    }
+                    else if (newPath.Contains("Deleted"))
+                    {
+                        int changedIndex = replacedNewPath.IndexOf("Deleted");
+                        finalPath = replacedNewPath.Remove(changedIndex);
+                        FinalPath = Regex.Replace(finalPath, @"\s+", "");
+
+                    }
+                    else if (newPath.Contains("Renamed"))
+                    {
+                        int changedIndex = replacedNewPath.IndexOf("Renamed");
+                        finalPath = replacedNewPath.Remove(changedIndex);
+                        FinalPath = Regex.Replace(finalPath, @"\s+", "");
+
+                    }
+
+
+                }
+
+                FileInfo finfo = new FileInfo(FinalPath);
+                
+                var besitzer = File.GetAccessControl(FinalPath).GetOwner(typeof(NTAccount));
+                var gruppe = File.GetAccessControl(FinalPath).GetGroup(typeof(NTAccount));
+
+                MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + besitzer + "(" + gruppe + ")" +   "\n\r" + "Size: " +  finfo.Length + "\n\r" + "Path: " + finalPath.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
 
 
 
