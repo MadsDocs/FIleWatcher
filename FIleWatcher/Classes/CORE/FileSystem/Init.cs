@@ -122,6 +122,7 @@ namespace FileWatcher.Classes.FileSystem
                 Directory.CreateDirectory(appdata + @"\FileWatcher\Rollback");
                 Directory.CreateDirectory(appdata + @"\FileWatcher\Extensions");
                 Directory.CreateDirectory(appdata + @"\FileWatcher\config");
+                Directory.CreateDirectory(appdata + @"\FileWatcher\Database");
 
                 is_Home = true;
 
@@ -202,6 +203,19 @@ namespace FileWatcher.Classes.FileSystem
                 return null;
             }
          
+        }
+
+        public static void CreateSQLiteDatabase (string path)
+        {
+            if (!File.Exists(path))
+            {
+                //We will have to create a sqlite database
+                File.Create(Statics.pathToSqlFile);
+            }
+            else
+            {
+               //Database exists...
+            }
         }
 
 
