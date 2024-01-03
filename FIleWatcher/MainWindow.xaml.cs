@@ -16,6 +16,8 @@ using System.Security.Principal;
 using System.Text.RegularExpressions;
 using System.Security.AccessControl;
 
+using System.Threading.Tasks;
+
 namespace FileWatcher
 {
 
@@ -157,37 +159,42 @@ namespace FileWatcher
             }
         }
 
-        private void Fsw_Deleted(object sender, FileSystemEventArgs e)
+        private async void Fsw_Deleted(object sender, FileSystemEventArgs e)
         {
             try
             {
-                FileInfo info = new FileInfo(e.Name);
-                string owner = fo.GetOwnerofFile(e.Name);
-                if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
-                {
+                await Task.Run(() => {
 
-                }
-                else if ( info.Extension == ".pf" || info.Extension == ".PF")
-                {
-                    pfcounter++;
-                    logger._wLogger("Skipping .pf Files...");
-                    logger._wLogger("Current PF Counter: " + pfcounter);
-                }
-                else
-                {
-                    if ( owner == string.Empty)
+                    FileInfo info = new FileInfo(e.Name);
+                    string owner = fo.GetOwnerofFile(e.Name);
+                    if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                     {
-                        logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+
+                    }
+                    else if (info.Extension == ".pf" || info.Extension == ".PF")
+                    {
+                        pfcounter++;
+                        logger._wLogger("Skipping .pf Files...");
+                        logger._wLogger("Current PF Counter: " + pfcounter);
                     }
                     else
                     {
-                        DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
-                        counter++;
-                    }
+                        if (owner == string.Empty)
+                        {
+                            logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                        }
+                        else
+                        {
+                            DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
+                            counter++;
+                        }
 
-               
-                }
-                //Original Code
+
+                    }
+                    //Original Code
+
+                });
+                
             }
             catch (Exception ex)
             {
@@ -197,37 +204,40 @@ namespace FileWatcher
 
         }
 
-        private void Fsw_Renamed(object sender, FileSystemEventArgs e)
+        private async void Fsw_Renamed(object sender, FileSystemEventArgs e)
         {
             try
             {
-                FileInfo info = new FileInfo(e.Name);
-                string owner = fo.GetOwnerofFile(e.Name);
+                await Task.Run(() => {
+                    FileInfo info = new FileInfo(e.Name);
+                    string owner = fo.GetOwnerofFile(e.Name);
 
-                if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
-                {
-                }
-                else if (info.Extension == ".pf" || info.Extension == ".PF")
-                {
-                    pfcounter++;
-                    logger._wLogger("Skipping .pf Files...");
-                    logger._wLogger("Current PF Counter: " + pfcounter);
-                }
-                else
-                {
-                    if (owner == string.Empty)
+                    if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                     {
-                        
-                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
-                        counter++;
+                    }
+                    else if (info.Extension == ".pf" || info.Extension == ".PF")
+                    {
+                        pfcounter++;
+                        logger._wLogger("Skipping .pf Files...");
+                        logger._wLogger("Current PF Counter: " + pfcounter);
                     }
                     else
                     {
-                        logger._wLogger("Found Owner:" + owner);
-                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
-                        counter++;
+                        if (owner == string.Empty)
+                        {
+
+                            DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                            counter++;
+                        }
+                        else
+                        {
+                            logger._wLogger("Found Owner:" + owner);
+                            DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                            counter++;
+                        }
                     }
-                }
+                });
+               
 
             }
             catch (Exception ex)
@@ -236,36 +246,40 @@ namespace FileWatcher
             }
         }
 
-        private void Fsw_Created(object sender, FileSystemEventArgs e)
+        private async void Fsw_Created(object sender, FileSystemEventArgs e)
         {
             try
             {
-                FileInfo info = new FileInfo(e.Name);
-                string owner = fo.GetOwnerofFile(e.Name);
-                if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
+                await Task.Run(() =>
                 {
-                }
-                else if (info.Extension == ".pf" || info.Extension == ".PF")
-                {
-                    pfcounter++;
-                    logger._wLogger("Skipping .pf Files...");
-                    logger._wLogger("Current PF Counter: " + pfcounter);
-                }
-                else
-                {
-                    if (owner == string.Empty)
+                    FileInfo info = new FileInfo(e.Name);
+                    string owner = fo.GetOwnerofFile(e.Name);
+                    if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                     {
-                        
-                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
-                        counter++;
+                    }
+                    else if (info.Extension == ".pf" || info.Extension == ".PF")
+                    {
+                        pfcounter++;
+                        logger._wLogger("Skipping .pf Files...");
+                        logger._wLogger("Current PF Counter: " + pfcounter);
                     }
                     else
                     {
-                        logger._wLogger("Found Owner:" + owner);
-                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
-                        counter++;
+                        if (owner == string.Empty)
+                        {
+
+                            DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                            counter++;
+                        }
+                        else
+                        {
+                            logger._wLogger("Found Owner:" + owner);
+                            DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                            counter++;
+                        }
                     }
-                }
+                });
+                
 
 
 
@@ -279,36 +293,41 @@ namespace FileWatcher
 
         }
 
-        private void Fsw_Changed(object sender, FileSystemEventArgs e)
+        private async void Fsw_Changed(object sender, FileSystemEventArgs e)
         {
             try
             {
-                FileInfo info = new FileInfo(e.Name);
-                string owner = fo.GetOwnerofFile(e.Name);
+                await Task.Run(() => {
 
-                if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
-                {
-                }
-                else if (info.Extension == ".pf" || info.Extension == ".PF")
-                {
-                    pfcounter++;
-                    logger._wLogger("Skipping .pf Files...");
-                    logger._wLogger("Current PF Counter: " + pfcounter);
-                }
-                else
-                {
-                    if (owner == string.Empty)
+                    FileInfo info = new FileInfo(e.Name);
+                    string owner = fo.GetOwnerofFile(e.Name);
+
+                    if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                     {
-                        logger._wLogger("Found Owner:" + owner);
-                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
-                        counter++;
+                    }
+                    else if (info.Extension == ".pf" || info.Extension == ".PF")
+                    {
+                        pfcounter++;
+                        logger._wLogger("Skipping .pf Files...");
+                        logger._wLogger("Current PF Counter: " + pfcounter);
                     }
                     else
                     {
-                        DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
-                        counter++;
+                        if (owner == string.Empty)
+                        {
+                            logger._wLogger("Found Owner:" + owner);
+                            DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                            counter++;
+                        }
+                        else
+                        {
+                            DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                            counter++;
+                        }
                     }
-                }
+
+                });
+               
 
 
             }

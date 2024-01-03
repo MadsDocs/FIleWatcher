@@ -10,6 +10,9 @@ using System.Windows;
 using System.Security.Principal;
 using FileWatcher;
 using System.Threading;
+using System.Security.AccessControl;
+using System.Text.RegularExpressions;
+using System.Windows.Documents;
 
 namespace FileWatcher.Classes.Logging
 {
@@ -31,21 +34,34 @@ namespace FileWatcher.Classes.Logging
         /// Dies ist der Error Logger
         /// </summary>
         /// <param name="ex"></param>
-        public void _eLogger(Exception ex)
+        public async void _eLogger(Exception ex)
         {
             try
             {
-                if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
-                {
-                    MessageBox.Show("There is no FileWatcher Directory, please restart FileWatcher, or create a new Direcotry under %appdata% named FileWatcher!", "No FileWatcher Directory", MessageBoxButton.OK, MessageBoxImage.Error);
+                await Task.Run(async () => {
 
-                }
-                else
-                {
-                    sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "| ERROR |" +  "\t" + ex.Message + "\r\n").ToString();
-                    File.AppendAllText(Statics.appdata + @"\FileWatcher\Logs\log.log", sb.ToString());
-                    sb.Clear();
-                }
+                    if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
+                    {
+                        MessageBox.Show("There is no FileWatcher Directory, please restart FileWatcher, or create a new Direcotry under %appdata% named FileWatcher!", "No FileWatcher Directory", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    }
+                    else
+                    {
+                        sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "| ERROR |" + "\t" + ex.Message + "\r\n").ToString();
+                        //File.AppendAllText(Statics.appdata + @"\FileWatcher\Logs\log.log", sb.ToString());
+
+                        await Task.Run(() =>
+                        {
+                            using (StreamWriter writer = new StreamWriter(Statics.appdata + @"FileWatcher\Logs\log.log", true))
+                            {
+                                writer.WriteLineAsync(sb.ToString());
+                            }
+                        });
+                        sb.Clear();
+                    }
+
+                });
+                
             }
             catch (Exception exe)
             {
@@ -53,24 +69,36 @@ namespace FileWatcher.Classes.Logging
             }
         }
         
-        public void ExLogger ( Exception ex)
+        public async void ExLogger ( Exception ex)
         {
             try
             {
-                if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
-                {
-                    MessageBox.Show("There is no FileWatcher Directory, please restart the FileWatcher, or create a new Direcotry under %appdata% named FileWatcher!", "No FileWatcher Directory", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    string fwpath = GetPath();
+                await Task.Run(async () => {
 
-                    error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.Message + "\r\n") ;
-                    error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.StackTrace + "\r\n");
+                    if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
+                    {
+                        MessageBox.Show("There is no FileWatcher Directory, please restart the FileWatcher, or create a new Direcotry under %appdata% named FileWatcher!", "No FileWatcher Directory", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        string fwpath = GetPath();
 
-                    File.AppendAllText(fwpath + @"\error.log", error.ToString()  + "\r\n");
-                    error.Clear();
-                }
+                        error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.Message + "\r\n");
+                        error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.StackTrace + "\r\n");
+
+                        File.AppendAllText(fwpath + @"\error.log", error.ToString() + "\r\n");
+
+                        await Task.Run(() =>
+                        {
+                            using (StreamWriter writer = new StreamWriter(fwpath + @"\error.log", true))
+                            {
+                                writer.WriteLineAsync(error.ToString());
+                            }
+                        });
+                        error.Clear();
+                    }
+                });
+               
             }
             catch ( Exception exe)
             {
@@ -83,40 +111,178 @@ namespace FileWatcher.Classes.Logging
         /// Dies ist der Warning Logger
         /// </summary>
         /// <param name="message"></param>
-        public void _wLogger(string message)
+        public async void _wLogger(string message)
         {
             try
             {
+                await Task.Run(async () =>
+                {
+                    if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
+                    {
+                        MessageBox.Show("There is no FileWatcher Directory, please restart the FileWatcher, or create a new Direcotry under %appdata% named FileWatcher!", "No FileWatcher Directory", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + message + "\r\n").ToString();
+                        //File.AppendAllText(Statics.appdata + @"\FileWatcher\Logs\log.log", sb.ToString());
 
-                if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
-                {
-                    MessageBox.Show("There is no FileWatcher Directory, please restart the FileWatcher, or create a new Direcotry under %appdata% named FileWatcher!", "No FileWatcher Directory", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + message + "\r\n").ToString();
-                    File.AppendAllText(Statics.appdata + @"\FileWatcher\Logs\log.log", sb.ToString());
-                    sb.Clear();
-                }
+                        using (StreamWriter writer = new StreamWriter(Logger.Path + @"\log.log", true))
+                        {
+                            await writer.WriteLineAsync(sb.ToString()); 
+                        }
+                        sb.Clear();
+                    }
+                });
+                
+
+
+                
             }
             catch (Exception ex)
             {
-                File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");
+                //File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");
+                /*using (StreamWriter writer = new StreamWriter(Logger.Path + @"\log.log", true))
+                {
+                    await writer.WriteLineAsync(ex.Message);
+                    
+                }*/
+                
+                
             }
         }
-        public void LogEntrys (string name, DateTime time, WatcherChangeTypes types)
+        public async void LogEntrys (string name, DateTime time, WatcherChangeTypes types)
         {
             try
             {
-                FileInfo attributes = new FileInfo(name);
-                DateTime creationTime = attributes.CreationTimeUtc;
-                string fattributes = attributes.Attributes.ToString();
+                await Task.Run(async () => {
+                    FileInfo attributes = new FileInfo(name);
+                    DateTime creationTime = attributes.CreationTimeUtc;
+                    string fattributes = attributes.Attributes.ToString();
 
-                var besitzer = File.GetAccessControl(name).GetOwner(typeof(NTAccount));
-                var gruppe = File.GetAccessControl(name).GetGroup(typeof(NTAccount));
+                    string pattern = @"([a-zA-Z]:\\[^*|""<>?\n]*)|(\\\\.*?\\.*?\\.*?\\[^*|""<>?\n]*)";
+                    Regex rex = new Regex(pattern, RegexOptions.IgnoreCase);
+                    MatchCollection matches = rex.Matches(name);
+                    foreach (Match match in matches)
+                    {
+                        string path = match.Value;
+                        //replace the - with a space
+                        path = path.Replace("-", " ");
+                        path = path.Replace("Changed", " ");
+                        path = path.Replace("Created", " ");
+                        path = path.Replace("Deleted", " ");
+                        path = path.Replace("Renamed", " ");
+                        path = path.Replace("->", " ");
+                        path = path.Replace("}", "");
+                        FileInfo finfo = new FileInfo(path);
 
-                if (attributes.Length != Statics.max_length)
+                        //Get the Owner of the File
+                        if (File.Exists(path.ToString()))
+                        {
+                            FileSecurity fsec = File.GetAccessControl(path.ToString());
+                            IdentityReference idOwner = fsec.GetOwner(typeof(NTAccount));
+                            IdentityReference idGroup = fsec.GetGroup(typeof(NTAccount));
+
+                            if (attributes.Length != Statics.max_length)
+                            {
+
+                                string extension = attributes.Extension;
+
+                                if (extension == ".tmp")
+                                {
+                                    if (Path == "INVALID" || Path == string.Empty)
+                                    {
+                                        _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
+                                    }
+                                    else
+                                    {
+                                        sb2.Append(DateTime.Now.Date.ToLongDateString() + " " + DateTime.Now.ToLongTimeString() + "\r\n");
+                                        sb2.Append(name + "\r\n");
+                                        sb2.Append("Changed to Type: " + types + "\r\n");
+                                        sb2.Append("Creation Time: " + creationTime.ToString() + "\r\n");
+                                        sb2.Append("Attributes: " + fattributes + "\r\n");
+                                        sb2.Append("Owner: " + idOwner + "\r\n");
+                                        sb2.Append("Group: " + idGroup + "\r\n");
+                                        sb2.Append("\r\n");
+                                        //File.AppendAllText(Path + @"\entries.log", sb2.ToString());
+
+
+
+                                        using (StreamWriter writer = new StreamWriter(Path + @"\entries.log", true))
+                                        {
+                                            await writer.WriteLineAsync(sb2.ToString());
+                                        }
+                                            
+                                        sb2.Clear();
+
+                                    }
+                                }
+                                else
+                                {
+                                    if (Path == "INVALID" || Path == string.Empty)
+                                    {
+                                        _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
+                                    }
+                                    else
+                                    {
+                                        long length2 = attributes.Length;
+                                        sb2.Append(DateTime.Now.Date.ToLongDateString() + " " + DateTime.Now.ToLongTimeString() + "\r\n");
+                                        sb2.Append(name + "\r\n");
+                                        sb2.Append("Changed to Type: " + types + "\r\n");
+                                        sb2.Append("Creation Time: " + creationTime.ToString() + "\r\n");
+                                        sb2.Append("Attributes: " + fattributes + "\r\n");
+                                        sb2.Append("Length: " + length2 + "\r\n");
+                                        sb2.Append("Owner: " + idOwner + "\r\n");
+                                        sb2.Append("Group: " + idGroup + "\r\n");
+                                        sb2.Append("\r\n");
+                                        //File.AppendAllText(Path + @"\entries.log", sb2.ToString());
+
+                                        using (StreamWriter writer = new StreamWriter(Path + @"\entries.log", true))
+                                        {
+                                            await writer.WriteLineAsync(sb2.ToString());
+                                        }
+                                        sb2.Clear();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                sb2.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "== Datei wurde nicht mitgeloggt! " + attributes.Name + " == ");
+                            }
+
+                        }
+                        else
+                        {
+                            
+                        }
+                    }
+                });
+                
+            }
+            catch (Exception ex)
+            {
+                //File.AppendAllText(ex.Message + "\r\n");
+                /*using (StreamWriter writer = new StreamWriter(Logger.Path + @"\log.log", true))
                 {
+                    await writer.WriteLineAsync(ex.Message);
+                }*/
+            }
+
+        }
+
+        public async void LogDirEntrys(string name, DateTime time, WatcherChangeTypes types)
+        {
+            try
+            {
+                await Task.Run(async () => {
+                    FileInfo attributes = new FileInfo(name);
+                    DateTime creationTime = attributes.CreationTimeUtc;
+
+                    string fattributes = attributes.Attributes.ToString();
+
+                    var besitzer = File.GetAccessControl(name).GetOwner(typeof(NTAccount));
+                    var gruppe = File.GetAccessControl(name).GetGroup(typeof(NTAccount));
+
+
 
                     string extension = attributes.Extension;
 
@@ -128,16 +294,22 @@ namespace FileWatcher.Classes.Logging
                         }
                         else
                         {
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + " "+ DateTime.Now.ToLongTimeString() + "\r\n");
-                            sb2.Append(name + "\r\n");
-                            sb2.Append("Changed to Type: " + types + "\r\n");
-                            sb2.Append("Creation Time: " + creationTime.ToString() + "\r\n");
-                            sb2.Append("Attributes: " + fattributes + "\r\n");
-                            sb2.Append("Owner: " + besitzer + "\r\n");
-                            sb2.Append("Group: " + gruppe + "\r\n");
-                            sb2.Append("\r\n");
-                            File.AppendAllText(Path + @"\entries.log", sb2.ToString());
-                            sb2.Clear();
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + " " + DateTime.Now.ToLongTimeString() + "\t" + "= DirectoryWatcher =" + "\r\n");
+                            sb3.Append(name + "\r\n");
+                            sb3.Append("Changed to Type: " + types + "\r\n");
+                            sb3.Append("Creation Time: " + creationTime.ToString() + "\r\n");
+                            sb3.Append("Attributes: " + fattributes + "\r\n");
+                            sb3.Append("Owner: " + besitzer + "\r\n");
+                            sb3.Append("Group: " + gruppe + "\r\n");
+
+                            sb3.Append("\r\n");
+                            //File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
+
+                            using (StreamWriter writer = new StreamWriter(Path + @"\direntries.log", true))
+                            {
+                                await writer.WriteLineAsync(sb3.ToString());
+                            }
+                            sb3.Clear();
                         }
                     }
                     else
@@ -149,92 +321,29 @@ namespace FileWatcher.Classes.Logging
                         else
                         {
                             long length2 = attributes.Length;
-                            sb2.Append(DateTime.Now.Date.ToLongDateString() + " " + DateTime.Now.ToLongTimeString() + "\r\n");
-                            sb2.Append(name + "\r\n");
-                            sb2.Append("Changed to Type: " + types + "\r\n");
-                            sb2.Append("Creation Time: " + creationTime.ToString() + "\r\n");
-                            sb2.Append("Attributes: " + fattributes + "\r\n");
-                            sb2.Append("Length: " + length2 + "\r\n");
-                            sb2.Append("Owner: " + besitzer + "\r\n");
-                            sb2.Append("Group: " + gruppe + "\r\n");
-                            sb2.Append("\r\n");
-                            File.AppendAllText(Path + @"\entries.log", sb2.ToString());
-                            sb2.Clear();
+                            sb3.Append(DateTime.Now.Date.ToLongDateString() + " " + DateTime.Now.ToLongTimeString() + "\t" + "= DirectoryWatcher =" + "\r\n");
+                            sb3.Append(name + "\r\n");
+                            sb3.Append("Changed to Type: " + types + "\r\n");
+                            sb3.Append("Creation Time: " + creationTime.ToString() + "\r\n");
+                            sb3.Append("Attributes: " + fattributes + "\r\n");
+                            sb3.Append("Length: " + length2 + "\r\n");
+                            sb3.Append("Owner: " + besitzer + "\r\n");
+                            sb3.Append("Group: " + gruppe + "\r\n");
+
+                            sb3.Append("\r\n");
+                            //File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
+
+                            using (StreamWriter writer = new StreamWriter(Path + @"\direntries.log", true))
+                            {
+                                await writer.WriteLineAsync(sb3.ToString());
+                            }
+                            sb3.Clear();
+
+                            sb3.Clear();
                         }
                     }
-                }
-                else
-                {
-                    sb2.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + "== Datei wurde nicht mitgeloggt! " + attributes.Name + " == ");
-                }
-            }
-            catch (Exception ex)
-            {
-                File.AppendAllText(Logger.Path + @"\log.log", ex.Message + "\r\n");
-            }
-
-        }
-
-        public void LogDirEntrys(string name, DateTime time, WatcherChangeTypes types)
-        {
-            try
-            {
-                FileInfo attributes = new FileInfo(name);
-                DateTime creationTime = attributes.CreationTimeUtc;
-
-                string fattributes = attributes.Attributes.ToString();
-
-               var besitzer = File.GetAccessControl(name).GetOwner(typeof(NTAccount));
-               var gruppe = File.GetAccessControl(name).GetGroup(typeof(NTAccount));
-
-
-
-                string extension = attributes.Extension;
-
-                if (extension == ".tmp")
-                {
-                    if (Path == "INVALID" || Path == string.Empty)
-                    {
-                        _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
-                    }
-                    else
-                    {
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + " " + DateTime.Now.ToLongTimeString() + "\t" + "= DirectoryWatcher =" + "\r\n");
-                        sb3.Append(name + "\r\n");
-                        sb3.Append("Changed to Type: " + types + "\r\n");
-                        sb3.Append("Creation Time: " + creationTime.ToString() + "\r\n");
-                        sb3.Append("Attributes: " + fattributes + "\r\n");
-                        sb3.Append("Owner: " + besitzer + "\r\n");
-                        sb3.Append("Group: " + gruppe + "\r\n");
-
-                        sb3.Append("\r\n");
-                        File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
-                        sb3.Clear();
-                    }
-                }
-                else
-                {
-                    if (Path == "INVALID" || Path == string.Empty)
-                    {
-                        _wLogger("Kann Entries.log nicht schreiben da der Pfad invalid ist!");
-                    }
-                    else
-                    {
-                        long length2 = attributes.Length;
-                        sb3.Append(DateTime.Now.Date.ToLongDateString() + " " + DateTime.Now.ToLongTimeString() + "\t" + "= DirectoryWatcher =" + "\r\n");
-                        sb3.Append(name + "\r\n");
-                        sb3.Append("Changed to Type: " + types + "\r\n");
-                        sb3.Append("Creation Time: " + creationTime.ToString() + "\r\n");
-                        sb3.Append("Attributes: " + fattributes + "\r\n");
-                        sb3.Append("Length: " + length2 + "\r\n");
-                        sb3.Append("Owner: " + besitzer + "\r\n");
-                        sb3.Append("Group: " + gruppe + "\r\n");
-
-                        sb3.Append("\r\n");
-                        File.AppendAllText(Path + @"\direntries.log", sb3.ToString());
-                        sb3.Clear();
-                    }
-                }
+                });
+                
             }
             catch (Exception ex)
             {
