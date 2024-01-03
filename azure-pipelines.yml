@@ -32,8 +32,10 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: PublishBuildArtifacts@1
+- task: CopyFilesOverSSH@0
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'FileWatcher'
-    publishLocation: 'Container'
+    sshEndpoint: 'upload'
+    sourceFolder: 'D:\a\1\s\FileWatcher\bin\Release\'
+    contents: '*.exe'
+    targetFolder: 'upload'
+    readyTimeout: '40000'
