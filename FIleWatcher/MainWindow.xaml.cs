@@ -13,6 +13,9 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using System.Security.Principal;
 
+using System.Text.RegularExpressions;
+using System.Security.AccessControl;
+
 namespace FileWatcher
 {
 
@@ -489,17 +492,45 @@ namespace FileWatcher
                 var item = lstview_anzeige.SelectedItems[0];
                 //MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
 
-                MessageBox.Show(item.ToString());
-                FileInfo finfo = new FileInfo(item.ToString());
-                
-                var besitzer = File.GetAccessControl(item.ToString()).GetOwner(typeof(NTAccount));
-                var gruppe = File.GetAccessControl(item.ToString()).GetGroup(typeof(NTAccount));
+                var selectedItem = lstview_anzeige.SelectedItem.ToString();
+                //MessageBox.Show(selectedItem, "Detailierte Informationen", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + besitzer + "(" + gruppe + ")" +   "\n\r" + "Size: " +  finfo.Length + "\n\r" + "Path: " + item.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
+                int length = selectedItem.Length;
+                string pattern = @"([a-zA-Z]:\\[^*|""<>?\n]*)|(\\\\.*?\\.*?\\.*?\\[^*|""<>?\n]*)";
+                Regex rex = new Regex(pattern, RegexOptions.IgnoreCase);
+                MatchCollection matches = rex.Matches(selectedItem);
+                foreach (Match match in matches)
+                {
+                    string path = match.Value;
+                    //replace the - with a space
+                    path = path.Replace("-", " ");
+                    path = path.Replace("Changed", " ");
+                    path = path.Replace("Created", " ");
+                    path = path.Replace("Deleted", " ");
+                    path = path.Replace("Renamed", " ");
+                    path = path.Replace("->", " ");
+                    path = path.Replace("}", "");
+                    FileInfo finfo = new FileInfo(path);
+
+                    //Get the Owner of the File
+                    if (File.Exists(path.ToString()))
+                    {
+                        FileSecurity fsec = File.GetAccessControl(path.ToString());
+                        IdentityReference idOwner = fsec.GetOwner(typeof(NTAccount));
+                        IdentityReference idGroup = fsec.GetGroup(typeof(NTAccount));
+
+                        MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + idOwner + "(" + idGroup + ")" + "\n\r" + "Size: " + finfo.Length + "\n\r" + "Path: " + item.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show(path.ToString() + "do not exists anymore", "File not found!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
 
 
+                    
 
-
+                    
+                }
             }
             catch (Exception ex)
             {

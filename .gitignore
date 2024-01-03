@@ -1,0 +1,10 @@
+
+*.vsidx
+*.lock
+*.exe
+*.pdb
+*.cache
+*.txt
+*.Cache
+*.exe
+*.pdb
