@@ -32,18 +32,10 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: true
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)_FileWatcher.zip'
-    replaceExistingArchive: true
-
 - task: CopyFilesOverSSH@0
   inputs:
     sshEndpoint: 'upload'
-    sourceFolder: '$(Build.BinariesDirectory)'
-    contents: '*.zip'
+    sourceFolder: 'D:\a\1\s\FileWatcher\bin\Release\FileWatcher.exe'
+    contents: '*.exe'
     targetFolder: 'upload'
-    readyTimeout: '30000'
+    readyTimeout: '40000'
