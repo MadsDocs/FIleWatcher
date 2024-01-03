@@ -217,12 +217,13 @@ namespace FileWatcher
                 {
                     if (owner == string.Empty)
                     {
-                        logger._wLogger("Found Owner:" + owner);
+                        
                         DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
                         counter++;
                     }
                     else
                     {
+                        logger._wLogger("Found Owner:" + owner);
                         DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
                         counter++;
                     }
@@ -254,12 +255,13 @@ namespace FileWatcher
                 {
                     if (owner == string.Empty)
                     {
-                        logger._wLogger("Found Owner:" + owner);
+                        
                         DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
                         counter++;
                     }
                     else
                     {
+                        logger._wLogger("Found Owner:" + owner);
                         DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
                         counter++;
                     }
@@ -525,11 +527,6 @@ namespace FileWatcher
                     {
                         MessageBox.Show(path.ToString() + "do not exists anymore", "File not found!", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-
-
-                    
-
-                    
                 }
             }
             catch (Exception ex)

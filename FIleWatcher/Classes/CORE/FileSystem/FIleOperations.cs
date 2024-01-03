@@ -293,5 +293,32 @@ namespace FileWatcher.Classes.FileSystem
             }
         }
 
+        internal static void ClearLogFiles()
+        {
+            //This method should truncate / clear the logfiles found under %appdata%\FileWatcher\Logs
+            try
+            {
+                string loggerdir = getLoggerDir();
+                MessageBox.Show("FileWatcher will now clear all LogFiles that are found under: " + loggerdir, "Clearing LogFiles", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly, false);
+
+                if (loggerdir == string.Empty)
+                {
+                    log._wLogger("No Path given!");
+                }
+                else
+                {
+                    string[] files = Directory.GetFiles(loggerdir);
+
+                    foreach (string file in files)
+                    {
+                        File.Delete(file);
+                    }
+                }
+            }
+            catch ( Exception ex)
+            {
+                log.ExLogger(ex);
+            }
+        }
     }
 }

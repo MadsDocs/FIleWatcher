@@ -55,6 +55,7 @@ namespace FileWatcher.Classes.FileSystem
                 {
                     //Read the Settings
                     string toggleentries = FIleOperations.getAppSettings("showentries");
+                    toggleentries = toggleentries.ToLower();
                     if (toggleentries == "true")
                     {
                         is_entriesenabled = true;
@@ -65,7 +66,8 @@ namespace FileWatcher.Classes.FileSystem
                     }
 
                     string togglestats = FIleOperations.getAppSettings("showstats");
-                    if (togglestats == "True")
+                    togglestats = togglestats.ToLower();
+                    if (togglestats == "true")
                     {
                         is_statsenabled = true;
                     }
@@ -73,11 +75,27 @@ namespace FileWatcher.Classes.FileSystem
                     {
                         is_statsenabled = false;
                     }
+
+                    string toggleClearLogFiles = FIleOperations.getAppSettings("clearlogfiles");
+                    toggleClearLogFiles = toggleClearLogFiles.ToLower();
+
+                    if (toggleClearLogFiles == "true")
+                    {
+                        //Clear the Logfiles
+                        FIleOperations.ClearLogFiles();
+                    }
+                    else
+                    {
+                        //Do nothing
+                    }
+
+
                 }
                 else if (File.Exists(@"D:\FileWatcher_BITBUCKET\FileWatcher\App.config"))
                 {
                     //Read the Settings
                     string toggleentries = FIleOperations.getAppSettings("showentries");
+                    toggleentries = toggleentries.ToLower();
                     if (toggleentries == "True")
                     {
                         is_entriesenabled = true;
@@ -88,6 +106,7 @@ namespace FileWatcher.Classes.FileSystem
                     }
 
                     string togglestats = FIleOperations.getAppSettings("showstats");
+                    togglestats = togglestats.ToLower();
                     if (togglestats == "True")
                     {
                         is_statsenabled = true;
@@ -99,8 +118,8 @@ namespace FileWatcher.Classes.FileSystem
                 }
                 else
                 {
-                    is_entriesenabled = true;
-                    is_statsenabled = true;
+                    is_entriesenabled = false;
+                    is_statsenabled = false;
                 }
             }
             catch (Exception ex)
@@ -126,7 +145,7 @@ namespace FileWatcher.Classes.FileSystem
             }
             catch (Exception)
             {
-                MessageBox.Show("Konnte kein Verzeichnis für den Filewatcher anlegen, starten Sie bitte das Programm als Administrator");
+                MessageBox.Show("Could not create the HomeDirectory for the filewatcher! Please start the FileWatcher as Administrator!");
                 is_Home = false;
 
             }

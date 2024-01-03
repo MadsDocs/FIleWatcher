@@ -22,6 +22,8 @@ namespace FileWatcher.Classes.Logging
         private static StringBuilder sb3 = new StringBuilder();
 
         public static string Path = MainWindow.pfad;
+
+
         //public static string Path { get => path; set => path = value; }
         
 
