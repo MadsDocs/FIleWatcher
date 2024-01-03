@@ -39,3 +39,11 @@ steps:
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)_FileWatcher.zip'
     replaceExistingArchive: true
+
+- task: CopyFilesOverSSH@0
+  inputs:
+    sshEndpoint: 'upload'
+    sourceFolder: '$(Build.BinariesDirectory)'
+    contents: '*.zip'
+    targetFolder: 'upload'
+    readyTimeout: '30000'
