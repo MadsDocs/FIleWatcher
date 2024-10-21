@@ -17,6 +17,8 @@ using System.Text.RegularExpressions;
 using System.Security.AccessControl;
 
 using System.Threading.Tasks;
+using System.Web.UI.WebControls.Expressions;
+using System.Web.UI.WebControls;
 
 namespace FileWatcher
 {
@@ -88,10 +90,6 @@ namespace FileWatcher
             {
                 logs.btn_showstats.IsEnabled = false;
             }
-
-
-
-
         }
 
         private void btn_go_Click(object sender, RoutedEventArgs e)
@@ -125,7 +123,7 @@ namespace FileWatcher
                         fsw.Filter = "*.*";
 
 
-                        fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+                        /*fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
 
                         if (fsw.EnableRaisingEvents == false)
                         {
@@ -143,7 +141,9 @@ namespace FileWatcher
                         fsw.Changed += Fsw_Changed;
                         fsw.Created += Fsw_Created;
                         fsw.Renamed += Fsw_Renamed;
-                        fsw.Deleted += Fsw_Deleted;
+                        fsw.Deleted += Fsw_Deleted;*/
+
+                        InitializeFileSystemWatcher();
 
                     }
                 }
@@ -158,7 +158,7 @@ namespace FileWatcher
 
             }
         }
-
+        /*
         private async void Fsw_Deleted(object sender, FileSystemEventArgs e)
         {
             try
@@ -167,19 +167,26 @@ namespace FileWatcher
 
                     FileInfo info = new FileInfo(e.Name);
                     string owner = fo.GetOwnerofFile(e.Name);
+                    string windir = Environment.GetEnvironmentVariable("windir");
+                    logger._wLogger("Found windir under" + windir);
+
                     if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                     {
 
                     }
-                    else if (info.Extension == ".pf" || info.Extension == ".PF")
+                    else if (info.Extension.Equals(".pf", StringComparison.OrdinalIgnoreCase))
                     {
                         pfcounter++;
                         logger._wLogger("Skipping .pf Files...");
                         logger._wLogger("Current PF Counter: " + pfcounter);
                     }
+                    else if (info.FullName.StartsWith(windir, StringComparison.OrdinalIgnoreCase))
+                    {
+                        logger._wLogger("Skipping files in %windir% directory...");
+                    }
                     else
                     {
-                        if (owner == string.Empty)
+                        if (string.IsNullOrEmpty(owner))
                         {
                             logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
                         }
@@ -188,8 +195,6 @@ namespace FileWatcher
                             DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
                             counter++;
                         }
-
-
                     }
                     //Original Code
 
@@ -204,35 +209,39 @@ namespace FileWatcher
 
         }
 
-        private async void Fsw_Renamed(object sender, FileSystemEventArgs e)
+        /*private async void Fsw_Renamed(object sender, FileSystemEventArgs e)
         {
             try
             {
                 await Task.Run(() => {
                     FileInfo info = new FileInfo(e.Name);
                     string owner = fo.GetOwnerofFile(e.Name);
+                    string windir = Environment.GetEnvironmentVariable("windir");
+                    logger._wLogger("Found windir under" + windir);
 
                     if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                     {
+
                     }
-                    else if (info.Extension == ".pf" || info.Extension == ".PF")
+                    else if (info.Extension.Equals(".pf", StringComparison.OrdinalIgnoreCase))
                     {
                         pfcounter++;
                         logger._wLogger("Skipping .pf Files...");
                         logger._wLogger("Current PF Counter: " + pfcounter);
                     }
+                    else if (info.FullName.StartsWith(windir, StringComparison.OrdinalIgnoreCase))
+                    {
+                        logger._wLogger("Skipping files in %windir% directory...");
+                    }
                     else
                     {
-                        if (owner == string.Empty)
+                        if (string.IsNullOrEmpty(owner))
                         {
-
-                            DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
-                            counter++;
+                            logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
                         }
                         else
                         {
-                            logger._wLogger("Found Owner:" + owner);
-                            DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                            DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
                             counter++;
                         }
                     }
@@ -254,27 +263,32 @@ namespace FileWatcher
                 {
                     FileInfo info = new FileInfo(e.Name);
                     string owner = fo.GetOwnerofFile(e.Name);
+                    string windir = Environment.GetEnvironmentVariable("windir");
+                    logger._wLogger("Found windir under" + windir);
+
                     if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                     {
+
                     }
-                    else if (info.Extension == ".pf" || info.Extension == ".PF")
+                    else if (info.Extension.Equals(".pf", StringComparison.OrdinalIgnoreCase))
                     {
                         pfcounter++;
                         logger._wLogger("Skipping .pf Files...");
                         logger._wLogger("Current PF Counter: " + pfcounter);
                     }
+                    else if (info.FullName.StartsWith(windir, StringComparison.OrdinalIgnoreCase))
+                    {
+                        logger._wLogger("Skipping files in %windir% directory...");
+                    }
                     else
                     {
-                        if (owner == string.Empty)
+                        if (string.IsNullOrEmpty(owner))
                         {
-
-                            DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
-                            counter++;
+                            logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
                         }
                         else
                         {
-                            logger._wLogger("Found Owner:" + owner);
-                            DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                            DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
                             counter++;
                         }
                     }
@@ -301,35 +315,97 @@ namespace FileWatcher
 
                     FileInfo info = new FileInfo(e.Name);
                     string owner = fo.GetOwnerofFile(e.Name);
+                    string windir = Environment.GetEnvironmentVariable("windir");
+                    logger._wLogger("Found windir under" + windir);
 
                     if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
                     {
+
                     }
-                    else if (info.Extension == ".pf" || info.Extension == ".PF")
+                    else if (info.Extension.Equals(".pf", StringComparison.OrdinalIgnoreCase))
                     {
                         pfcounter++;
                         logger._wLogger("Skipping .pf Files...");
                         logger._wLogger("Current PF Counter: " + pfcounter);
                     }
+                    else if (info.FullName.StartsWith(windir, StringComparison.OrdinalIgnoreCase))
+                    {
+                        logger._wLogger("Skipping files in %windir% directory...");
+                    }
                     else
                     {
-                        if (owner == string.Empty)
+                        if (string.IsNullOrEmpty(owner))
                         {
-                            logger._wLogger("Found Owner:" + owner);
-                            DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
-                            counter++;
+                            logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
                         }
                         else
                         {
-                            DisplayFiles(WatcherChangeTypes.Changed, e.FullPath, owner);
+                            DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
                             counter++;
                         }
                     }
-
                 });
                
 
 
+            }
+            catch (Exception ex)
+            {
+                log.ExLogger(ex);
+            }
+        }
+        */
+        private void InitializeFileSystemWatcher()
+        {
+            fsw.Path = @"C:\";
+            fsw.IncludeSubdirectories = true;
+            fsw.Filter = "*.*";
+            fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+
+            fsw.Changed += OnFileSystemEvent;
+            fsw.Created += OnFileSystemEvent;
+            fsw.Deleted += OnFileSystemEvent;
+            fsw.Renamed += OnFileSystemEvent;
+
+            fsw.EnableRaisingEvents = true;
+        }
+
+        private async void OnFileSystemEvent (object sender, FileSystemEventArgs e)
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    FileInfo info = new FileInfo(e.FullPath);
+                    string owner = fo.GetOwnerofFile(e.FullPath);
+
+                    if (info.Name == "entries.log" || info.Name == "log.log" || info.Name == "error.log")
+                    {
+                        // Skip log files
+                    }
+                    else if (info.Extension.Equals(".pf", StringComparison.OrdinalIgnoreCase))
+                    {
+                        pfcounter++;
+                        logger._wLogger("Skipping .pf Files...");
+                        logger._wLogger("Current PF Counter: " + pfcounter);
+                    }
+                    else if (info.FullName.StartsWith(Environment.GetFolderPath(Environment.SpecialFolder.Windows), StringComparison.OrdinalIgnoreCase))
+                    {
+                        logger._wLogger("Skipping files in Windows directory...");
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(owner))
+                        {
+                            logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                        }
+                        else
+                        {
+                            DisplayFiles(e.ChangeType, e.FullPath, owner);
+                            counter++;
+                        }
+                    }
+                });
             }
             catch (Exception ex)
             {
@@ -344,7 +420,7 @@ namespace FileWatcher
 
             try
             {
-                if (watcherTypes == WatcherChangeTypes.Changed)
+                /*if (watcherTypes == WatcherChangeTypes.Changed)
                 {
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes, owner); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
@@ -371,7 +447,15 @@ namespace FileWatcher
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
                     Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
-                }
+                }*/
+
+                Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() =>
+                {
+                    AddtoList($"{DateTime.Now} -> {FileName} - {watcherTypes}", watcherTypes, owner);
+                    AutoScroll();
+                    DisplayCounter();
+                    log.LogEntrys(FileName, DateTime.Now, watcherTypes);
+                }));
             }
             catch (Exception ex)
             {
@@ -510,9 +594,9 @@ namespace FileWatcher
             try
             {
                 ///TODO: Implment a better Design to Show Information...
-                var item = lstview_anzeige.SelectedItems[0];
+                /*var item = lstview_anzeige.SelectedItems[0];
                 //MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
-
+                
                 var selectedItem = lstview_anzeige.SelectedItem.ToString();
                 //MessageBox.Show(selectedItem, "Detailierte Informationen", MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -546,7 +630,25 @@ namespace FileWatcher
                     {
                         MessageBox.Show(path.ToString() + "do not exists anymore", "File not found!", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                }*/
+
+                if(lstview_anzeige.SelectedItem == null)
+                {
+                    MessageBox.Show("Please select an item to show the details!", "No item selected", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
+
+                var selectedItem = lstview_anzeige.SelectedItem as ListViewItem;
+                if (selectedItem == null)
+                {
+                    MessageBox.Show("Das ausgewählte Element ist ungültig.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Beispiel: Anzeigen der Details des ausgewählten Elements
+                string itemContent = selectedItem.ToString();
+                MessageBox.Show($"Details des ausgewählten Elements: {itemContent}", "Elementdetails", MessageBoxButton.OK, MessageBoxImage.Information);
+
             }
             catch (Exception ex)
             {
