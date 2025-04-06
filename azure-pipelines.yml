@@ -32,10 +32,10 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: CopyFilesOverSSH@0
-  inputs:
-    sshEndpoint: 'upload'
-    sourceFolder: 'D:\a\1\s\FileWatcher\bin\Release\'
-    contents: '*.exe'
-    targetFolder: 'upload'
-    readyTimeout: '40000'
+#- task: CopyFilesOverSSH@0
+#  inputs:
+#    sshEndpoint: 'upload'
+#    sourceFolder: 'D:\a\1\s\FileWatcher\bin\Release\'
+#    contents: '*.exe'
+#    targetFolder: 'upload'
+#    readyTimeout: '40000'
