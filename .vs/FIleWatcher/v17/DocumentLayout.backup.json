@@ -1,0 +1,211 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|c:\\users\\mario\\source\\repos\\filewatcher\\filewatcher\\filewatcher_settings.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|solutionrelative:filewatcher\\filewatcher_settings.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|C:\\Users\\mario\\source\\repos\\FIleWatcher\\filewatcher\\filewatcher_settings.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|solutionrelative:filewatcher\\filewatcher_settings.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|C:\\Users\\mario\\source\\repos\\FIleWatcher\\filewatcher\\showlog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|solutionrelative:filewatcher\\showlog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|C:\\Users\\mario\\source\\repos\\FIleWatcher\\filewatcher\\showlog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|solutionrelative:filewatcher\\showlog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|C:\\Users\\mario\\source\\repos\\FIleWatcher\\filewatcher\\classes\\core\\filesystem\\init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|solutionrelative:filewatcher\\classes\\core\\filesystem\\init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|C:\\Users\\mario\\source\\repos\\FIleWatcher\\filewatcher\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|solutionrelative:filewatcher\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|C:\\Users\\mario\\source\\repos\\FIleWatcher\\filewatcher\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|solutionrelative:filewatcher\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|C:\\Users\\mario\\source\\repos\\FIleWatcher\\filewatcher\\classes\\core\\filesystem\\fileoperations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|solutionrelative:filewatcher\\classes\\core\\filesystem\\fileoperations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|C:\\Users\\mario\\source\\repos\\FIleWatcher\\filewatcher\\classes\\core\\logging\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|solutionrelative:filewatcher\\classes\\core\\logging\\logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|C:\\Users\\mario\\source\\repos\\FIleWatcher\\filewatcher\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|solutionrelative:filewatcher\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|C:\\Users\\mario\\source\\repos\\FIleWatcher\\filewatcher\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B8548A1C-8B38-4B6D-B06A-5775C0180D08}|FileWatcher\\FileWatcher.csproj|solutionrelative:filewatcher\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FileWatcher_Settings.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\FileWatcher_Settings.xaml.cs",
+              "RelativeDocumentMoniker": "FIleWatcher\\FileWatcher_Settings.xaml.cs",
+              "ToolTip": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\FileWatcher_Settings.xaml.cs",
+              "RelativeToolTip": "FIleWatcher\\FileWatcher_Settings.xaml.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAwwDAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-30T10:35:37.104Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FileWatcher_Settings.xaml",
+              "DocumentMoniker": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\FileWatcher_Settings.xaml",
+              "RelativeDocumentMoniker": "FIleWatcher\\FileWatcher_Settings.xaml",
+              "ToolTip": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\FileWatcher_Settings.xaml",
+              "RelativeToolTip": "FIleWatcher\\FileWatcher_Settings.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-11-30T10:16:50.377Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "FIleWatcher\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\MainWindow.xaml",
+              "RelativeToolTip": "FIleWatcher\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-11-30T10:01:34.382Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Logger.cs",
+              "DocumentMoniker": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\Classes\\CORE\\Logging\\Logger.cs",
+              "RelativeDocumentMoniker": "FIleWatcher\\Classes\\CORE\\Logging\\Logger.cs",
+              "ToolTip": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\Classes\\CORE\\Logging\\Logger.cs",
+              "RelativeToolTip": "FIleWatcher\\Classes\\CORE\\Logging\\Logger.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIYAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-01-03T19:17:59.82Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FIleOperations.cs",
+              "DocumentMoniker": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\Classes\\CORE\\FileSystem\\FIleOperations.cs",
+              "RelativeDocumentMoniker": "FIleWatcher\\Classes\\CORE\\FileSystem\\FIleOperations.cs",
+              "ToolTip": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\Classes\\CORE\\FileSystem\\FIleOperations.cs",
+              "RelativeToolTip": "FIleWatcher\\Classes\\CORE\\FileSystem\\FIleOperations.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-01-03T19:12:03.909Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "App.config",
+              "DocumentMoniker": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\App.config",
+              "RelativeDocumentMoniker": "FIleWatcher\\App.config",
+              "ToolTip": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\App.config",
+              "RelativeToolTip": "FIleWatcher\\App.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2024-01-03T19:08:12.357Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Init.cs",
+              "DocumentMoniker": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\Classes\\CORE\\FileSystem\\Init.cs",
+              "RelativeDocumentMoniker": "FIleWatcher\\Classes\\CORE\\FileSystem\\Init.cs",
+              "ToolTip": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\Classes\\CORE\\FileSystem\\Init.cs",
+              "RelativeToolTip": "FIleWatcher\\Classes\\CORE\\FileSystem\\Init.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAACkAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-01-03T18:30:48.247Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "FIleWatcher\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\MainWindow.xaml.cs",
+              "RelativeToolTip": "FIleWatcher\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAM0CAAAAAAAAAAAowOcCAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-01-02T17:29:51.742Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ShowLog.xaml",
+              "DocumentMoniker": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\ShowLog.xaml",
+              "RelativeDocumentMoniker": "FIleWatcher\\ShowLog.xaml",
+              "ToolTip": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\ShowLog.xaml",
+              "RelativeToolTip": "FIleWatcher\\ShowLog.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-01-02T17:27:58.58Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FileWatcher\\App.xaml",
+              "RelativeDocumentMoniker": "FileWatcher\\App.xaml",
+              "ToolTip": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FileWatcher\\App.xaml",
+              "RelativeToolTip": "FileWatcher\\App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-01-02T17:27:58.603Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ShowLog.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\ShowLog.xaml.cs",
+              "RelativeDocumentMoniker": "FIleWatcher\\ShowLog.xaml.cs",
+              "ToolTip": "C:\\Users\\mario\\source\\repos\\FIleWatcher\\FIleWatcher\\ShowLog.xaml.cs",
+              "RelativeToolTip": "FIleWatcher\\ShowLog.xaml.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAnwH0AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-01-02T17:27:58.605Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

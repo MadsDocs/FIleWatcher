@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\mario\Source\Repos\MadsDocs\FIleWatcher\FileWatcher\obj\Debug\
+C:\Users\mario\source\repos\FIleWatcher\FileWatcher\obj\Debug\
 FileWatcher
 none
 false
 DEBUG;TRACE
-C:\Users\mario\Source\Repos\MadsDocs\FIleWatcher\FileWatcher\App.xaml
-9-802825087
-3-662101969
-20-452550788
-21670193034
-Changelog.xaml;DirectoryWatcher.xaml;Errorbehandlung.xaml;Logs_Bereinigung.xaml;MainWindow.xaml;SetPath.xaml;ShowInfra.xaml;ShowLog.xaml;Stats.xaml;
+C:\Users\mario\source\repos\FIleWatcher\FileWatcher\App.xaml
+10-288165371
+32138090391
+21-841360316
+22-728263453
+Changelog.xaml;DirectoryWatcher.xaml;Errorbehandlung.xaml;FileWatcher_Settings.xaml;Logs_Bereinigung.xaml;MainWindow.xaml;SetPath.xaml;ShowInfra.xaml;ShowLog.xaml;Stats.xaml;
 
 False
 

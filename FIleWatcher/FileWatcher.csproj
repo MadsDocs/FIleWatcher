@@ -97,6 +97,9 @@
     <Compile Include="DirectoryWatcher.xaml.cs">
       <DependentUpon>DirectoryWatcher.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileWatcher_Settings.xaml.cs">
+      <DependentUpon>FileWatcher_Settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Logs_Bereinigung.xaml.cs">
       <DependentUpon>Logs_Bereinigung.xaml</DependentUpon>
     </Compile>
@@ -121,6 +124,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Errorbehandlung.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FileWatcher_Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

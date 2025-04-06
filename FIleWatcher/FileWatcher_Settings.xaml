@@ -1,0 +1,25 @@
+﻿<Window x:Class="FileWatcher.FileWatcher_Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FileWatcher"
+        mc:Ignorable="d"
+        Title="FileWatcher_Settings" Height="204" Width="557">
+    <Grid Margin="0,0,0,-6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="199*"/>
+            <ColumnDefinition Width="538*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="121" Click="Button_Click"/>
+        <RadioButton Content="Log to Database" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="107,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="1" Name="txt_server"/>
+        <TextBox HorizontalAlignment="Left" Margin="107,34,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="1" Name ="txt_username"/>
+        <TextBox HorizontalAlignment="Left" Margin="107,57,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="1" Name="txt_password"/>
+        <TextBox HorizontalAlignment="Left" Margin="107,81,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.Column="1" Name="txt_database"/>
+        <Label Grid.Column="1" Content="Server:" HorizontalAlignment="Left" Margin="58,5,0,0" VerticalAlignment="Top" Height="24" Width="70"/>
+        <Label Grid.Column="1" Content="Username:" HorizontalAlignment="Left" Margin="37,29,0,0" VerticalAlignment="Top" Height="24" Width="70"/>
+        <Label Grid.Column="1" Content="Password:" HorizontalAlignment="Left" Margin="43,52,0,0" VerticalAlignment="Top" Height="24" Width="70"/>
+        <Label Grid.Column="1" Content="Database:" HorizontalAlignment="Left" Margin="43,76,0,0" VerticalAlignment="Top" Height="24" Width="70"/>
+    </Grid>
+</Window>
