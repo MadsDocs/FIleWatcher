@@ -401,7 +401,9 @@ namespace FileWatcher
                     {
                         if (string.IsNullOrEmpty(owner))
                         {
-                            logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                            //logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
+                            DisplayFiles(e.ChangeType, e.FullPath,"");
+                            counter++;
                         }
                         else
                         {
