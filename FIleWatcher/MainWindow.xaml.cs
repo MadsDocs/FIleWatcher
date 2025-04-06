@@ -361,7 +361,7 @@ namespace FileWatcher
         */
         private void InitializeFileSystemWatcher()
         {
-            fsw.Path = @"C:\";
+            //fsw.Path = @"C:\";
             fsw.IncludeSubdirectories = true;
             fsw.Filter = "*.*";
             fsw.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
