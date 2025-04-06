@@ -53,10 +53,9 @@
             <MenuItem Header="Datei">
                 <MenuItem Header="Überwachungsoptionen" >
                     <MenuItem Header="Ordnerüberwachung" Click="DirectoryWatch_Click">
-
                     </MenuItem>
                  <!-- END Ordnerüberwachung-->
-                   
+
                 </MenuItem>
                 <MenuItem Header="System" >
                     <MenuItem Header="SetPath" Click="SetPath_Click" Name="SetPathMenu"></MenuItem>
@@ -66,6 +65,8 @@
                         <Label Name="lbl_ordner_clean" MouseDown="lbl_ordner_clean_MouseDown">Log Ordner bereinigen</Label>
                         <Label Name="lbl_ShowChangelog" MouseDown="lbl_ShowChangelog_MouseDown">Show Changelog</Label>
                     </MenuItem>
+                    <Label Name="lbl_Settings" MouseDown="lbl_Settings_MouseDown">Show FileWatcher Settings</Label>
+                    
                     <MenuItem Header=" Log Dateien anzeigen" Click="LoDa_Click">
                                                
                     </MenuItem>

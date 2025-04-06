@@ -19,6 +19,9 @@ using System.Security.AccessControl;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls.Expressions;
 using System.Web.UI.WebControls;
+using FileWatcher.Properties;
+
+
 
 namespace FileWatcher
 {
@@ -37,6 +40,7 @@ namespace FileWatcher
         private static FIleOperations fo = new FIleOperations();
         private static string LoggerDirPath;
         private static ShowLog logs = new ShowLog();
+        
         public static string pfad = log.GetPath();
         private int pfcounter = 0;
 
@@ -729,6 +733,12 @@ namespace FileWatcher
         {
             ShowInfra infra = new ShowInfra();
             infra.Show();
+        }
+
+        private void lbl_Settings_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            FileWatcher.FileWatcher_Settings settings = new FileWatcher_Settings();
+            settings.Show();
         }
     }
 }
