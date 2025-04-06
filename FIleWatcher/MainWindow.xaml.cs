@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using System.Web.UI.WebControls.Expressions;
 using System.Web.UI.WebControls;
 using FileWatcher.Properties;
+using FileWatcher.Classes.CORE.FileSystem;
 
 
 
@@ -599,61 +600,68 @@ namespace FileWatcher
         {
             try
             {
-                ///TODO: Implment a better Design to Show Information...
-                /*var item = lstview_anzeige.SelectedItems[0];
-                //MessageBox.Show(item.ToString(), "Detailierte Informationen",MessageBoxButton.OK, MessageBoxImage.Information);
-                
-                var selectedItem = lstview_anzeige.SelectedItem.ToString();
-                //MessageBox.Show(selectedItem, "Detailierte Informationen", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                int length = selectedItem.Length;
-                string pattern = @"([a-zA-Z]:\\[^*|""<>?\n]*)|(\\\\.*?\\.*?\\.*?\\[^*|""<>?\n]*)";
-                Regex rex = new Regex(pattern, RegexOptions.IgnoreCase);
-                MatchCollection matches = rex.Matches(selectedItem);
-                foreach (Match match in matches)
-                {
-                    string path = match.Value;
-                    //replace the - with a space
-                    path = path.Replace("-", " ");
-                    path = path.Replace("Changed", " ");
-                    path = path.Replace("Created", " ");
-                    path = path.Replace("Deleted", " ");
-                    path = path.Replace("Renamed", " ");
-                    path = path.Replace("->", " ");
-                    path = path.Replace("}", "");
-                    FileInfo finfo = new FileInfo(path);
-
-                    //Get the Owner of the File
-                    if (File.Exists(path.ToString()))
-                    {
-                        FileSecurity fsec = File.GetAccessControl(path.ToString());
-                        IdentityReference idOwner = fsec.GetOwner(typeof(NTAccount));
-                        IdentityReference idGroup = fsec.GetGroup(typeof(NTAccount));
-
-                        MessageBox.Show("Name: " + finfo.Name + "\n\r" + "Extension: " + finfo.Extension + "\n\r" + "Permissions: " + "\n\r" + "Owner: " + idOwner + "(" + idGroup + ")" + "\n\r" + "Size: " + finfo.Length + "\n\r" + "Path: " + item.ToString(), "FileInformation", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show(path.ToString() + "do not exists anymore", "File not found!", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }*/
-
                 if(lstview_anzeige.SelectedItem == null)
                 {
                     MessageBox.Show("Please select an item to show the details!", "No item selected", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
-                var selectedItem = lstview_anzeige.SelectedItem as ListViewItem;
+                var selectedItem = lstview_anzeige.SelectedItem;
+                
                 if (selectedItem == null)
                 {
-                    MessageBox.Show("Das ausgewählte Element ist ungültig.", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("The selected item is either invalid or not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
                 // Beispiel: Anzeigen der Details des ausgewählten Elements
                 string itemContent = selectedItem.ToString();
-                MessageBox.Show($"Details des ausgewählten Elements: {itemContent}", "Elementdetails", MessageBoxButton.OK, MessageBoxImage.Information);
+                string[] details = itemContent.Split(new[] { " -> ", " - " }, StringSplitOptions.None);
+
+                if (details.Length >= 3)
+                {
+                    string date = details[0];
+                    string fileName = details[1];
+                    string action =  details[2];
+
+                    //get only the filename from the filename variable
+                    FileInfo fileInfo = new FileInfo(fileName);
+                    string extension = fileInfo.Extension;
+
+                    /*if (string.IsNullOrEmpty(extension))
+                    {
+                        string message = $"Date: {date}\nFileName: {fileName}\nAction: {action}\nType: Directory";
+                        MessageBox.Show(message, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        int extensionIndex = fileName.LastIndexOf(extension, StringComparison.OrdinalIgnoreCase);
+                        int lastIndex = fileName.LastIndexOf("\\", extensionIndex, StringComparison.OrdinalIgnoreCase);
+
+                        string fileNameWithoutPath = fileName.Substring(lastIndex + 1);
+
+                        string message = $"Date: {date}\nFileName: {fileNameWithoutPath}\nAction: {action}\nType: File";
+                        MessageBox.Show(message, $"{fileNameWithoutPath}", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }*/
+
+                    string type = string.IsNullOrEmpty(extension) ? "Directory" : "File";
+                    var fileDetailsWindow = new FiileDetailsWindow(date, fileName, action, type);
+                    fileDetailsWindow.ShowDialog();
+                }
+                else if(details.Length == 2)
+                {
+                    string date = details[0];
+                    string action = details[2];
+
+                    var fileDetailsWindow = new FiileDetailsWindow(date, string.Empty, action, "Unknown");
+                    fileDetailsWindow.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Can´t find fileinformation.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                
+
 
             }
             catch (Exception ex)

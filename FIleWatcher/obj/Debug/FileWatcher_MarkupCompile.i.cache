@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\mario\source\repos\FIleWatcher\FileWatcher\App.xaml
-10-288165371
+112058055576
 32138090391
-221080417805
+23-2030203998
 22-728263453
-Changelog.xaml;DirectoryWatcher.xaml;Errorbehandlung.xaml;FileWatcher_Settings.xaml;Logs_Bereinigung.xaml;MainWindow.xaml;SetPath.xaml;ShowInfra.xaml;ShowLog.xaml;Stats.xaml;
+Changelog.xaml;Classes\CORE\FileSystem\FiileDetailsWindow.xaml;DirectoryWatcher.xaml;Errorbehandlung.xaml;FileWatcher_Settings.xaml;Logs_Bereinigung.xaml;MainWindow.xaml;SetPath.xaml;ShowInfra.xaml;ShowLog.xaml;Stats.xaml;
 
 True
 

@@ -234,3 +234,5 @@ C:\Users\mario\source\repos\FIleWatcher\FileWatcher\obj\Debug\FileWatcher.pdb
 C:\Users\mario\source\repos\FIleWatcher\FileWatcher\obj\Debug\FileWatc.D3F63814.Up2Date
 C:\Users\mario\source\repos\FIleWatcher\FileWatcher\obj\Debug\FileWatcher_Settings.g.cs
 C:\Users\mario\source\repos\FIleWatcher\FileWatcher\obj\Debug\FileWatcher_Settings.baml
+C:\Users\mario\source\repos\FIleWatcher\FileWatcher\obj\Debug\Classes\CORE\FileSystem\FiileDetailsWindow.baml
+C:\Users\mario\source\repos\FIleWatcher\FileWatcher\obj\Debug\Classes\CORE\FileSystem\FiileDetailsWindow.g.cs

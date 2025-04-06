@@ -1,0 +1,21 @@
+﻿<Window x:Class="FileWatcher.Classes.CORE.FileSystem.FiileDetailsWindow"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="File Details" Height="200" Width="400">
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="Date:" FontWeight="Bold"/>
+            <TextBlock x:Name="txtDate"/>
+            <TextBlock Text="FileName:" FontWeight="Bold"/>
+            <TextBlock x:Name="txtFileName"/>
+            <TextBlock Text="Action:" FontWeight="Bold"/>
+            <TextBlock x:Name="txtAction"/>
+            <TextBlock Text="Type:" FontWeight="Bold"/>
+            <TextBlock x:Name="txtType"/>
+            <TextBlock Text="Open in Explorer:" FontWeight="Bold"/>
+            <TextBlock>
+            <Hyperlink x:Name="linkFilePath" Click="LinkFilePath_Click">Open</Hyperlink>
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</Window>
