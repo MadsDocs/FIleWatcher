@@ -17,10 +17,13 @@ using System.Text.RegularExpressions;
 using System.Security.AccessControl;
 
 using System.Threading.Tasks;
-using System.Web.UI.WebControls.Expressions;
-using System.Web.UI.WebControls;
 using FileWatcher.Properties;
 using FileWatcher.Classes.CORE.FileSystem;
+using System.Text;
+using System.Net.Sockets;
+using System.Threading;
+
+using System.Net.NetworkInformation;
 
 
 
@@ -41,7 +44,9 @@ namespace FileWatcher
         private static FIleOperations fo = new FIleOperations();
         private static string LoggerDirPath;
         private static ShowLog logs = new ShowLog();
-        
+        private static bool is_senddataenabled = false;
+
+
         public static string pfad = log.GetPath();
         private int pfcounter = 0;
 
@@ -94,6 +99,26 @@ namespace FileWatcher
             else
             {
                 logs.btn_showstats.IsEnabled = false;
+            }
+
+            //Check if sendData is enabled in the settings
+            if (File.Exists(Classes.Statics.appdata + @"\FileWatcher\settings.settings"))
+            {
+                StreamReader settingsreader = new StreamReader(Classes.Statics.appdata + @"\FileWatcher\settings.settings");
+                string content = settingsreader.ReadToEnd();
+                if (content.Contains("SendData=true"))
+                {
+                    logger._wLogger("SendData is enabled in the settings...");
+                    is_senddataenabled = true;
+                }
+                else
+                {
+                    is_senddataenabled = false;
+                }
+            }
+            else
+            {
+                is_senddataenabled = false;
             }
         }
 
@@ -163,13 +188,12 @@ namespace FileWatcher
 
             }
         }
-        /*
+        
         private async void Fsw_Deleted(object sender, FileSystemEventArgs e)
         {
             try
             {
-                await Task.Run(() => {
-
+                await Task.Run(async () => {
                     FileInfo info = new FileInfo(e.Name);
                     string owner = fo.GetOwnerofFile(e.Name);
                     string windir = Environment.GetEnvironmentVariable("windir");
@@ -197,12 +221,10 @@ namespace FileWatcher
                         }
                         else
                         {
-                            DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
+                            await DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
                             counter++;
                         }
                     }
-                    //Original Code
-
                 });
                 
             }
@@ -214,11 +236,11 @@ namespace FileWatcher
 
         }
 
-        /*private async void Fsw_Renamed(object sender, FileSystemEventArgs e)
+        private async void Fsw_Renamed(object sender, FileSystemEventArgs e)
         {
             try
             {
-                await Task.Run(() => {
+                await Task.Run(async () => {
                     FileInfo info = new FileInfo(e.Name);
                     string owner = fo.GetOwnerofFile(e.Name);
                     string windir = Environment.GetEnvironmentVariable("windir");
@@ -246,7 +268,7 @@ namespace FileWatcher
                         }
                         else
                         {
-                            DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
+                            await DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
                             counter++;
                         }
                     }
@@ -264,7 +286,7 @@ namespace FileWatcher
         {
             try
             {
-                await Task.Run(() =>
+                await Task.Run(async () =>
                 {
                     FileInfo info = new FileInfo(e.Name);
                     string owner = fo.GetOwnerofFile(e.Name);
@@ -293,7 +315,7 @@ namespace FileWatcher
                         }
                         else
                         {
-                            DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
+                            await DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
                             counter++;
                         }
                     }
@@ -316,8 +338,7 @@ namespace FileWatcher
         {
             try
             {
-                await Task.Run(() => {
-
+                await Task.Run(async () => {
                     FileInfo info = new FileInfo(e.Name);
                     string owner = fo.GetOwnerofFile(e.Name);
                     string windir = Environment.GetEnvironmentVariable("windir");
@@ -345,7 +366,7 @@ namespace FileWatcher
                         }
                         else
                         {
-                            DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
+                            await DisplayFiles(WatcherChangeTypes.Deleted, e.Name, owner);
                             counter++;
                         }
                     }
@@ -359,7 +380,7 @@ namespace FileWatcher
                 log.ExLogger(ex);
             }
         }
-        */
+        
         private void InitializeFileSystemWatcher()
         {
             //fsw.Path = @"C:\";
@@ -379,7 +400,7 @@ namespace FileWatcher
         {
             try
             {
-                await Task.Run(() =>
+                await Task.Run(async () =>
                 {
                     FileInfo info = new FileInfo(e.FullPath);
                     string owner = fo.GetOwnerofFile(e.FullPath);
@@ -402,13 +423,13 @@ namespace FileWatcher
                     {
                         if (string.IsNullOrEmpty(owner))
                         {
-                            //logger._wLogger("Datei ohne Besitzer gefunden, wird nicht geloggt...");
-                            DisplayFiles(e.ChangeType, e.FullPath,"");
+                            // Await the call to DisplayFiles to avoid CS4014
+                            await DisplayFiles(e.ChangeType, e.FullPath, "");
                             counter++;
                         }
                         else
                         {
-                            DisplayFiles(e.ChangeType, e.FullPath, owner);
+                            await DisplayFiles(e.ChangeType, e.FullPath, owner);
                             counter++;
                         }
                     }
@@ -420,49 +441,96 @@ namespace FileWatcher
             }
         }
 
-        void DisplayFiles ( WatcherChangeTypes watcherTypes, string FileName, string owner, string oldname = null)
+        async Task DisplayFiles ( WatcherChangeTypes watcherTypes, string FileName, string owner, string oldname = null)
         {
 
             Logger logger = new Classes.Logging.Logger();
 
             try
             {
-                /*if (watcherTypes == WatcherChangeTypes.Changed)
+                if (watcherTypes == WatcherChangeTypes.Changed)
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes, owner); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes, owner); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
                 }
                 else if (watcherTypes == WatcherChangeTypes.Created)
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes,owner); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes,owner); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
                 }
                 else if (watcherTypes == WatcherChangeTypes.Deleted)
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes,owner); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes,owner); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
                 }
                 else if (watcherTypes == WatcherChangeTypes.Renamed)
                 {
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes,owner); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
-                }*/
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AddtoList(string.Format("{0} -> {1} - {2}", DateTime.Now, FileName, watcherTypes.ToString()), watcherTypes,owner); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { AutoScroll(); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { DisplayCounter(); }));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() => { log.LogEntrys(FileName, DateTime.Now, watcherTypes); }));
+                }
 
-                Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() =>
+                
+                
+
+                if (is_senddataenabled)
                 {
-                    AddtoList($"{DateTime.Now} -> {FileName} - {watcherTypes}", watcherTypes, owner);
-                    AutoScroll();
-                    DisplayCounter();
-                    log.LogEntrys(FileName, DateTime.Now, watcherTypes);
-                }));
+                    string message = DateTime.Now + " -> " + FileName + " - " + watcherTypes.ToString() + owner;
+                    byte[] data = Encoding.UTF8.GetBytes(message);
+
+                    using (var udpClient = new UdpClient())
+                    {
+                        // Ziel-Endpunkt definieren
+                        var endpoint = new System.Net.IPEndPoint(System.Net.IPAddress.Loopback, 5000);
+
+                        Ping ping = new Ping();
+                        PingReply reply = ping.Send("localhost");
+
+                        if (reply.Status == IPStatus.Success)
+                        {
+                            // UDP-Paket senden
+                            await udpClient.SendAsync(data, data.Length, endpoint);
+                            await Task.Delay(1000);
+
+                            log._wLogger("Successfully connected to the server on localhost:5000 and sent data.");
+                            log._wLogger("Data: " + message);
+                        }
+                        else
+                        {
+                            logger._wLogger("Server host not reachable, stopping FileWatcher and disabling further UDP sends...");
+                            Stop();
+                            is_senddataenabled = false;
+                            MessageBox.Show("Could not reach the server on localhost:5000. FileWatcher has been stopped and SendData is now disabled.", "Server not reachable", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+
+
+                    }
+
+                    
+                    
+                }
+                else
+                {
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() =>
+                    {
+                        AddtoList($"{DateTime.Now} -> {FileName} - {watcherTypes}", watcherTypes, owner);
+                        AutoScroll();
+                        DisplayCounter();
+                        log.LogEntrys(FileName, DateTime.Now, watcherTypes);
+                    }));
+
+                }
+
+
+                   
             }
             catch (Exception ex)
             {
@@ -627,22 +695,6 @@ namespace FileWatcher
                     //get only the filename from the filename variable
                     FileInfo fileInfo = new FileInfo(fileName);
                     string extension = fileInfo.Extension;
-
-                    /*if (string.IsNullOrEmpty(extension))
-                    {
-                        string message = $"Date: {date}\nFileName: {fileName}\nAction: {action}\nType: Directory";
-                        MessageBox.Show(message, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else
-                    {
-                        int extensionIndex = fileName.LastIndexOf(extension, StringComparison.OrdinalIgnoreCase);
-                        int lastIndex = fileName.LastIndexOf("\\", extensionIndex, StringComparison.OrdinalIgnoreCase);
-
-                        string fileNameWithoutPath = fileName.Substring(lastIndex + 1);
-
-                        string message = $"Date: {date}\nFileName: {fileNameWithoutPath}\nAction: {action}\nType: File";
-                        MessageBox.Show(message, $"{fileNameWithoutPath}", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }*/
 
                     string type = string.IsNullOrEmpty(extension) ? "Directory" : "File";
                     var fileDetailsWindow = new FiileDetailsWindow(date, fileName, action, type);

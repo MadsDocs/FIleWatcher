@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+
+using FileWatcher.Classes.Logging;
 
 namespace FileWatcher
 {
@@ -19,6 +22,7 @@ namespace FileWatcher
     /// </summary>
     public partial class FileWatcher_Settings : Window
     {
+        private Logger logger = new Logger();
         public FileWatcher_Settings()
         {
             InitializeComponent();
@@ -40,6 +44,22 @@ namespace FileWatcher
             {
                 //Save the settings
 
+            }
+
+            if (rdb_SendData.IsChecked == true)
+            {
+                if (File.Exists(Classes.Statics.appdata + @"\FileWatcher\settings.settings"))
+                {
+                    logger._wLogger("Settings entry for sendData already exists, skipping...");
+                }
+                else
+                {
+                    StreamWriter sendData = new StreamWriter(Classes.Statics.appdata + @"\FileWatcher\settings.settings");
+                    sendData.WriteLine("SendData=true");
+                    sendData.Flush();
+                    sendData.Close();
+                }
+                
             }
         }
 

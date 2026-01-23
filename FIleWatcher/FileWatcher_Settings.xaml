@@ -21,5 +21,6 @@
         <Label Grid.Column="1" Content="Username:" HorizontalAlignment="Left" Margin="37,29,0,0" VerticalAlignment="Top" Height="24" Width="70"/>
         <Label Grid.Column="1" Content="Password:" HorizontalAlignment="Left" Margin="43,52,0,0" VerticalAlignment="Top" Height="24" Width="70"/>
         <Label Grid.Column="1" Content="Database:" HorizontalAlignment="Left" Margin="43,76,0,0" VerticalAlignment="Top" Height="24" Width="70"/>
+        <RadioButton x:Name="rdb_SendData" Content="SendDataToLocalServer" HorizontalAlignment="Left" Margin="10,58,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="146"/>
     </Grid>
 </Window>

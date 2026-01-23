@@ -15,9 +15,10 @@ namespace FileWatcher.Classes.CORE.FW_Network
         {
             try
             {
-                string link = "https://baronie.themadbrainz.net/filewatcher/App.config";
+                /*string link = "https://baronie.themadbrainz.net/filewatcher/App.config";
                 WebClient client = new WebClient();
                 client.DownloadFile(link, Init.appdata + @"\filewatcher\config\App.config");
+                */
             }
             catch (Exception ex)
             {

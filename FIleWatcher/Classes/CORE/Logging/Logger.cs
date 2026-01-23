@@ -25,10 +25,11 @@ namespace FileWatcher.Classes.Logging
         private static StringBuilder sb3 = new StringBuilder();
 
         public static string Path = MainWindow.pfad;
+        private static readonly object errorlock = new object();
 
 
         //public static string Path { get => path; set => path = value; }
-        
+
 
         /// <summary>
         /// Dies ist der Error Logger
@@ -73,8 +74,8 @@ namespace FileWatcher.Classes.Logging
         {
             try
             {
-                await Task.Run(async () => {
-
+                await Task.Run(() =>
+                {
                     if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
                     {
                         MessageBox.Show("There is no FileWatcher Directory, please restart the FileWatcher, or create a new Direcotry under %appdata% named FileWatcher!", "No FileWatcher Directory", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -83,22 +84,23 @@ namespace FileWatcher.Classes.Logging
                     {
                         string fwpath = GetPath();
 
-                        error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.Message + "\r\n");
-                        error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.StackTrace + "\r\n");
-
-                        File.AppendAllText(fwpath + @"\error.log", error.ToString() + "\r\n");
-
-                        await Task.Run(() =>
+                        lock (errorlock)
                         {
+                            error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.Message + "\r\n");
+                            error.Append(DateTime.Now.ToLongDateString() + "\t" + ex.StackTrace + "\r\n");
+
+                            File.AppendAllText(fwpath + @"\error.log", error.ToString() + "\r\n");
+
+                            // Optional: synchron schreiben, da wir im Lock sind
                             using (StreamWriter writer = new StreamWriter(fwpath + @"\error.log", true))
                             {
-                                writer.WriteLineAsync(error.ToString());
+                                writer.WriteLine(error.ToString());
                             }
-                        });
-                        error.Clear();
+                            error.Clear();
+                        }
                     }
                 });
-               
+
             }
             catch ( Exception exe)
             {
@@ -115,7 +117,7 @@ namespace FileWatcher.Classes.Logging
         {
             try
             {
-                await Task.Run(async () =>
+                await Task.Run(() =>
                 {
                     if (!Directory.Exists(Statics.appdata + @"\FileWatcher"))
                     {
@@ -123,20 +125,17 @@ namespace FileWatcher.Classes.Logging
                     }
                     else
                     {
-                        sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + message + "\r\n").ToString();
-                        //File.AppendAllText(Statics.appdata + @"\FileWatcher\Logs\log.log", sb.ToString());
-
-                        using (StreamWriter writer = new StreamWriter(Logger.Path + @"\log.log", true))
+                        lock (sb)
                         {
-                            await writer.WriteLineAsync(sb.ToString()); 
+                            sb.Append(DateTime.Now.ToLongDateString() + "\t" + DateTime.Now.ToLongTimeString() + "\t" + message + "\r\n");
+                            using (StreamWriter writer = new StreamWriter(Logger.Path + @"\log.log", true, Encoding.UTF8))
+                            {
+                                writer.WriteLine(sb.ToString());
+                            }
+                            sb.Clear();
                         }
-                        sb.Clear();
                     }
                 });
-                
-
-
-                
             }
             catch (Exception ex)
             {
@@ -178,7 +177,8 @@ namespace FileWatcher.Classes.Logging
                         //Get the Owner of the File
                         if (File.Exists(path.ToString()))
                         {
-                            FileSecurity fsec = File.GetAccessControl(path.ToString());
+                            FileInfo finfo2 = new FileInfo(path.ToString());
+                            FileSecurity fsec = finfo2.GetAccessControl();
                             IdentityReference idOwner = fsec.GetOwner(typeof(NTAccount));
                             IdentityReference idGroup = fsec.GetGroup(typeof(NTAccount));
 
@@ -203,11 +203,11 @@ namespace FileWatcher.Classes.Logging
                                         sb2.Append("Owner: " + idOwner + "\r\n");
                                         sb2.Append("Group: " + idGroup + "\r\n");
                                         sb2.Append("\r\n");
-                                        //File.AppendAllText(Path + @"\entries.log", sb2.ToString());
+                                        
 
 
 
-                                        using (StreamWriter writer = new StreamWriter(Path + @"\entries.log", true))
+                                        using (StreamWriter writer = new StreamWriter(Path + @"\entries.log", true, Encoding.UTF8))
                                         {
                                             await writer.WriteLineAsync(sb2.ToString());
                                         }
@@ -234,9 +234,9 @@ namespace FileWatcher.Classes.Logging
                                         sb2.Append("Owner: " + idOwner + "\r\n");
                                         sb2.Append("Group: " + idGroup + "\r\n");
                                         sb2.Append("\r\n");
-                                        //File.AppendAllText(Path + @"\entries.log", sb2.ToString());
+                                        
 
-                                        using (StreamWriter writer = new StreamWriter(Path + @"\entries.log", true))
+                                        using (StreamWriter writer = new StreamWriter(Path + @"\entries.log", true, Encoding.UTF8))
                                         {
                                             await writer.WriteLineAsync(sb2.ToString());
                                         }
@@ -279,8 +279,8 @@ namespace FileWatcher.Classes.Logging
 
                     string fattributes = attributes.Attributes.ToString();
 
-                    var besitzer = File.GetAccessControl(name).GetOwner(typeof(NTAccount));
-                    var gruppe = File.GetAccessControl(name).GetGroup(typeof(NTAccount));
+                    var besitzer = new FileInfo(name).GetAccessControl().GetOwner(typeof(NTAccount));
+                    var gruppe = new FileInfo(name).GetAccessControl().GetGroup(typeof(NTAccount));
 
 
 

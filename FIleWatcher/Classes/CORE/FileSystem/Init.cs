@@ -1,17 +1,18 @@
-﻿using System;
+﻿using FileWatcher.Classes.Logging;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Management;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Reflection;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
-
-using System.IO;
-using System.Security;
 using System.Windows;
-
-using FileWatcher.Classes.Logging;
-using Microsoft.Win32;
-using System.Reflection;
-using System.Net;
 
 namespace FileWatcher.Classes.FileSystem
 {
@@ -219,6 +220,16 @@ namespace FileWatcher.Classes.FileSystem
                 return null;
             }
          
+        }
+
+        //function to make sure that the filewatcher is ready to run
+        //this would include the following:
+        //checking if the filewatcher home under %appdata% exists
+        //checking if the firewall exception for data transfer exists
+        //quick check if the filewatcher server could be reached (only activate this when datatransfer is enabled in the settings)
+        public string startupChecker()
+        {
+            return "";
         }
 
 

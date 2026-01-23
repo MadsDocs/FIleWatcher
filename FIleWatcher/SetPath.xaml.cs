@@ -44,10 +44,6 @@ namespace FileWatcher
 
             if (File.Exists(Statics.appdata + @"\FileWatcher\save"))
                 MessageBox.Show(@" Log Ordner wurde eingerichtet! Sollten Sie den Ort wechseln wollten, können Sie einfach die save Datei unter %appdata%\save editieren!", "Log Ordner wurde eingerichtet", MessageBoxButton.OK, MessageBoxImage.Error);
-
-
-
-
         }
 
         private void btn_save_Click(object sender, RoutedEventArgs e)

@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\mario\source\repos\FIleWatcher\FileWatcher\obj\Debug\
+C:\Users\mario\OneDrive\Projects\FileWatcher_forgejo_modernization\FileWatcher\FileWatcher\obj\Debug\
 FileWatcher
 none
 false
 DEBUG;TRACE
-C:\Users\mario\source\repos\FIleWatcher\FileWatcher\App.xaml
+C:\Users\mario\OneDrive\Projects\FileWatcher_forgejo_modernization\FileWatcher\FileWatcher\App.xaml
 112058055576
-32138090391
-22342985177
-22-728263453
+
+23-1180332411
+20-610778364
 Changelog.xaml;Classes\CORE\FileSystem\FiileDetailsWindow.xaml;DirectoryWatcher.xaml;Errorbehandlung.xaml;FileWatcher_Settings.xaml;Logs_Bereinigung.xaml;MainWindow.xaml;SetPath.xaml;ShowInfra.xaml;ShowLog.xaml;Stats.xaml;
 
 False

@@ -22,7 +22,7 @@ namespace FileWatcher.Classes.Network
 
             try
             {
-                FtpWebRequest testrequest = (FtpWebRequest)WebRequest.Create("ftp://84.115.70.116");
+                /*FtpWebRequest testrequest = (FtpWebRequest)WebRequest.Create("ftp://84.115.70.116");
                 testrequest.Credentials = new NetworkCredential("", "");
                 testrequest.Method = WebRequestMethods.Ftp.ListDirectory;
 
@@ -36,7 +36,8 @@ namespace FileWatcher.Classes.Network
                 {
                     return "FTP Server is not up!";
                 }
-                return "";
+                return "";*/
+                throw new NotImplementedException();
 
             }
             catch ( Exception ex)
