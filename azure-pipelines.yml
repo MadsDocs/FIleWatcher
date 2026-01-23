@@ -26,6 +26,7 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    clean: true
 
 - task: VSTest@2
   inputs:
@@ -35,7 +36,7 @@ steps:
 - task: CopyFilesOverSSH@0
   inputs:
     sshEndpoint: 'upload'
-    sourceFolder: 'D:\a\1\s\FileWatcher\bin\Release\'
+    sourceFolder: 'D:\a\2\s\FileWatcher\bin\Release\'
     contents: '*.exe'
     targetFolder: 'upload'
     readyTimeout: '40000'
