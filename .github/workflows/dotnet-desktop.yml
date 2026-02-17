@@ -26,55 +26,50 @@ jobs:
       with:
         fetch-depth: 0
 
-    # Install .NET Core workload
     - name: Install .NET Core
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
 
-    # Add MSBuild to PATH
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
 
     - name: Restore NuGet packages
       run: dotnet restore $env:Solution_Name.sln
 
-    
-    # Build the solution
     - name: Build Solution
       run: msbuild $env:Solution_Name.sln /p:Configuration=${{ matrix.configuration }}
 
-    # Optional: create build artifacts
-    - name: Archive Build Output
+    # Archive ONLY the .exe file
+    - name: Archive EXE Output
       if: matrix.configuration == 'Release'
       run: |
         mkdir output
-        Copy-Item -Path "**/bin/Release/**" -Destination "output" -Recurse
+        Get-ChildItem -Path "**/bin/Release/**/*.exe" | Copy-Item -Destination "output"
 
     - name: Upload Build Artifact
       if: matrix.configuration == 'Release'
       uses: actions/upload-artifact@v4
       with:
-        name: release-build
+        name: release-exe
         path: output
 
   release:
-    name: Create GitHub Release
     needs: build
-    runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: windows-latest
 
     steps:
     - name: Download Release Artifact
       uses: actions/download-artifact@v4
       with:
-        name: release-build
+        name: release-exe
         path: dist
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
         generate_release_notes: false
-        files: dist/**
+        files: dist/*.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
